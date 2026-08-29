@@ -1,0 +1,1284 @@
+{
+  "schema": 2,
+  "generated_at": 1788189391,
+  "assets": {
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip",
+      "sha256": "bbc8b22bd4877bfb025ed5858f826f6ca6d00c6bfd49752a8b36e2acf90d0397",
+      "files": [
+        {
+          "path": "SilentPatchIII.asi",
+          "sha256": "5cb5bc539c9ec81fb9c710f930c392ecbc876162851aec0c0b48a8c285acf8d9"
+        },
+        {
+          "path": "SilentPatchIII.ini",
+          "sha256": "319f356b6e2aa67deaedd6eace149d18a72eb8ba4bf29dc5657bdb2d0ac5812e"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchSA.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchSA.zip",
+      "sha256": "028784e08b0b32461b226e816cf0f3c1cb1b0f27e8ecc3b9b000771b7f618664",
+      "files": [
+        {
+          "path": "SilentPatchSA.asi",
+          "sha256": "a4c27d738c6cfb88a8303f19174f2ca604938b26c489bc14045648545b60856c"
+        },
+        {
+          "path": "SilentPatchSA.ini",
+          "sha256": "9fd329e566be2208c31420f0a81b74218311aac42a098ad12e2160852d4179a9"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchVC.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchVC.zip",
+      "sha256": "474282ffbe1ec18b50f77bbdf1666942b681e8241b282d5af461d4333789f256",
+      "files": [
+        {
+          "path": "SilentPatchVC.asi",
+          "sha256": "7102382f2cd0a33952fd7009aed024030d606caa23c33ed3ea9bb8c48544cb34"
+        },
+        {
+          "path": "SilentPatchVC.ini",
+          "sha256": "2d6e59cc9e651973e39b03a14ca9241e1fcbde5b84c2544498eec49e67de1e8d"
+        },
+        {
+          "path": "data/maps/club/CLUB.ipl",
+          "sha256": "418e3e032f1633e3e3a0fc36c42851ed9067a6f628a73061c1497b7914880180"
+        },
+        {
+          "path": "data/maps/hotel/hotel.IPL",
+          "sha256": "9c58e82d38c5d8eca6df2ae500e7ed68f0062c5c600f1b5fd147b13db28de7c7"
+        },
+        {
+          "path": "data/maps/littleha/littleha.ipl",
+          "sha256": "6d32145a715aef2c76d345e139fc95f3080e49c3e69220776723806d43763ae0"
+        },
+        {
+          "path": "data/maps/mansion/mansion.ipl",
+          "sha256": "a684434ec64b8bab958fbe6dc5d23b86e024afb6b8fef90f23aabc126ed4b97b"
+        },
+        {
+          "path": "data/maps/oceandn/oceandN.ipl",
+          "sha256": "4846070d64e2f9c0923dc30537269aa67af6abe1c455608f854d172006cfd92f"
+        },
+        {
+          "path": "data/maps/oceandrv/oceandrv.ipl",
+          "sha256": "b74c52999eb442c285c590c3581e371a2fda587277f2f7e7a18f9285a7fa9208"
+        },
+        {
+          "path": "data/maps/stripclb/stripclb.ipl",
+          "sha256": "415b69b4e6dce06b062f6a7683714704336c2a024776ae8244274f71e09d055c"
+        },
+        {
+          "path": "data/maps/washints/washints.ipl",
+          "sha256": "8cad9adb12f7a66495c99f0e0fd8c526e60b76ba7401653973200ab814b2d223"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33.1-SA/SilentPatchIII.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33.1-SA/SilentPatchIII.zip",
+      "sha256": "90e9d41274668682f5ed597e091e9f7b3681eea2ae05edc610d8c5ec13bd974f",
+      "files": [
+        {
+          "path": "SilentPatchIII.asi",
+          "sha256": "ad72c1ebd4be20bc9967c2f9cf0121fd661a642dbc19ccd6388266aeabf6d1f1"
+        },
+        {
+          "path": "SilentPatchIII.ini",
+          "sha256": "319f356b6e2aa67deaedd6eace149d18a72eb8ba4bf29dc5657bdb2d0ac5812e"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchSA.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchSA.zip",
+      "sha256": "620bb2000de57f0035c9ee8cbd8a3e2af244257fe160ad6b034b560ff131aa54",
+      "files": [
+        {
+          "path": "SilentPatchSA.asi",
+          "sha256": "7b54a636920dfdd0ebf3db78ae7bda3e35c9b28d7b845d0ba4910fbe05343b7e"
+        },
+        {
+          "path": "SilentPatchSA.ini",
+          "sha256": "3a2288600762070f14434e30bb8f6c0fff25ce59962a630f629ea2b83d7e1ff4"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchVC.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchVC.zip",
+      "sha256": "7f3adcdf8b64a4bb3df4ac487fd3b439a0678a09bed3090e427f9876c4c7d9cf",
+      "files": [
+        {
+          "path": "SilentPatchVC.asi",
+          "sha256": "019877b3d04cf9f846baa80e3f0ac746c185a4586c9f5db2a6f847221a3ed83e"
+        },
+        {
+          "path": "SilentPatchVC.ini",
+          "sha256": "3e4bbda1c090db4118f8c73cc0f6ee6f63027573b6c05d6645b064313903a842"
+        },
+        {
+          "path": "data/maps/club/CLUB.ipl",
+          "sha256": "418e3e032f1633e3e3a0fc36c42851ed9067a6f628a73061c1497b7914880180"
+        },
+        {
+          "path": "data/maps/hotel/hotel.IPL",
+          "sha256": "9c58e82d38c5d8eca6df2ae500e7ed68f0062c5c600f1b5fd147b13db28de7c7"
+        },
+        {
+          "path": "data/maps/littleha/littleha.ipl",
+          "sha256": "6d32145a715aef2c76d345e139fc95f3080e49c3e69220776723806d43763ae0"
+        },
+        {
+          "path": "data/maps/mansion/mansion.ipl",
+          "sha256": "a684434ec64b8bab958fbe6dc5d23b86e024afb6b8fef90f23aabc126ed4b97b"
+        },
+        {
+          "path": "data/maps/oceandn/oceandN.ipl",
+          "sha256": "4846070d64e2f9c0923dc30537269aa67af6abe1c455608f854d172006cfd92f"
+        },
+        {
+          "path": "data/maps/oceandrv/oceandrv.ipl",
+          "sha256": "b74c52999eb442c285c590c3581e371a2fda587277f2f7e7a18f9285a7fa9208"
+        },
+        {
+          "path": "data/maps/stripclb/stripclb.ipl",
+          "sha256": "415b69b4e6dce06b062f6a7683714704336c2a024776ae8244274f71e09d055c"
+        },
+        {
+          "path": "data/maps/washints/washints.ipl",
+          "sha256": "8cad9adb12f7a66495c99f0e0fd8c526e60b76ba7401653973200ab814b2d223"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchIII.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchIII.zip",
+      "sha256": "6d5ebab21126345a2b33e0aa5737a28eaa7c5822a45fa796690793c668a519f3",
+      "files": [
+        {
+          "path": "SilentPatchIII.asi",
+          "sha256": "97d162081032f048958c3de0a5d92eb08d15512fc972bb9ce24562e4d35c3c5c"
+        },
+        {
+          "path": "SilentPatchIII.ini",
+          "sha256": "0036239d0c6385f270f782abc1e4153a1ee96acb4641907b9e3c4987b35e2e36"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchSA.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchSA.zip",
+      "sha256": "0837bbdc0548a4a952f924adefd2bb6eacc866407f153844fe1f56995668c42c",
+      "files": [
+        {
+          "path": "SilentPatchSA.asi",
+          "sha256": "908e1d12e36ba809a8ce584be0bd29239349968259a5de593f9b0cc71dbb352b"
+        },
+        {
+          "path": "SilentPatchSA.ini",
+          "sha256": "3a2288600762070f14434e30bb8f6c0fff25ce59962a630f629ea2b83d7e1ff4"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchVC.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchVC.zip",
+      "sha256": "37189b72835316ac1d20d13e686d5fe986ffde51755de5d730ba5795378840ab",
+      "files": [
+        {
+          "path": "SilentPatchVC.asi",
+          "sha256": "71eaf21c9bcba7010c389dd57badd56cdaae55cf73cc52e1941529d598a6c771"
+        },
+        {
+          "path": "SilentPatchVC.ini",
+          "sha256": "3e4bbda1c090db4118f8c73cc0f6ee6f63027573b6c05d6645b064313903a842"
+        },
+        {
+          "path": "data/maps/club/CLUB.ipl",
+          "sha256": "418e3e032f1633e3e3a0fc36c42851ed9067a6f628a73061c1497b7914880180"
+        },
+        {
+          "path": "data/maps/hotel/hotel.IPL",
+          "sha256": "9c58e82d38c5d8eca6df2ae500e7ed68f0062c5c600f1b5fd147b13db28de7c7"
+        },
+        {
+          "path": "data/maps/littleha/littleha.ipl",
+          "sha256": "6d32145a715aef2c76d345e139fc95f3080e49c3e69220776723806d43763ae0"
+        },
+        {
+          "path": "data/maps/mansion/mansion.ipl",
+          "sha256": "a684434ec64b8bab958fbe6dc5d23b86e024afb6b8fef90f23aabc126ed4b97b"
+        },
+        {
+          "path": "data/maps/oceandn/oceandN.ipl",
+          "sha256": "4846070d64e2f9c0923dc30537269aa67af6abe1c455608f854d172006cfd92f"
+        },
+        {
+          "path": "data/maps/oceandrv/oceandrv.ipl",
+          "sha256": "b74c52999eb442c285c590c3581e371a2fda587277f2f7e7a18f9285a7fa9208"
+        },
+        {
+          "path": "data/maps/stripclb/stripclb.ipl",
+          "sha256": "415b69b4e6dce06b062f6a7683714704336c2a024776ae8244274f71e09d055c"
+        },
+        {
+          "path": "data/maps/washints/washints.ipl",
+          "sha256": "8cad9adb12f7a66495c99f0e0fd8c526e60b76ba7401653973200ab814b2d223"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchIII.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchIII.zip",
+      "sha256": "7f57fb59707649e29168b025c0297be282a4ba7d8dc5109b7536e783a363d949",
+      "files": [
+        {
+          "path": "SilentPatchIII.asi",
+          "sha256": "a25418e3b56ae6d763b49b6fdb8ebfab30e6a758ad74e1e0b4879cf0b3e6cd78"
+        },
+        {
+          "path": "SilentPatchIII.ini",
+          "sha256": "319f356b6e2aa67deaedd6eace149d18a72eb8ba4bf29dc5657bdb2d0ac5812e"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchSA.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchSA.zip",
+      "sha256": "5d915e9f3bbab7137e1fb9d1c3f731e895a88a500557649291f9694c007ef611",
+      "files": [
+        {
+          "path": "SilentPatchSA.asi",
+          "sha256": "a95f9550175a8f41f68d24d93b34610fe5f6f486b9bf543438f698564543443b"
+        },
+        {
+          "path": "SilentPatchSA.ini",
+          "sha256": "9fd329e566be2208c31420f0a81b74218311aac42a098ad12e2160852d4179a9"
+        }
+      ]
+    },
+    "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchVC.zip": {
+      "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchVC.zip",
+      "sha256": "1cd0bf2c6b5e186f4fd397cafc41bbd3ca2e9c8fc04333f6f73a14b7258d2b3d",
+      "files": [
+        {
+          "path": "SilentPatchVC.asi",
+          "sha256": "3ee6b28f2d82ecec5d4cde9de75f170b2a555515cb544e9d9ed2e534afbb6091"
+        },
+        {
+          "path": "SilentPatchVC.ini",
+          "sha256": "c6e198fe526bfdbd8dc367797d4f8ef39dd9e35f5bf323917daed7251930b864"
+        },
+        {
+          "path": "data/maps/club/CLUB.ipl",
+          "sha256": "418e3e032f1633e3e3a0fc36c42851ed9067a6f628a73061c1497b7914880180"
+        },
+        {
+          "path": "data/maps/hotel/hotel.IPL",
+          "sha256": "9c58e82d38c5d8eca6df2ae500e7ed68f0062c5c600f1b5fd147b13db28de7c7"
+        },
+        {
+          "path": "data/maps/littleha/littleha.ipl",
+          "sha256": "6d32145a715aef2c76d345e139fc95f3080e49c3e69220776723806d43763ae0"
+        },
+        {
+          "path": "data/maps/mansion/mansion.ipl",
+          "sha256": "a684434ec64b8bab958fbe6dc5d23b86e024afb6b8fef90f23aabc126ed4b97b"
+        },
+        {
+          "path": "data/maps/oceandn/oceandN.ipl",
+          "sha256": "4846070d64e2f9c0923dc30537269aa67af6abe1c455608f854d172006cfd92f"
+        },
+        {
+          "path": "data/maps/oceandrv/oceandrv.ipl",
+          "sha256": "b74c52999eb442c285c590c3581e371a2fda587277f2f7e7a18f9285a7fa9208"
+        },
+        {
+          "path": "data/maps/stripclb/stripclb.ipl",
+          "sha256": "415b69b4e6dce06b062f6a7683714704336c2a024776ae8244274f71e09d055c"
+        },
+        {
+          "path": "data/maps/washints/washints.ipl",
+          "sha256": "8cad9adb12f7a66495c99f0e0fd8c526e60b76ba7401653973200ab814b2d223"
+        }
+      ]
+    },
+    "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.3.0/silents_asi_loader_13.zip": {
+      "url": "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.3.0/silents_asi_loader_13.zip",
+      "sha256": "9c61c0a7fe5643405b5c696bfbddd3f2dc09ef57033ca51e17a3137c5681fb8a",
+      "files": [
+        {
+          "path": "scripts/global.ini",
+          "sha256": "4996e00167f7ab9e42504cebc17e636c576c277a2b67b5a6f6e742335f132735"
+        },
+        {
+          "path": "vorbisFile.dll",
+          "sha256": "1b0c406c126ffd3d367f34f91624fa12526ae50c2dbf9e5ec453c0c313b77c8e"
+        },
+        {
+          "path": "vorbisHooked.dll",
+          "sha256": "a08923479000cec366967fb8259e0920b7aa18859722c7dda1415726bed4774f"
+        }
+      ]
+    },
+    "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.4.0/silents_asi_loader_14.zip": {
+      "url": "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.4.0/silents_asi_loader_14.zip",
+      "sha256": "e3b46a64bb804bf9870b890d8aedf5cf780d6f7daf2ab2442dfbe462c18a0352",
+      "files": [
+        {
+          "path": "scripts/global.ini",
+          "sha256": "4996e00167f7ab9e42504cebc17e636c576c277a2b67b5a6f6e742335f132735"
+        },
+        {
+          "path": "vorbisFile.dll",
+          "sha256": "151de5d9f0fe92f8f71edc57f253d8325f678b96bbe71721b5eeb2f11f6a6c46"
+        },
+        {
+          "path": "vorbisHooked.dll",
+          "sha256": "a08923479000cec366967fb8259e0920b7aa18859722c7dda1415726bed4774f"
+        }
+      ]
+    },
+    "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.5.0/silents_asi_loader_15.zip": {
+      "url": "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.5.0/silents_asi_loader_15.zip",
+      "sha256": "de525eea3c93fc569c58c8e60337221daf873e35ade88d4e5d75b324821a653d",
+      "files": [
+        {
+          "path": "scripts/global.ini",
+          "sha256": "4996e00167f7ab9e42504cebc17e636c576c277a2b67b5a6f6e742335f132735"
+        },
+        {
+          "path": "vorbisFile.dll",
+          "sha256": "218e7ccb905e1facd660a98ce854691345dbfc4a257b5167a43b82b9c329300b"
+        },
+        {
+          "path": "vorbisHooked.dll",
+          "sha256": "a08923479000cec366967fb8259e0920b7aa18859722c7dda1415726bed4774f"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip": {
+      "url": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip",
+      "sha256": "952cebfc30d525afc2bdbaca954329d405ded3aa688a83027354dae14dfd5c5f",
+      "files": [
+        {
+          "path": "dinput8.dll",
+          "sha256": "d5a059aa467a7a7127c8f6169f79fa63ff0f55986ee9eb2fd9a281bebf2aa2e6"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gta3/GTA3.WidescreenFix.zip": {
+      "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gta3/GTA3.WidescreenFix.zip",
+      "sha256": "38bdeb3b901a4953f1f635685fbd91342dcd3ba4c5a70c621b37ab6f017889e1",
+      "files": [
+        {
+          "path": "scripts/GTA3.WidescreenFix.asi",
+          "sha256": "988f87f5f7fb74c0ae281ad5253d1fa8ede38dbb840bf0f4b01bd158b3e50e0c"
+        },
+        {
+          "path": "scripts/GTA3.WidescreenFix.ini",
+          "sha256": "975d83a3e5c026fa5d1cd65158bdff0bd7c7a527d8d78a907c5e2e347ff2579c"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtasa/GTASA.WidescreenFix.zip": {
+      "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtasa/GTASA.WidescreenFix.zip",
+      "sha256": "38d648c33d43b3459f3b8e2ab2ee5086fbd84f2567c9d9b4d191a2239f68810e",
+      "files": [
+        {
+          "path": "scripts/GTASA.WidescreenFix.asi",
+          "sha256": "31247defdde4dc496a506b5361854423cce88980e10fb1dac1cf25fb7c5c0161"
+        },
+        {
+          "path": "scripts/GTASA.WidescreenFix.ini",
+          "sha256": "07d8ef3149ec2c82b1a087c525fa63e42c6c4840076192ebe2990a66c387a4b4"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtavc/GTAVC.WidescreenFix.zip": {
+      "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtavc/GTAVC.WidescreenFix.zip",
+      "sha256": "2a8c8b46f6b50bfaea063d3be4c2c13acac0066385ffec4d51bfe5812af0f5e3",
+      "files": [
+        {
+          "path": "scripts/GTAVC.WidescreenFix.asi",
+          "sha256": "0e27490664f6e0c5ef3a0fd495f69c5430ceba509d057743c992d3601c083036"
+        },
+        {
+          "path": "scripts/GTAVC.WidescreenFix.ini",
+          "sha256": "b91fcf6d00587d19d919c72e20ab0f7bd41755a6b7a138d4ba05e21559e3e43c"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.4.3/cleo_redux_1.4.3.x86.zip": {
+      "url": "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.4.3/cleo_redux_1.4.3.x86.zip",
+      "sha256": "dca094d35d8a83e2e89f9279db421e24c7bb22e35d3e9856aefa99929166064c",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/Events.cleo",
+          "sha256": "abe618b70b6fa7efe912868b708aad0a27cd0a335a4fec96384297912831d9e6"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/Frontend.cleo",
+          "sha256": "d0ac8590f875211c9680359648c28767c770e10200c33a18c712ffb79a376e3c"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/IdeLoader.cleo",
+          "sha256": "da946169cfcc24b2da4b048920ddc6bb8b22d312d46e89a0845750c1b4ee1cfe"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/IniFiles.cleo",
+          "sha256": "582692a1ef0e46772d7865eaad8e133c26b64658a31edc42f2e609b65468e1c0"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/Input.cleo",
+          "sha256": "732c398162c32c927ad45b3aa9dc01e764757371149be36b089782c9a2825592"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/TextLoader.cleo",
+          "sha256": "46b7624de70731f9dcccfbe07f15d3f5bcf5703c8baaba9b99fe1ae833982994"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/dylib.cleo",
+          "sha256": "b98ef2f2a3380f91972be9e22ee9489ebe55e887c654901165b3d12adb682c18"
+        },
+        {
+          "path": "cleo_redux.asi",
+          "sha256": "d8e26139c223fed5136e8e20664ee7bb6acbcb4f92d0043520febf221c45fe95"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.5.0/cleo_redux_1.5.0.x86.zip": {
+      "url": "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.5.0/cleo_redux_1.5.0.x86.zip",
+      "sha256": "fe3c421d9d9c1b98763501b0c4c8df77debd061dbd1317cd4d55c03ff35ec3d3",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/Events.cleo",
+          "sha256": "abe618b70b6fa7efe912868b708aad0a27cd0a335a4fec96384297912831d9e6"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/Frontend.cleo",
+          "sha256": "d0ac8590f875211c9680359648c28767c770e10200c33a18c712ffb79a376e3c"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/FxtLoader.cleo",
+          "sha256": "67d30fc64e0407887f4a5a2170e9e72b85379f73d496ad40a35e60eb5c9a1200"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/IdeLoader.cleo",
+          "sha256": "da946169cfcc24b2da4b048920ddc6bb8b22d312d46e89a0845750c1b4ee1cfe"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/IniFiles.cleo",
+          "sha256": "582692a1ef0e46772d7865eaad8e133c26b64658a31edc42f2e609b65468e1c0"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/Input.cleo",
+          "sha256": "732c398162c32c927ad45b3aa9dc01e764757371149be36b089782c9a2825592"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/TextLoader.cleo",
+          "sha256": "46b7624de70731f9dcccfbe07f15d3f5bcf5703c8baaba9b99fe1ae833982994"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/dylib.cleo",
+          "sha256": "b98ef2f2a3380f91972be9e22ee9489ebe55e887c654901165b3d12adb682c18"
+        },
+        {
+          "path": "cleo_redux.asi",
+          "sha256": "d38c08a0a67df851d5cb6e13e507b761cd198c8271222ac1d7f2b3117c2c7da4"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO4/releases/download/v4.4.4/CLEO4.zip": {
+      "url": "https://github.com/cleolibrary/CLEO4/releases/download/v4.4.4/CLEO4.zip",
+      "sha256": "aca8a1ca9dfc85d6f886b5963388059b2580501219f1f6b891114560552a8560",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "748ea0b36a1580652146c8b443066bdd81ef14556431805b2102f0f1f44caa08"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6e1bf8ea63f9923687709f4e2f0dac7ff558b2ab923e8c8aa147384746e05b1d"
+        },
+        {
+          "path": "cleo/FileSystemOperations.cleo",
+          "sha256": "b7b80bc1aad995e7643127a978dfb56bda7fe02ab54879327cfa7baca71bcddf"
+        },
+        {
+          "path": "cleo/IniFiles.cleo",
+          "sha256": "d9ddde713211eb1341ec7181d0b2d7e487e8c816ced7afadee5d50ef3f37d168"
+        },
+        {
+          "path": "cleo/IntOperations.cleo",
+          "sha256": "5897bcd19ac9097f3b730c091623c556a176c82af4f97e3a2c483f62f4819f4f"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.0/SA.CLEO_v5.0.0.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.0/SA.CLEO_v5.0.0.zip",
+      "sha256": "07c758d8d5f6eef7a3d670508305f005b6b9a3a1e2c0bcdd9ff11e5c8a6d5dd0",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "ba7a9873b0d18ac75b84bda0ce8d10b11df144888827425e69cfa5fa479b4af7"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6e1bf8ea63f9923687709f4e2f0dac7ff558b2ab923e8c8aa147384746e05b1d"
+        },
+        {
+          "path": "cleo/.cleo_config.ini",
+          "sha256": "12d6272ca7119d1d29df749b6ca171117f04693003527b5dd485b857e0dc5d70"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "dfe565f8eefe00bf9bfac68a5195d20067fd3a418bf68c5fcd29286c08544900"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "705cba19dff033dabc92397aac18cfcc59b99c9cd4c00974cd469652c13ced49"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.ini",
+          "sha256": "41f63ad30746bebdd15736a8707c82adc36a4a744ccb946a5e1d527833fa2f62"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "c8f7b25077c981a8f0eb2e3e027f69b5fdbd4301365edbecb09d2517e8aabf13"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.ini",
+          "sha256": "ad997203b75d39d43de056fc0db4aeebb75b638e8ff59c30093800575ce6f2d7"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "83c00228e9cf8554c19d286cc7b964c9614e5eb1779960767350a9702799df24"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "550f3e644e19ac18f1989b9fe3774b74add679a55c51465ab1fefe0ed8baf022"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "d71899acf80db5515217f05b00bb786122473776453f2cb33c0e38b21d74808d"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "3672af270f74eb15169cf52ba44b6deba881ab10760f3bda845c9d9b5bf7ce5f"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "1958cc4e015546e71cf23e29bdfca42539a93ae848b102bebcf92b51eb72ecd4"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.1/SA.CLEO_v5.0.1.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.1/SA.CLEO_v5.0.1.zip",
+      "sha256": "308f283ed503c199e8ba27507f5b7286459aaa098da864d2d9fa646692fa8694",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "261726b33fc2b1b14db78b89e4cfbf1faa01c6b239cc90859c073b0e6e7e1664"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6e1bf8ea63f9923687709f4e2f0dac7ff558b2ab923e8c8aa147384746e05b1d"
+        },
+        {
+          "path": "cleo/.cleo_config.ini",
+          "sha256": "12d6272ca7119d1d29df749b6ca171117f04693003527b5dd485b857e0dc5d70"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "8015b746ffd5c2d5c4db2a7f97263d5ba6c2e5b438dd2227ad0cb8d746e55134"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "3db7bef4456c55fb5af4ef7b2434bf61b471e8cf693e77068cb5e27af1ff5e89"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.ini",
+          "sha256": "668f80244caaebc30b6099f480d8c0c2679caf35b838b3d01f39aa2c0ffecc22"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "7e51df42759f1026fe16cad67ce929038411fd7e117f3fcef450698f594e02b2"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.ini",
+          "sha256": "ad997203b75d39d43de056fc0db4aeebb75b638e8ff59c30093800575ce6f2d7"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "6e55c52179d9cb270852e8e0ea7c4c0b3ce463635150fb352c0175c184c89e6c"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "47c3d87b7368bd7d4c923e1de4bf1566b60168ffc70cf13e6ba7ae00604a3a95"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "00fd2b8635f3d6e097f4c50d58fe48bae66cb65f064aba524fd4edc71b65aa39"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "0d8f650a93cc00c54614dc60a6cd7e99c17fdf208ef97ff137cd00dc8c13cd94"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "f8a51deb3b6cdf56c490fb66964419640f9a592c9e14430b373e80b70334a700"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.2/SA.CLEO_v5.0.2.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.2/SA.CLEO_v5.0.2.zip",
+      "sha256": "719a331a33f7c3e71f3e848cac932a5ea7a2e46e4198416200b41bfc5769264c",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "71113efc23b507fb27441f1ac3b9a42f75da9f56ef8de93a9f67ecacca7a6b07"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6c47e73a754fc0408e7e46a25743ed1a41017a8fa013447072e56380aea0ce68"
+        },
+        {
+          "path": "cleo/.cleo_config.ini",
+          "sha256": "12d6272ca7119d1d29df749b6ca171117f04693003527b5dd485b857e0dc5d70"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "78cb9f1e06e846b62784a1c71055c5d3d311024c6d9ae1cffeb77a84be899947"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "02fd429f71e3830606013f42ff641da34a21f4c8db36761d6863e41af11bc9b4"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.ini",
+          "sha256": "668f80244caaebc30b6099f480d8c0c2679caf35b838b3d01f39aa2c0ffecc22"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "641f71164bdf0f15c610c1f780fd2451eaeb11c020004c422ed7e5d75767a1c3"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.ini",
+          "sha256": "ad997203b75d39d43de056fc0db4aeebb75b638e8ff59c30093800575ce6f2d7"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "17ca63aab9cd81ca58938f8e4a2404d4dafec9c6f3b0c9ebab52dd6b22001782"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "3f907988806d2e5fecfe8df7c21dfd9a0985b77b85cf505397880ad051ea6464"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "96227cf7f6b77a893b533c826c77db780fd710d229f8026cfca64a962b244f55"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "c99a36d551824cdf0a574be2655702037ee74e7dd737b18eb62558638fb02146"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "8c4629c571e9e9dfc941492b4ecda97a4dcdbdfd4ee560b790988cf92f3e7612"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.3/SA.CLEO_v5.0.3.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.3/SA.CLEO_v5.0.3.zip",
+      "sha256": "336a3afc603e09839ed43800feaff05f19db4ea336f98c0d94d2c6bb567a662d",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "b64c631aca59ce03eb99bab1ae2e32f106a2718c28f4b294dbf558d578cb6680"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6c47e73a754fc0408e7e46a25743ed1a41017a8fa013447072e56380aea0ce68"
+        },
+        {
+          "path": "cleo/.cleo_config.ini",
+          "sha256": "1f777db5169e3db777b99f21f01d5880cfa1ba3f9802e2e8b7b20b9671625b76"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "9197f04dabd547f9e2391478146e35b786281e907afb3ab9f9c1798aaba3a19f"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "0ea9ce182481b3ecacef506ae84b24e98a854ced1acc7aceddf21a3897a50e7c"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.ini",
+          "sha256": "668f80244caaebc30b6099f480d8c0c2679caf35b838b3d01f39aa2c0ffecc22"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "1ef376a1adfaf32a04d45c6495dba2a63ee7c06b3ec5b3172c875e19ca35e33e"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.ini",
+          "sha256": "ad997203b75d39d43de056fc0db4aeebb75b638e8ff59c30093800575ce6f2d7"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "7fa53ce17f81c080cd621ad19cf97e7ce857e2f523e00964761916f1272306ac"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "5e029ee836c22fa07f83286f683b8b072c2a9d28c307298e1216d6f9ba55c17b"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "29dddc6c6a7efda9b0f417b7c3960a37c81184c3de8631959baa7a124a8ff6f9"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "10596c73038ebfadcf0d5ac6bb6f7b2a7a0089bf62ae0f5806bdea798ee75355"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "9987bfb2cc2c709cf58ac867bb2a00949660249cb96940788b9235774c37bb62"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.1.0/SA.CLEO-v5.1.0.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.1.0/SA.CLEO-v5.1.0.zip",
+      "sha256": "5aab813d1edc6298cf4c407feffe5b964d8dbc869a7727e4a8e94e212285b94e",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "e95a12eea44b6d6964c558963d4296843c3f02b075467a5c83d175145e3fdceb"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6c47e73a754fc0408e7e46a25743ed1a41017a8fa013447072e56380aea0ce68"
+        },
+        {
+          "path": "cleo/.cleo_config.ini",
+          "sha256": "1f777db5169e3db777b99f21f01d5880cfa1ba3f9802e2e8b7b20b9671625b76"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "8a0b9bff82af1b88ffce477f7e26162131d1fd0f2ef69ca21fd3ee6ec429504a"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "92f872653026db48314f2c5f454e8ff7a2da7c0a175145451bd77cd842bdf082"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.ini",
+          "sha256": "668f80244caaebc30b6099f480d8c0c2679caf35b838b3d01f39aa2c0ffecc22"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "daeee4bdb832cead39095a928f90bc0bfc8e4839389ec838f988717ea3a6ad82"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.ini",
+          "sha256": "ad997203b75d39d43de056fc0db4aeebb75b638e8ff59c30093800575ce6f2d7"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "ca77a277277ee44f0a90143372bfa4c76089daa7e8bf7a428bff0c521d600f05"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.GameEntities.cleo",
+          "sha256": "4331b70fbecf7e6af64e707651835fb1de5cf52f4eda25b59dd3d9f61bf3fe58"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "1718ae310587cced530457abbd034cb9faaf2ed82318c3844cd27e14c7b5bc01"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Input.cleo",
+          "sha256": "785d4385b104285ef8347d9a8236415ea2f70d3e5e1d3b2bd3b4e75d91811c85"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "d16730eba4d97c42f9f3211b22739272d261eb308a8c3adf6fcfefd6d0ceac36"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "ca589fde3c99c0273a4076e87853e42b333a73cad24abaf0a75cb66882524dec"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "f2a1f8fa2486b777d1effbafe7f50f3eab18d53675d0af99ca82f4e5075bd8dc"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.2.0/SA.CLEO-v5.2.0.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.2.0/SA.CLEO-v5.2.0.zip",
+      "sha256": "6faa55f6e916ed4f96bf9e006c05d216dd792877fee5eb0f11549ae418a2e53b",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "e6b40510b1f2490493dc9a946c7c1737ebd9f429771bf5b99f0435f6ab7b72ad"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6c47e73a754fc0408e7e46a25743ed1a41017a8fa013447072e56380aea0ce68"
+        },
+        {
+          "path": "cleo/.cleo_config.ini",
+          "sha256": "1f777db5169e3db777b99f21f01d5880cfa1ba3f9802e2e8b7b20b9671625b76"
+        },
+        {
+          "path": "cleo/.config/enums.json",
+          "sha256": "78c006c32628a108707e0898c9c08bc5e4e5502b06af8064b262232767ffc3d7"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "4f7e6c5b8b95598cdf826fec9ee474bb966e24563adbc6c2aa0f5ed6f5f0ad8b"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "7607e7cfeae98eee6616ed3a6cfc40b8a1807004a48c08ece9a313001e449394"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.ini",
+          "sha256": "668f80244caaebc30b6099f480d8c0c2679caf35b838b3d01f39aa2c0ffecc22"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "82b466bf0843220f39d60ad99e64eab8cab6865d722efb853005c7246e52b32c"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.ini",
+          "sha256": "7259c1cb55f6a0ba0ac0b6d510f33b6685ca5d27815d8caaf3b115d1a9652399"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "154072ce500120cda54683d847b5c200646a21c2c675f1503dce4c670bf79424"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.GameEntities.cleo",
+          "sha256": "27c839bcd87f3d74f43719c6d042c7fbb72043b94ff238783676cd876c88bf5b"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "4279f29115b50c30ba3ed2d54ac7a2dd62fc2e7ec5659e5f1dd71b878d2144f9"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Input.cleo",
+          "sha256": "8b0969d258be41639c43c23085a54aba63b302366cca938e5d3283878c506752"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "2706b515787f3047da70f971071f49a0ab21bd146ce861c4213eefd003db3491"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "8080cf857746524fb423d415ffb9754596bbe77dd999580513cc69f4990a1aed"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.ini",
+          "sha256": "6b0a929bbe5c92880bf03897523dbc5121333dd73aa21e7f155d723f9328fbda"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "42145eca8a0671a629f662b3c6794310226a8e35044174b7965b5a8c2cc2cd43"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.3.0/SA.CLEO-v5.3.0.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.3.0/SA.CLEO-v5.3.0.zip",
+      "sha256": "2e243befed2e5ca4d37226cc6df858db5dcb21fd2b211704ec41c257402ddde5",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "17054f51886244b713390b080a93d690069d0dd7e4f71fb6522b5fe86743a625"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "6c47e73a754fc0408e7e46a25743ed1a41017a8fa013447072e56380aea0ce68"
+        },
+        {
+          "path": "cleo/.cleo_config.ini",
+          "sha256": "e3bdcbaff0e8fc6d6c2822cbd7dfb509e9a097dc4a2586d81de6a05731e9073d"
+        },
+        {
+          "path": "cleo/.config/enums.json",
+          "sha256": "cbb744cb42890cdadd8cce007fe4c3dc4fc1730be46d63e2d4631b6b1277f6ac"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "b2fa4dd632e0f2d09db9362143972215f00e4409a153fe777ba0455fb3c1a7d9"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "5197f9184eb5e4b040b265dde21a94081f6843d56249d3188a3323b2efcb6ad5"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "5ee81bf9a0a92fa18c4753cc99170b9e08205bb9f2696a2260f229628797ce1d"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "a084b3071bd26248e1a2b5e5db25ae9908072f971f764f710e0952e8900a43d1"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.GameEntities.cleo",
+          "sha256": "3748c88f7a140bed91fd4ce3704fb309bb74fb9850e3145c4cd3176a3285f214"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "80b1de289b74d88e35acc04f7d13db6cab9067473cdf7dd76b0a163c3b2d24e9"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Input.cleo",
+          "sha256": "234e769eb1f4888f68ca569fac8d29447cca86f904fe760c9c5279ef2783eae8"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "814929a3eaf21c0ce5fa4d235e903f6e43edbe52f9b3a64a233d11c50a485537"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "8bb61772ef738bf15c6b64e4e196bf9e3e5f5a87aeeff574d826e6804f6ef68c"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "bf5fa3df1278f968c54020f63ff7ba1966340580d95388a4cfe766850a00800e"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.4.0/SA.CLEO-v5.4.0.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.4.0/SA.CLEO-v5.4.0.zip",
+      "sha256": "09f79c48f7cd7d27f811896a1bf8f135b80ebd60bc6b4577ae24a889d81505d7",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "d802a5215f2a5c421998dc6bbf9734819950eed034fa4cfd66e92d8ec9e2dc9e"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "ce5e97630cf4e1ef12a9afad785683414b7504efc443766333360ad2ed142eba"
+        },
+        {
+          "path": "cleo/.config/enums.json",
+          "sha256": "2d26fd815930f44c6094727fbbc6025729d84b553be8986db0cc5df1e08f2b6f"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "df63192ace9fd1866c8087c2f01771afda370edacf27cc141e2230b9475be3bc"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "db9d7eabcc06fa49c9acee6edb52a4e0547e6ed10ad99ba324a966f40db9bbc8"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "12fbe66a2a875bfae956c7c26f89517d6bd0e62efa2bf674ff5abb9ed704870b"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "2a9b177863c009045214d4e120f1a477ca0f8dfff9654f561b4e0e9694e3bc7c"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.GameEntities.cleo",
+          "sha256": "745cf5fd021e9d5759cf52dc10c01fbc40e5f7ecd1fb5524d31c376a3bd9c0a1"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "e9f14a84edc0c95d0e684ac0e19218f7506851c7fb1ec1ff068ac97e16d6938c"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Input.cleo",
+          "sha256": "2bf6256b88b46d1f3fcb2654eb821c249c3c393a889d8eb9599370c0e6c5d640"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "f23d605aa8660fca316df7fb2aad7836a874f582c874907c5e136452003be74e"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "0a6312ee08fc5069e66a97a748886269f40c045868f67ae2a25d339abcee31cc"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "24f5505999f94cbbc1859d75b7c61cc59c44f1ef31aceb8320ee2e4190acd572"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/III.VC.CLEO/releases/download/v2.2.0/III.CLEO-v2.2.0.zip": {
+      "url": "https://github.com/cleolibrary/III.VC.CLEO/releases/download/v2.2.0/III.CLEO-v2.2.0.zip",
+      "sha256": "d2a208b9eb13a78a7299a3b92908d63664fa237c34fefb0870798a87e50cbe58",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.ClipboardControl.cleo",
+          "sha256": "960a89649e6c0699d9ceeaefe5d2b7ff7e8a91940e1a5d6b52722a2a1c186304"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.FileSystemOperations.cleo",
+          "sha256": "1953d360d451349741fb0658aa0647c96245dfc1a54b50c1754204ff26029b0d"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.IniFiles.cleo",
+          "sha256": "150c2aa38452e0c5f5de019760035c6a3422da0097081382d0594198b260d3ae"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.IntOperations.cleo",
+          "sha256": "31e9be672bab1e476bbcdada5cae5573e5b0a38945bb20cae81c2a24d757a536"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.MemoryModule.cleo",
+          "sha256": "b85c3f4e8ac17023f541f422798d894634637d33b276a0f5b75bdbaf5e030982"
+        },
+        {
+          "path": "III.CLEO.asi",
+          "sha256": "af62e6847fbbb470d2384d7005c00385f0c855ad7252de06bde9d4ac9e9f7c89"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/III.VC.CLEO/releases/download/v2.2.0/VC.CLEO-v2.2.0.zip": {
+      "url": "https://github.com/cleolibrary/III.VC.CLEO/releases/download/v2.2.0/VC.CLEO-v2.2.0.zip",
+      "sha256": "18479d1e3d72c24b2282e66100abadeee881676c744216565d9b493dd153a243",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.ClipboardControl.cleo",
+          "sha256": "aedc59cc637d7e7ab1fbb05119d65ab7fc7e87b42ce1228a4690e3e6648b5df8"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.FileSystemOperations.cleo",
+          "sha256": "de94443a2e7208eac118cde40ee859812f7d4e3a122fc62c39e8cee24954e547"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.IniFiles.cleo",
+          "sha256": "32d01b832ecbae6ca880c1917a6cbe5950b6fd258bbbed5aa7c8a42215d6a9ed"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.IntOperations.cleo",
+          "sha256": "8fa50a4af2fe6483d3e0a272e8e366a1aee5b527af1a59dab72434224d95825a"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.MemoryModule.cleo",
+          "sha256": "71c314ca0c572f7697428e71e9a79c2b206179c590e159dcffea8eec5c0efdcc"
+        },
+        {
+          "path": "VC.CLEO.asi",
+          "sha256": "e6a22f5432d62815d29ae9377526efc32fc48e7ad65e11d45c60b96d15ed2551"
+        }
+      ]
+    },
+    "https://github.com/thelink2012/modloader/releases/download/v0.3.10/modloader.zip": {
+      "url": "https://github.com/thelink2012/modloader/releases/download/v0.3.10/modloader.zip",
+      "sha256": "3bb0e3d656a55d8c0a7ce98876033e2b9b672e8b7b5596f8044ccaa8f38dc403",
+      "files": [
+        {
+          "path": "modloader.asi",
+          "sha256": "64924c98bdd76b480db2a71a3cda7297620e78307f2cf3b9fe433d80807faa26"
+        },
+        {
+          "path": "modloader/.data/LICENSE",
+          "sha256": "fdd80441e323a3ef4df8e47673b1e4cb4a90b54eb3ac0478dad1e69ab19c2d76"
+        },
+        {
+          "path": "modloader/.data/config.ini.0",
+          "sha256": "8d0ad9d6ba4362d270b0d8604d9865cee8ffa185415499327ddd075567a33ebf"
+        },
+        {
+          "path": "modloader/.data/modloader.ini.0",
+          "sha256": "4a4f8fc15a496a5e39a9bf3b617685a29e8c7b326a6565514b2d63e5effd8695"
+        },
+        {
+          "path": "modloader/.data/plugins.ini.0",
+          "sha256": "2d534da354961d3c285e8cf11545476efd276ccb1d8b314f5f2659185f9c9bdb"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.asi.dll",
+          "sha256": "f3217d82ac6f036ea6ad7d059cdd2e0b693210f44de55b62cd1c0285864d9c10"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.bank.dll",
+          "sha256": "cace891a95b87e4a0fb5c886acc69c992cc64fbed495140bf839e4e4655922b1"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.data.dll",
+          "sha256": "8f11cf187ee86e82b6de233ef29feb1d13e3049ce8960e7a2f7549c51774ba13"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.dmaudio.dll",
+          "sha256": "443356fb14a416f44771f82c1ac2a034ba5ebabb14225ce0355cb0f953141c2b"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.fx.dll",
+          "sha256": "49a178cf6250c7f3aced363438000f1db9d8a5787b55225896965bcb6c618f75"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.movies.dll",
+          "sha256": "92269636092b8af2c61dbdd9907f9e704745203f5c8b966fd3f2a141e5045e62"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.scm.dll",
+          "sha256": "a24381e1c782f45f69e4bf53811cea22a0b021fe049a72ba106d0396fe4be1c9"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.sprites.dll",
+          "sha256": "dc4b337e01792abe63eda4c3a893dc38a83ab304f2730b98353e944557277893"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.stream.dll",
+          "sha256": "b65afd93c4be2a3d6f4b996a1479a8107cff430938adf0e42336521b395ad196"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.text.dll",
+          "sha256": "b44987532eebb4f99e65ba4e5c776ee46a33c80ff8611902dbb7e4ecb5dc6cb8"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.tracks.dll",
+          "sha256": "5d9080075b77d872146318573f97f1de757b32a54aa02600cb33e89c7ba5a052"
+        },
+        {
+          "path": "modloader/.data/text/1033/menu.fxt",
+          "sha256": "89e38b1ce8136187631fe44f6e15af89a4de9d1a3b926d713c2aabc18319d561"
+        }
+      ]
+    },
+    "https://github.com/thelink2012/modloader/releases/download/v0.3.7/modloader.zip": {
+      "url": "https://github.com/thelink2012/modloader/releases/download/v0.3.7/modloader.zip",
+      "sha256": "b3d0184b1822c9b0289f326d8958c5697d83726fac844c85aff01372e1a520e2",
+      "files": [
+        {
+          "path": "modloader.asi",
+          "sha256": "9354beb050850fb4c5188e45241d0aa661b6994b9353064ff1ade90d7aa5fcd8"
+        },
+        {
+          "path": "modloader/.data/LICENSE",
+          "sha256": "fdd80441e323a3ef4df8e47673b1e4cb4a90b54eb3ac0478dad1e69ab19c2d76"
+        },
+        {
+          "path": "modloader/.data/config.ini.0",
+          "sha256": "8d0ad9d6ba4362d270b0d8604d9865cee8ffa185415499327ddd075567a33ebf"
+        },
+        {
+          "path": "modloader/.data/modloader.ini.0",
+          "sha256": "2aac15d6bae1413652afcd2aef1b253687c19d7b4972e9a9d84396be04b7dddd"
+        },
+        {
+          "path": "modloader/.data/plugins.ini.0",
+          "sha256": "2d534da354961d3c285e8cf11545476efd276ccb1d8b314f5f2659185f9c9bdb"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.asi.dll",
+          "sha256": "08bfaadf62cb8d5e93c9d472f219be3d5fe9e68c8c772cb2aa04942027c802f1"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.bank.dll",
+          "sha256": "abddfe1f653ed406107eb314072a117173ab821f9f233545e1ba11748c2fd315"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.data.dll",
+          "sha256": "5eabc8cc52967293f061175d40a7537babae8a7e753ccbd6b15ba11ec646fe88"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.fx.dll",
+          "sha256": "3f34e574296d230d5da38a10f3f8983754d4d5ba2ea1606548a4b84675a76385"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.movies.dll",
+          "sha256": "6b146fba86c8210637e66259b3e3a8a1de59df724239c24ef366b24804403ba9"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.scm.dll",
+          "sha256": "4e1004c96af35c089a2e6df40ef903d7d28c813ba90535876f41a525d95d6cd1"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.sprites.dll",
+          "sha256": "4bc1043b00b086f1a785fd780e755cf48ca5d10bce89af342f1d3202cbd5f9b5"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.stream.dll",
+          "sha256": "49fa872faa2cee77835ecce13a84087bcdba7354a4ffc60f2a560b586adb0030"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.text.dll",
+          "sha256": "9dee51b660e5fa8b47910e0b69ef597cb7a96ba10b1a2d33c643760502f9f866"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.tracks.dll",
+          "sha256": "a220569ec2ab4ce9aebbb4203e3cd9a17691ab27d58bbf493b3fdd7294376acd"
+        },
+        {
+          "path": "modloader/.data/text/1033/menu.fxt",
+          "sha256": "89e38b1ce8136187631fe44f6e15af89a4de9d1a3b926d713c2aabc18319d561"
+        }
+      ]
+    },
+    "https://github.com/thelink2012/modloader/releases/download/v0.3.9/modloader.zip": {
+      "url": "https://github.com/thelink2012/modloader/releases/download/v0.3.9/modloader.zip",
+      "sha256": "c88be0f8b00d7b770e909d3ad2ac4f2576a37608e4290953baeb76e93007fa20",
+      "files": [
+        {
+          "path": "modloader.asi",
+          "sha256": "0e6ffda6a9974137d42da9b43f717cb7063852fe865e32789579619a212d12e4"
+        },
+        {
+          "path": "modloader/.data/LICENSE",
+          "sha256": "fdd80441e323a3ef4df8e47673b1e4cb4a90b54eb3ac0478dad1e69ab19c2d76"
+        },
+        {
+          "path": "modloader/.data/config.ini.0",
+          "sha256": "8d0ad9d6ba4362d270b0d8604d9865cee8ffa185415499327ddd075567a33ebf"
+        },
+        {
+          "path": "modloader/.data/modloader.ini.0",
+          "sha256": "4a4f8fc15a496a5e39a9bf3b617685a29e8c7b326a6565514b2d63e5effd8695"
+        },
+        {
+          "path": "modloader/.data/plugins.ini.0",
+          "sha256": "2d534da354961d3c285e8cf11545476efd276ccb1d8b314f5f2659185f9c9bdb"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.asi.dll",
+          "sha256": "a56f3664a18ad6d3e65187e8d7c88a6b98ac0551cbb5ea352ed2166550d2f38f"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.bank.dll",
+          "sha256": "5161552a318b78cd4ab1a9eae846173dcffaf35f12e299cb62758069f7326a8b"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.data.dll",
+          "sha256": "4707226f21519d12f84f43f4d308336a63226db4178f1741b5313120b663b585"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.dmaudio.dll",
+          "sha256": "fa262e8f506dcfeba8c997b68f1ffcbacfb2431618c5d6646d7d2eee3b8f1bfd"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.fx.dll",
+          "sha256": "7eec8a1dd3545d2643c10c2e5ba66683c4a3e18d6b7db7941a6eb6a269bcc9f7"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.movies.dll",
+          "sha256": "94c0611b4004e6ca17640b5f94110bcbf7b795b9eb5f940106c3ecafb234704c"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.scm.dll",
+          "sha256": "64c0341346c2278df408882c2d9d790720ed51dcf8f80a4a5fcfd6793e185a11"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.sprites.dll",
+          "sha256": "916bec88b82356121070c52ca2a5ff167b557df8d1fb3437121260f330e7744e"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.stream.dll",
+          "sha256": "fce125d457a285599f5925defee04f75645488cf702ca124ee03f2e38b6c0edd"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.text.dll",
+          "sha256": "dc0bb8cf1d772ed4bdd2ad2111d8958bdf54647ab3d226cf6e7f9d9e6202d60f"
+        },
+        {
+          "path": "modloader/.data/plugins/gta3/std.tracks.dll",
+          "sha256": "4a6ad53f3e8f0b3cae237f1def49f3b52f04ab5bacad3be7f5cd7ad1dff4500a"
+        },
+        {
+          "path": "modloader/.data/text/1033/menu.fxt",
+          "sha256": "89e38b1ce8136187631fe44f6e15af89a4de9d1a3b926d713c2aabc18319d561"
+        }
+      ]
+    }
+  }
+}

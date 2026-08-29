@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            archive: zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Build
+        run: cargo build --release --locked --target ${{ matrix.target }} --manifest-path cli/Cargo.toml
+      - name: Package (zip)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory dist | Out-Null
+          Copy-Item "cli/target/${{ matrix.target }}/release/chef.exe" "dist/chef.exe"
+          Compress-Archive -Path "dist/chef.exe" -DestinationPath "dist/chef-${{ matrix.target }}.zip"
+      - name: Checksums
+        shell: bash
+        working-directory: dist
+        run: |
+          for f in chef-${{ matrix.target }}.*; do
+            sha256sum "$f" > "$f.sha256"
+          done
+          cat *.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chef-${{ matrix.target }}
+          path: dist/*
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          path: dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.zip
+            dist/*.sha256
+          generate_release_notes: true

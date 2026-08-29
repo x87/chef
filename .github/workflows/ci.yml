@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: Format check
+        run: cargo fmt --all --check --manifest-path cli/Cargo.toml
+      - name: Clippy
+        run: cargo clippy --all-targets --locked --manifest-path cli/Cargo.toml -- -D warnings
+      - name: Build
+        run: cargo build --locked --manifest-path cli/Cargo.toml
+      # CI must not depend on the live GitHub API:
+      # all integration tests run offline against self-built fixtures.
+      - name: Test
+        run: cargo test --locked --manifest-path cli/Cargo.toml
+
+  release-build-smoke:
+    if: github.event_name == 'push'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Release build smoke test
+        run: cargo build --release --locked --manifest-path cli/Cargo.toml

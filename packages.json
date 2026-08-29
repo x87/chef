@@ -1,0 +1,716 @@
+{
+  "schema": 2,
+  "packages": [
+    {
+      "id": "cleo.sa",
+      "name": "CLEO",
+      "aliases": [
+        "cleo5",
+        "cleo4",
+        "cleo"
+      ],
+      "versions": [
+        {
+          "version": "5.4.0",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.4.0",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.4.0/SA.CLEO-v5.4.0.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "5.3.0",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.3.0",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.3.0/SA.CLEO-v5.3.0.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "5.2.0",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.2.0",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.2.0/SA.CLEO-v5.2.0.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "5.1.0",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.1.0",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.1.0/SA.CLEO-v5.1.0.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "5.0.3",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.0.3",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.3/SA.CLEO_v5.0.3.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "5.0.2",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.0.2",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.2/SA.CLEO_v5.0.2.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "5.0.1",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.0.1",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.1/SA.CLEO_v5.0.1.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "5.0.0",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.0.0",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.0.0/SA.CLEO_v5.0.0.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "4.4.4",
+          "release": "https://github.com/cleolibrary/CLEO4/releases/tag/v4.4.4",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO4/releases/download/v4.4.4/CLEO4.zip"
+          ],
+          "exclude": [
+            "cleo_sdk/*",
+            "cleo_readme/*",
+            "scripts/*",
+            "vorbisFile.dll",
+            "vorbisHooked.dll"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleo.vc",
+      "name": "VC.CLEO",
+      "aliases": [
+        "cleo",
+        "vc.cleo"
+      ],
+      "versions": [
+        {
+          "version": "2.2.0",
+          "release": "https://github.com/cleolibrary/III.VC.CLEO/releases/tag/v2.2.0",
+          "assets": [
+            "https://github.com/cleolibrary/III.VC.CLEO/releases/download/v2.2.0/VC.CLEO-v2.2.0.zip"
+          ],
+          "games": [
+            "gta-vc"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleo.iii",
+      "name": "III.CLEO",
+      "aliases": [
+        "cleo",
+        "iii.cleo"
+      ],
+      "versions": [
+        {
+          "version": "2.2.0",
+          "release": "https://github.com/cleolibrary/III.VC.CLEO/releases/tag/v2.2.0",
+          "assets": [
+            "https://github.com/cleolibrary/III.VC.CLEO/releases/download/v2.2.0/III.CLEO-v2.2.0.zip"
+          ],
+          "games": [
+            "gta-3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleo-redux.sa",
+      "name": "CLEO Redux",
+      "aliases": [
+        "cleo-redux",
+        "cleoredux"
+      ],
+      "versions": [
+        {
+          "version": "1.4.3",
+          "release": "https://github.com/cleolibrary/CLEO-Redux/releases/tag/1.4.3",
+          "games": [
+            "gta-sa"
+          ],
+          "assets": [
+            "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.4.3/cleo_redux_1.4.3.x86.zip"
+          ]
+        },
+        {
+          "version": "1.5.0",
+          "release": "https://github.com/cleolibrary/CLEO-Redux/releases/tag/1.5.0",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.5.0/cleo_redux_1.5.0.x86.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleo-redux.vc.iii",
+      "name": "CLEO Redux",
+      "aliases": [
+        "cleo-redux",
+        "cleoredux"
+      ],
+      "versions": [
+        {
+          "version": "1.4.3",
+          "release": "https://github.com/cleolibrary/CLEO-Redux/releases/tag/1.4.3",
+          "games": [
+            "gta-vc",
+            "gta-3"
+          ],
+          "assets": [
+            "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.4.3/cleo_redux_1.4.3.x86.zip"
+          ]
+        },
+        {
+          "version": "1.5.0",
+          "release": "https://github.com/cleolibrary/CLEO-Redux/releases/tag/1.5.0",
+          "games": [
+            "gta-vc",
+            "gta-3"
+          ],
+          "assets": [
+            "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.5.0/cleo_redux_1.5.0.x86.zip"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "silents-asi-loader.sa",
+      "name": "Silent's ASI Loader",
+      "aliases": [
+        "sal",
+        "silents-asi-loader",
+        "asi-loader"
+      ],
+      "replaces": [
+        "universal-asi-loader.sa.vc.iii"
+      ],
+      "versions": [
+        {
+          "version": "1.3.0",
+          "release": "https://github.com/GTAmodding/ASI-Loader/releases/tag/v1.3.0",
+          "assets": [
+            "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.3.0/silents_asi_loader_13.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ]
+        },
+        {
+          "version": "1.4.0",
+          "preview": true,
+          "release": "https://github.com/GTAmodding/ASI-Loader/releases/tag/v1.4.0",
+          "assets": [
+            "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.4.0/silents_asi_loader_14.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ]
+        },
+        {
+          "version": "1.5.0",
+          "preview": true,
+          "release": "https://github.com/GTAmodding/ASI-Loader/releases/tag/v1.5.0",
+          "assets": [
+            "https://github.com/GTAmodding/ASI-Loader/releases/download/v1.5.0/silents_asi_loader_15.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "universal-asi-loader.sa.vc.iii",
+      "name": "Universal ASI Loader",
+      "aliases": [
+        "ual",
+        "universal-asi-loader",
+        "asi-loader"
+      ],
+      "replaces": [
+        "silents-asi-loader.sa"
+      ],
+      "versions": [
+        {
+          "version": "9.7.4",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v9.7.4",
+          "games": [
+            "gta-sa"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip"
+          ],
+          "postinstall": {
+            "rename": {
+              "dinput8.dll": "vorbisFile.dll"
+            }
+          }
+        },
+        {
+          "version": "9.7.4",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v9.7.4",
+          "games": [
+            "gta-3",
+            "gta-vc"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "silentpatch.sa",
+      "name": "SilentPatch",
+      "aliases": [
+        "silentpatch",
+        "sp.sa"
+      ],
+      "versions": [
+        {
+          "version": "34.1",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34.1-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchSA.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "34",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchSA.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "33.1",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD9.2-III",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchSA.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "33",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchSA.zip"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "silentpatch.vc",
+      "name": "SilentPatch",
+      "aliases": [
+        "silentpatch",
+        "sp.vc"
+      ],
+      "versions": [
+        {
+          "version": "12.1",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34.1-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchVC.zip"
+          ],
+          "games": [
+            "gta-vc"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "12",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchVC.zip"
+          ],
+          "games": [
+            "gta-vc"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "11.1",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD9.2-III",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchVC.zip"
+          ],
+          "games": [
+            "gta-vc"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "11",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchVC.zip"
+          ],
+          "games": [
+            "gta-vc"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "silentpatch.iii",
+      "name": "SilentPatch",
+      "aliases": [
+        "silentpatch",
+        "sp.iii"
+      ],
+      "versions": [
+        {
+          "version": "10.1",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34.1-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchIII.zip"
+          ],
+          "games": [
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "9.2",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD9.2-III",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchIII.zip"
+          ],
+          "games": [
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "9.1",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33.1-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33.1-SA/SilentPatchIII.zip"
+          ],
+          "games": [
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "9",
+          "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33-SA",
+          "assets": [
+            "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip"
+          ],
+          "games": [
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "widescreenfix.sa",
+      "name": "WidescreenFix",
+      "aliases": [
+        "widescreenfix",
+        "wsf.sa"
+      ],
+      "versions": [
+        {
+          "version": "0.0.0",
+          "release": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/tag/gtasa",
+          "assets": [
+            "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtasa/GTASA.WidescreenFix.zip"
+          ],
+          "exclude": [
+            "vorbisFile.dll"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "widescreenfix.vc",
+      "name": "WidescreenFix",
+      "aliases": [
+        "widescreenfix",
+        "wsf.vc"
+      ],
+      "versions": [
+        {
+          "version": "0.0.0",
+          "release": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/tag/gtavc",
+          "assets": [
+            "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtavc/GTAVC.WidescreenFix.zip"
+          ],
+          "exclude": [
+            "d3d8.dll",
+            "scripts/global.ini"
+          ],
+          "games": [
+            "gta-vc"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "widescreenfix.iii",
+      "name": "WidescreenFix",
+      "aliases": [
+        "widescreenfix",
+        "wsf.iii"
+      ],
+      "versions": [
+        {
+          "version": "0.0.0",
+          "release": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/tag/gta3",
+          "assets": [
+            "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gta3/GTA3.WidescreenFix.zip"
+          ],
+          "exclude": [
+            "d3d8.dll",
+            "scripts/global.ini"
+          ],
+          "games": [
+            "gta-3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "modloader.sa.vc.iii",
+      "name": "Mod Loader",
+      "aliases": [
+        "modloader"
+      ],
+      "versions": [
+        {
+          "version": "0.3.7",
+          "release": "https://github.com/thelink2012/modloader/releases/tag/v0.3.7",
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "assets": [
+            "https://github.com/thelink2012/modloader/releases/download/v0.3.7/modloader.zip"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ],
+          "exclude": [
+            "Readme.txt",
+            "Leia-me.txt",
+            "modloader/.data/*.md",
+            "modloader/.data/licenses/*"
+          ]
+        },
+        {
+          "version": "0.3.9",
+          "release": "https://github.com/thelink2012/modloader/releases/tag/v0.3.9",
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "assets": [
+            "https://github.com/thelink2012/modloader/releases/download/v0.3.9/modloader.zip"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ],
+          "exclude": [
+            "Readme.txt",
+            "Leia-me.txt",
+            "modloader/.data/*.md",
+            "modloader/.data/licenses/*"
+          ]
+        },
+        {
+          "version": "0.3.10",
+          "release": "https://github.com/thelink2012/modloader/releases/tag/v0.3.10",
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "assets": [
+            "https://github.com/thelink2012/modloader/releases/download/v0.3.10/modloader.zip"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ],
+          "exclude": [
+            "Readme.txt",
+            "Leia-me.txt",
+            "modloader/.data/*.md",
+            "modloader/.data/licenses/*"
+          ]
+        }
+      ]
+    }
+  ],
+  "games": {
+    "gta_sa.exe": "gta-sa",
+    "gta3.exe": "gta-3",
+    "gta-vc.exe": "gta-vc",
+    "gta-sa.exe": "gta-sa",
+    "gta_sa_compact.exe": "gta-sa"
+  }
+}
