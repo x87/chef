@@ -366,7 +366,7 @@
       ],
       "versions": [
         {
-          "version": "34.1",
+          "version": "34.1.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34.1-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchSA.zip"
@@ -380,7 +380,7 @@
           ]
         },
         {
-          "version": "34",
+          "version": "34.0.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchSA.zip"
@@ -394,7 +394,7 @@
           ]
         },
         {
-          "version": "33.1",
+          "version": "33.1.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD9.2-III",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchSA.zip"
@@ -408,7 +408,7 @@
           ]
         },
         {
-          "version": "33",
+          "version": "33.0.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchSA.zip"
@@ -432,7 +432,7 @@
       ],
       "versions": [
         {
-          "version": "12.1",
+          "version": "12.1.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34.1-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchVC.zip"
@@ -446,7 +446,7 @@
           ]
         },
         {
-          "version": "12",
+          "version": "12.0.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchVC.zip"
@@ -460,7 +460,7 @@
           ]
         },
         {
-          "version": "11.1",
+          "version": "11.1.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD9.2-III",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchVC.zip"
@@ -474,7 +474,7 @@
           ]
         },
         {
-          "version": "11",
+          "version": "11.0.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchVC.zip"
@@ -498,7 +498,7 @@
       ],
       "versions": [
         {
-          "version": "10.1",
+          "version": "10.1.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD34.1-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchIII.zip"
@@ -512,7 +512,7 @@
           ]
         },
         {
-          "version": "9.2",
+          "version": "9.2.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD9.2-III",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchIII.zip"
@@ -526,7 +526,7 @@
           ]
         },
         {
-          "version": "9.1",
+          "version": "9.1.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33.1-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33.1-SA/SilentPatchIII.zip"
@@ -540,7 +540,7 @@
           ]
         },
         {
-          "version": "9",
+          "version": "9.0.0",
           "release": "https://github.com/CookiePLMonster/SilentPatch/releases/tag/1.1-BUILD33-SA",
           "assets": [
             "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip"
