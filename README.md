@@ -63,7 +63,7 @@ $ chef add cleo@6
 error: version '6' does not match any tracked release (available majors: 4, 5)
 ```
 
-## Menu
+## `chef menu`
 
 ```
 $ chef menu
@@ -77,7 +77,7 @@ Universal ASI Loader 9.7.4                -
 
 Pre-releases are marked `(preview)` and only selected via `@preview` or `@latest`.
 
-## Which
+## `chef which`
 
 `chef which` lists installed mods in two groups: chef-managed and user-installed (user mods are found by checksum):
 
@@ -107,7 +107,7 @@ vorbisHooked.dll    1.5.0
 
 `unknown` means the file is present but its checksum does not match any known version;
 
-## Dry runs
+## `chef --dry-run`
 
 `chef add --dry-run` prints the plan file by file:
 

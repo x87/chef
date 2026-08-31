@@ -81,10 +81,22 @@ case ":$PATH:" in
     *":$BIN_DIR:"*) ;;
     *)
         echo ""
-        echo "add chef to your PATH (e.g. append this to ~/.bashrc):"
-        echo "  export PATH=\"\$PATH:$BIN_DIR\""
+        echo "chef was installed to: $BIN_DIR"
+        echo ""
+        echo "add that directory to your PATH permanently:"
+        echo ""
+        echo "  bash: echo 'export PATH=\"\$PATH:$BIN_DIR\"' >> ~/.bashrc"
+        echo "  zsh:  echo 'export PATH=\"\$PATH:$BIN_DIR\"' >> ~/.zshrc"
+        echo ""
+        echo "then reload your shell config ('source ~/.bashrc' / 'source ~/.zshrc'),"
+        echo "or simply open a new terminal."
+        echo ""
+        echo "right now, without any of that, chef can be run directly:"
+        echo "  $BIN_DIR/$BIN --version"
         if [ -n "$win_path" ]; then
-            echo "Windows PATH (cmd/PowerShell, so chef works outside bash):"
+            echo ""
+            echo "Windows (cmd/PowerShell) - only needed if you want chef to work"
+            echo "outside bash as well:"
             echo "  setx PATH \"%PATH%;$win_path\""
         fi
         ;;
