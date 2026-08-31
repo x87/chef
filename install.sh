@@ -15,8 +15,8 @@ case "$(uname -s)" in
     Linux*)
         BIN="chef"
         ASSET="chef-x86_64-unknown-linux-gnu.zip"
-        # Match dirs::data_local_dir on Linux: $XDG_DATA_HOME, else ~/.local/share.
-        DEFAULT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/Chef"
+        # Match dirs::data_local_dir on Linux ($XDG_DATA_HOME, else ~/.local/share)
+        DEFAULT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/chef"
         ;;
     *)
         BIN="chef.exe"
@@ -72,6 +72,9 @@ if [ -e "$BIN_DIR/$BIN" ]; then
     mv -f "$BIN_DIR/$BIN" "$BIN_DIR/chef.old"
 fi
 mv -f "$tmp/$BIN" "$BIN_DIR/$BIN"
+# On Linux the release zip may not preserve the executable bit; the file
+# must be executable or running it fails ("error 90" / Permission denied).
+[ "$(uname -s)" = "Linux" ] && chmod +x "$BIN_DIR/$BIN"
 
 win_path="$(command -v cygpath >/dev/null 2>&1 && cygpath -w "$BIN_DIR" || true)"
 case ":$PATH:" in

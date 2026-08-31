@@ -61,6 +61,11 @@ pub fn chef_home() -> PathBuf {
         .join(APP_DIR_NAME)
 }
 
+/// Data-home folder name: lowercase `chef` on Unix (matches the installer's
+/// `~/.local/share/chef` default), `Chef` on Windows (`%LOCALAPPDATA%\Chef`).
+#[cfg(unix)]
+const APP_DIR_NAME: &str = "chef";
+#[cfg(not(unix))]
 const APP_DIR_NAME: &str = "Chef";
 
 fn packages_mirror() -> PathBuf {
