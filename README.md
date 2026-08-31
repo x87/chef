@@ -22,15 +22,15 @@ or download the binary from [the releases page](https://github.com/x87/chef/rele
 
 Once installed, run the following commands in your favorite terminal in the game folder (or use `--dir <folder>`):
 
-| Command               | What it does                         |
-| --------------------- | ------------------------------------ |
-| `chef add <pkg>`      | install a mod, optionally `@version` |
-| `chef remove <pkg>`   | uninstall a mod (restores backups)   |
-| `chef menu [<pkg>]`   | list mods and versions for your game |
-| `chef which [<pkg>]`  | show what is installed               |
-| `chef update [<pkg>]` | update installed mods                |
-| `chef upgrade`        | update chef itself                   |
-| `chef help`           | all commands and options             |
+| Command               | What it does                             |
+| --------------------- | ---------------------------------------- |
+| `chef menu`           | list available packages for your game    |
+| `chef which [<pkg>]`  | show what is installed in current folder |
+| `chef add <pkg>`      | install a mod                            |
+| `chef remove <pkg>`   | uninstall a mod (restores backups)       |
+| `chef update [<pkg>]` | update installed mods                    |
+| `chef upgrade`        | update chef itself                       |
+| `chef help`           | all commands and options                 |
 
 ## Options
 
