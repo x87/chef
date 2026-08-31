@@ -120,17 +120,9 @@ Silent's ASI Loader 1.3.0
     vorbisHooked.dll    already installed
 ```
 
-Each file gets one label:
-
-- `add` - new file
-- `replace` - overwrites an existing file (your modified copy if you edited it)
-- `backup` - the path is taken by the package; your file is backed up and restored on `chef remove`
-- `remove` - no longer shipped by the new version
-- `keep` - already in place
-
-`chef update --dry-run` prints the same plan.
+`chef update --dry-run` prints the same plan for all installed packages, and `chef remove --dry-run` prints the files that would be restored from backup.
 
 ## Notes
 
 - chef backs up everything before changing it and restores on `remove`
-- State, cache and backups live in `%LOCALAPPDATA%\Chef`; `history.log` there records every run (messages and the command line) for debugging
+- State, cache and backups live in `%LOCALAPPDATA%\Chef`; `history.log` there keeps track of recent messages and executed commands for debugging

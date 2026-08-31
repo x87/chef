@@ -8,18 +8,19 @@ $BinDir = Join-Path $ChefHome "bin"
 $Asset = "chef-x86_64-pc-windows-msvc.zip"
 
 Write-Host "resolving latest release of $Repo..."
-$rel = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest"
-$download = $rel.assets | Where-Object { $_.name -eq $Asset }
-if (-not $download) { throw "could not find asset $Asset in the latest release" }
+# GitHub redirects these to the latest release's asset bytes - no API call,
+# so installers are immune to api.github.com rate limits (403) and need no auth.
+$BaseUrl = "https://github.com/$Repo/releases/latest/download"
+$DownloadUrl = "$BaseUrl/$Asset"
 
 $tmp = New-Item -ItemType Directory -Path (Join-Path ([IO.Path]::GetTempPath()) ("chef-" + [Guid]::NewGuid()))
 try {
-    Write-Host "downloading $($download.name)..."
+    Write-Host "downloading $Asset..."
     $zip = Join-Path $tmp $Asset
-    Invoke-WebRequest $download.browser_download_url -OutFile $zip
+    Invoke-WebRequest $DownloadUrl -OutFile $zip
 
     # Verify SHA-256 against the sidecar published in the same release.
-    $sidecar = (Invoke-WebRequest "$($download.browser_download_url).sha256").Content.Trim()
+    $sidecar = (Invoke-WebRequest "$DownloadUrl.sha256").Content.Trim()
     $expected = ($sidecar -split "\s+")[0].ToLower()
     $got = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
     if ($expected -ne $got) { throw "checksum mismatch: expected $expected, got $got" }

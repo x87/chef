@@ -1,26 +1,40 @@
 #!/usr/bin/env bash
-# chef one-line installer (Git Bash, MSYS2, WSL, or any Unix shell).
+# chef one-line installer (Linux, Git Bash, MSYS2, WSL, or any Unix shell).
 #   curl -fsSL https://raw.githubusercontent.com/x87/chef/master/install.sh | bash
 #
-# Mirrors install.ps1: same release asset, same checksum sidecar, same
-# chef.old rollback. chef itself is Windows-only; this script fetches the
-# Windows binary and puts it in <CHEF_HOME>/bin.
+# Picks the native binary for the host platform: Linux gets the linux-gnu
+# build, anything else (Git Bash / MSYS2 / WSL on Windows) gets the Windows
+# build. Same release asset, same checksum sidecar, same chef.old rollback;
+# chef installs into <CHEF_HOME>/bin.
 set -euo pipefail
 
 REPO="x87/chef"
-CHEF_HOME="${CHEF_HOME:-${LOCALAPPDATA:-$HOME/AppData/Local}/Chef}"
+
+# Host platform: native Linux vs Windows (Git Bash / MSYS2 / WSL).
+case "$(uname -s)" in
+    Linux*)
+        BIN="chef"
+        ASSET="chef-x86_64-unknown-linux-gnu.zip"
+        # Match dirs::data_local_dir on Linux: $XDG_DATA_HOME, else ~/.local/share.
+        DEFAULT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/Chef"
+        ;;
+    *)
+        BIN="chef.exe"
+        ASSET="chef-x86_64-pc-windows-msvc.zip"
+        DEFAULT_HOME="${LOCALAPPDATA:-$HOME/AppData/Local}/Chef"
+        ;;
+esac
+
+CHEF_HOME="${CHEF_HOME:-$DEFAULT_HOME}"
 BIN_DIR="$CHEF_HOME/bin"
-ASSET="chef-x86_64-pc-windows-msvc.zip"
 
 command -v curl >/dev/null 2>&1 || { echo "error: curl is required" >&2; exit 1; }
 
 echo "resolving latest release of $REPO..."
-release="$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest")"
-url="$(printf '%s' "$release" | sed -n "s/.*\"browser_download_url\": *\"\([^\"]*$ASSET\)\".*/\1/p" | head -n1)"
-if [ -z "$url" ]; then
-    echo "error: could not find asset $ASSET in the latest release" >&2
-    exit 1
-fi
+# GitHub redirects these to the latest release's asset bytes - no API call,
+# so installers are immune to api.github.com rate limits (403) and need no auth.
+BASE_URL="https://github.com/$REPO/releases/latest/download"
+url="$BASE_URL/$ASSET"
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
@@ -42,23 +56,29 @@ echo "sha256: OK"
 mkdir -p "$BIN_DIR"
 if command -v unzip >/dev/null 2>&1; then
     unzip -qo "$zip" -d "$tmp"
-else
-    # Fall back to PowerShell when unzip is missing.
+elif [ "$(uname -s)" = "Linux" ]; then
+    echo "error: unzip is required to extract the archive (e.g. apt install unzip)" >&2
+    exit 1
+elif command -v powershell.exe >/dev/null 2>&1; then
+    # Windows fallback when unzip is missing (Git Bash / MSYS2).
     powershell.exe -NoProfile -Command "Expand-Archive -LiteralPath '$zip' -DestinationPath '$tmp' -Force" \
         || { echo "error: need unzip (or PowerShell) to extract the archive" >&2; exit 1; }
+else
+    echo "error: need unzip to extract the archive" >&2
+    exit 1
 fi
 rm -f "$BIN_DIR/chef.old"
-if [ -e "$BIN_DIR/chef.exe" ]; then
-    mv -f "$BIN_DIR/chef.exe" "$BIN_DIR/chef.old"
+if [ -e "$BIN_DIR/$BIN" ]; then
+    mv -f "$BIN_DIR/$BIN" "$BIN_DIR/chef.old"
 fi
-mv -f "$tmp/chef.exe" "$BIN_DIR/chef.exe"
+mv -f "$tmp/$BIN" "$BIN_DIR/$BIN"
 
 win_path="$(command -v cygpath >/dev/null 2>&1 && cygpath -w "$BIN_DIR" || true)"
 case ":$PATH:" in
     *":$BIN_DIR:"*) ;;
     *)
         echo ""
-        echo "add chef to your PATH (Git Bash: append this to ~/.bashrc):"
+        echo "add chef to your PATH (e.g. append this to ~/.bashrc):"
         echo "  export PATH=\"\$PATH:$BIN_DIR\""
         if [ -n "$win_path" ]; then
             echo "Windows PATH (cmd/PowerShell, so chef works outside bash):"
@@ -67,4 +87,4 @@ case ":$PATH:" in
         ;;
 esac
 
-"$BIN_DIR/chef.exe" --version
+"$BIN_DIR/$BIN" --version

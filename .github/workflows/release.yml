@@ -15,6 +15,11 @@ jobs:
         include:
           - target: x86_64-pc-windows-msvc
             os: windows-latest
+            bin: chef.exe
+            archive: zip
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            bin: chef
             archive: zip
     runs-on: ${{ matrix.os }}
     steps:
@@ -29,8 +34,8 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory dist | Out-Null
-          Copy-Item "cli/target/${{ matrix.target }}/release/chef.exe" "dist/chef.exe"
-          Compress-Archive -Path "dist/chef.exe" -DestinationPath "dist/chef-${{ matrix.target }}.zip"
+          Copy-Item "cli/target/${{ matrix.target }}/release/${{ matrix.bin }}" "dist/${{ matrix.bin }}"
+          Compress-Archive -Path "dist/${{ matrix.bin }}" -DestinationPath "dist/chef-${{ matrix.target }}.zip"
       - name: Checksums
         shell: bash
         working-directory: dist
@@ -58,3 +63,11 @@ jobs:
             dist/*.zip
             dist/*.sha256
           generate_release_notes: true
+          # Explict - the action otherwise auto-marks 0.x tags as prerelease,
+          # which hides the release from /releases/latest (breaking install.sh
+          # and install.ps1). Normal tags are real releases.
+          prerelease: false
+          draft: false
+          # Never publish a release with zero assets: fail loudly if the
+          # file globs match nothing (or the release was created elsewhere).
+          fail_on_unmatched_files: true
