@@ -1,5 +1,6 @@
 use anyhow::Context;
 use sha2::{Digest, Sha256};
+use std::fs::{File, create_dir_all};
 use std::io::Read as _;
 use std::path::Path;
 
@@ -7,7 +8,7 @@ use std::path::Path;
 /// then rename into place. Creates parent directories.
 pub fn write_atomic(path: &Path, bytes: &[u8]) -> anyhow::Result<()> {
     let dir = path.parent().unwrap_or_else(|| Path::new("."));
-    std::fs::create_dir_all(dir)?;
+    create_dir_all(dir)?;
 
     let mut tmp = tempfile::NamedTempFile::new_in(dir)?;
     std::io::Write::write_all(&mut tmp, bytes)?;
@@ -19,8 +20,7 @@ pub fn write_atomic(path: &Path, bytes: &[u8]) -> anyhow::Result<()> {
 
 /// SHA-256 hex digest of a file's contents.
 pub fn sha256_file(path: &Path) -> anyhow::Result<String> {
-    let mut f =
-        std::fs::File::open(path).with_context(|| format!("cannot open {}", path.display()))?;
+    let mut f = File::open(path).with_context(|| format!("cannot open {}", path.display()))?;
     let mut h = Sha256::new();
     let mut buf = [0u8; 65536];
     loop {

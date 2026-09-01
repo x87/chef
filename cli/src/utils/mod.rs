@@ -1,4 +1,4 @@
 pub mod fs;
 pub mod http;
-pub mod picker;
+pub mod term;
 pub mod walk;

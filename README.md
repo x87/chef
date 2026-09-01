@@ -27,7 +27,7 @@ Once installed, run the following commands in your favorite terminal in the game
 | `chef menu`           | list available packages for your game    |
 | `chef which [<pkg>]`  | show what is installed in current folder |
 | `chef add <pkg>`      | install a mod                            |
-| `chef remove <pkg>`   | uninstall a mod (restores backups)       |
+| `chef remove <pkg>`   | uninstall a mod (replays the undo script)  |
 | `chef update [<pkg>]` | update installed mods                    |
 | `chef upgrade`        | update chef itself                       |
 | `chef help`           | all commands and options                 |
@@ -120,9 +120,30 @@ Silent's ASI Loader 1.3.0
     vorbisHooked.dll    already installed
 ```
 
-`chef update --dry-run` prints the same plan for all installed packages, and `chef remove --dry-run` prints the files that would be restored from backup.
+`chef update --dry-run` prints the same plan for all installed packages.
+
+## `chef remove`
+
+Every install records an **undo script**: each filesystem operation it
+performed, paired with its exact revert. `chef remove` plays that script
+back **in reverse**, so uninstalling returns the game folder to its exact
+pre-install state no matter which transformations the install applied:
+
+| during install        | recorded op      | on `remove`              |
+| --------------------- | ---------------- | ------------------------ |
+| add file X            | write X          | delete X                 |
+| replace X with X2     | write X2 over X  | restore X over X2        |
+| rename X to Y         | rename X to Y    | rename Y to X            |
+| delete X              | delete X         | recreate X from backup   |
+
+Two rules protect your work:
+
+- a deployed file you **edited after installing** is handed back as-is
+  (never deleted, never overwritten by a restore);
+- a **user file displaced** by the install (its path was taken) is restored
+  exactly, across version replacements too.
 
 ## Notes
 
-- chef backs up everything before changing it and restores on `remove`
+- chef records every file operation with its exact revert (an undo script) and `remove` plays it back in reverse, restoring the initial state
 - State, cache and backups live in `%LOCALAPPDATA%\Chef`; `history.log` there keeps track of recent messages and executed commands for debugging

@@ -1,4 +1,7 @@
-use std::path::{Path, PathBuf};
+use std::{
+    fs::{canonicalize, copy, create_dir_all, read_dir},
+    path::{Path, PathBuf},
+};
 
 /// Every file under `root`, recursively. Unreadable subdirectories are
 /// skipped and the result is globally sorted for deterministic order.
@@ -6,7 +9,7 @@ pub fn files(root: &Path) -> Vec<PathBuf> {
     let mut out = Vec::new();
     let mut stack = vec![root.to_path_buf()];
     while let Some(dir) = stack.pop() {
-        let Ok(entries) = std::fs::read_dir(&dir) else {
+        let Ok(entries) = read_dir(&dir) else {
             continue;
         };
         for e in entries.flatten() {
@@ -25,15 +28,15 @@ pub fn files(root: &Path) -> Vec<PathBuf> {
 /// Copy `src` into `dst`, mirroring subdirectories (empty ones included).
 /// Errors propagate - deploy relies on this for transactional staging.
 pub fn copy_tree(src: &Path, dst: &Path) -> anyhow::Result<()> {
-    std::fs::create_dir_all(dst)?;
-    for e in std::fs::read_dir(src)?.flatten() {
-        let sp = e.path();
-        let dp = dst.join(e.file_name());
+    create_dir_all(dst)?;
+    for sources in read_dir(src)?.flatten() {
+        let sp = sources.path();
+        let dp = dst.join(sources.file_name());
 
         if sp.is_dir() {
             copy_tree(&sp, &dp)?;
         } else {
-            std::fs::copy(&sp, &dp)?;
+            copy(&sp, &dp)?;
         }
     }
     Ok(())
@@ -52,8 +55,8 @@ pub fn restore_tree(backup_dir: &Path, game_dir: &Path, skip: &[String]) -> Vec<
             continue;
         }
         let abs = game_dir.join(&rel);
-        let _ = std::fs::create_dir_all(abs.parent().unwrap_or_else(|| Path::new(".")));
-        if std::fs::copy(&p, &abs).is_ok() {
+        let _ = create_dir_all(abs.parent().unwrap_or_else(|| Path::new(".")));
+        if copy(&p, &abs).is_ok() {
             restored.push(rel);
         }
     }
@@ -67,7 +70,7 @@ pub fn prune_empty_tree(dir: &Path, stop_at: &Path) {
         return;
     }
     // Depth-first: clean children first so parents can become empty.
-    let children: Vec<PathBuf> = std::fs::read_dir(dir)
+    let children: Vec<PathBuf> = read_dir(dir)
         .map(|it| {
             it.flatten()
                 .filter_map(|e| {
@@ -94,7 +97,7 @@ pub fn prune_empty_tree(dir: &Path, stop_at: &Path) {
 /// Path equality that resolves symlinks where possible, falling back to a
 /// plain string comparison.
 pub fn paths_equal(a: &Path, b: &Path) -> bool {
-    match (std::fs::canonicalize(a), std::fs::canonicalize(b)) {
+    match (canonicalize(a), canonicalize(b)) {
         (Ok(x), Ok(y)) => x == y,
         _ => a == b,
     }

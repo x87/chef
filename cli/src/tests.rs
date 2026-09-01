@@ -5,7 +5,6 @@ use std::sync::{Mutex, MutexGuard, OnceLock};
 use crate::cli::Cmd;
 use crate::game_dir::{self, StateFile};
 use crate::packages::{self, LockFile, PackagesFile};
-use crate::store;
 
 use sha2::Digest as _;
 
@@ -336,7 +335,7 @@ fn setup(name: &str) -> TestEnv {
     // Point chef at the sandbox data home (test seam, not an env var).
     crate::packages::set_home_override(home.clone());
 
-    crate::dbg_trace(format_args!(
+    crate::emit::dbg_trace(format_args!(
         "TEST SETUP name={name} home={} game={} key={}",
         home.display(),
         game.display(),
@@ -358,18 +357,18 @@ impl Drop for TestEnv {
 }
 
 fn chef_run(cmd: Cmd) -> crate::Result<()> {
-    crate::run(cmd)
+    crate::run_test(cmd)
 }
 
 fn run_ok(cmd: Cmd) {
-    if let Err(e) = crate::run(cmd) {
+    if let Err(e) = chef_run(cmd) {
         panic!("command failed: {e}");
     }
 }
 
 fn state() -> StateFile {
     let st = StateFile::load().unwrap();
-    crate::dbg_trace(format_args!(
+    crate::emit::dbg_trace(format_args!(
         "TEST state() path={} exists={} dirs={} keys=[{}]",
         game_dir::state_path().display(),
         game_dir::state_path().exists(),
@@ -415,11 +414,11 @@ fn unit_pkgs() -> PackagesFile {
 #[test]
 fn normalization_strips_non_alphanumerics() {
     assert_eq!(
-        crate::match_names::normalize("Silent's ASI Loader"),
+        crate::packages::normalize("Silent's ASI Loader"),
         "silentsasiloader"
     );
-    assert_eq!(crate::match_names::normalize("cleo-redux"), "cleoredux");
-    assert_eq!(crate::match_names::normalize("CLEO 5"), "cleo5");
+    assert_eq!(crate::packages::normalize("cleo-redux"), "cleoredux");
+    assert_eq!(crate::packages::normalize("CLEO 5"), "cleo5");
 }
 
 #[test]
@@ -440,15 +439,15 @@ fn alias_matching_precedence() {
     assert_eq!(resolve_id(&pkgs, "ual"), "universal-asi-loader.sa.vc.iii");
     // unique prefix: cleo-red -> both redux ids? no: prefix "cleored" starts
     // with cleo-* ids only ("cleoreduxs", "cleoreduxvciii") -> still two.
-    let hits = crate::match_names::resolve(&pkgs, "cleo-red", None).unwrap();
+    let hits = crate::packages::resolve(&pkgs, "cleo-red", None).unwrap();
     assert_eq!(hits.len(), 2, "cleo-red matches both redux ids");
     // god-agnostic narrowing resolves the ambiguity on a known game.
-    let norm = crate::match_names::narrow_by_game(hits, &pkgs, Some("gta-sa"));
+    let norm = crate::packages::narrow_by_game(hits, &pkgs, Some("gta-sa"));
     assert_eq!(norm.len(), 1);
     assert_eq!(norm[0].pkg.id, "cleo-redux.sa");
     // bare "asi-loader" is unambiguous-intent but two packages -> both
     // loader candidates (CLI turns that into a pick / exit 2).
-    let amb = crate::match_names::resolve(&pkgs, "asi-loader", None).unwrap();
+    let amb = crate::packages::resolve(&pkgs, "asi-loader", None).unwrap();
     assert_eq!(amb.len(), 2, "asi-loader must match both loader packages");
     assert!(amb.iter().any(|m| m.pkg.id == "silents-asi-loader.sa"));
     assert!(
@@ -464,10 +463,10 @@ fn alias_matching_precedence() {
 /// (test helper; the production resolver inlines its own key collection)
 fn alias_keys(pkg: &crate::packages::PackageEntry) -> Vec<String> {
     let mut keys = vec![
-        crate::match_names::normalize(&pkg.id),
-        crate::match_names::normalize(&pkg.name),
+        crate::packages::normalize(&pkg.id),
+        crate::packages::normalize(&pkg.name),
     ];
-    keys.extend(pkg.aliases.iter().map(|a| crate::match_names::normalize(a)));
+    keys.extend(pkg.aliases.iter().map(|a| crate::packages::normalize(a)));
     keys.sort();
     keys.dedup();
     keys.retain(|k| !k.is_empty());
@@ -514,10 +513,10 @@ fn catalog_has_no_unexpected_duplicate_normalized_aliases() {
 #[test]
 fn ambiguous_match_returns_candidates_exit2() {
     let pkgs = unit_pkgs();
-    let hits = crate::match_names::resolve(&pkgs, "asi", None).unwrap();
+    let hits = crate::packages::resolve(&pkgs, "asi", None).unwrap();
     assert_eq!(hits.len(), 2, "'asi' must match both loader packages");
     assert!(
-        crate::match_names::resolve(&pkgs, "zzzz", None)
+        crate::packages::resolve(&pkgs, "zzzz", None)
             .unwrap_err()
             .to_string()
             .contains("unknown package")
@@ -527,9 +526,7 @@ fn ambiguous_match_returns_candidates_exit2() {
 }
 
 fn resolve_id<'a>(pkgs: &'a PackagesFile, s: &str) -> &'a str {
-    &crate::match_names::resolve(pkgs, s, None).unwrap()[0]
-        .pkg
-        .id
+    &crate::packages::resolve(pkgs, s, None).unwrap()[0].pkg.id
 }
 
 // ===========================================================================
@@ -688,15 +685,15 @@ fn wildcard_and_asset_selection() {
 
 #[test]
 fn zip_traversal_is_rejected() {
-    assert!(store::sanitize_entry("../escaped.txt").is_err());
-    assert!(store::sanitize_entry("ok/../../up.txt").is_err());
-    assert!(store::sanitize_entry("/absolute.txt").is_err());
-    assert!(store::sanitize_entry("C:\\evil.txt").is_err());
+    assert!(packages::sanitize_entry("../escaped.txt").is_err());
+    assert!(packages::sanitize_entry("ok/../../up.txt").is_err());
+    assert!(packages::sanitize_entry("/absolute.txt").is_err());
+    assert!(packages::sanitize_entry("C:\\evil.txt").is_err());
     assert_eq!(
-        store::sanitize_entry("./a/b/../c.txt").unwrap().unwrap(),
+        packages::sanitize_entry("./a/b/../c.txt").unwrap().unwrap(),
         "a/c.txt"
     );
-    assert_eq!(store::sanitize_entry("dir/").unwrap().unwrap(), "dir");
+    assert_eq!(packages::sanitize_entry("dir/").unwrap().unwrap(), "dir");
 
     // End-to-end with a crafted malicious archive.
     let tmp = tempfile::tempdir().unwrap();
@@ -710,7 +707,7 @@ fn zip_traversal_is_rejected() {
         std::io::Write::write_all(&mut z, b"pwned").unwrap();
         z.finish().unwrap();
     }
-    assert!(store::extract_zip(&evil, &out).is_err());
+    assert!(packages::extract_zip(&evil, &out).is_err());
     assert!(
         !tmp.path().join("escaped.txt").exists(),
         "traversal escaped!"
@@ -1166,7 +1163,7 @@ fn integration_safety_guards_refuse_dangerous_targets() {
 fn integration_version_spec_semantics() {
     let t = setup("spec");
     let use_pkg = |t: &TestEnv, pkg: &str| {
-        crate::run(Cmd::Add {
+        chef_run(Cmd::Add {
             pkgs: vec![pkg.into()],
             dir: Some(t.game_dir.clone()),
             dry_run: false,
@@ -1261,15 +1258,19 @@ fn integration_version_spec_semantics() {
         dir: Some(t.game_dir.clone()),
         dry_run: false,
     });
-    let err = crate::run(Cmd::Remove {
+    let err = chef_run(Cmd::Remove {
         pkgs: vec!["cleo@latest".into()],
         dir: Some(t.game_dir.clone()),
     })
     .unwrap_err();
 
     match err {
+        // Version-syntax validation now fails fast in the command layer
+        // (before anything is removed), so the error surfaces directly as
+        // `Other`; the handler loop's `Reported` shape is accepted too.
         crate::ChefError::Reported(e) => assert!(format!("{e:#}").contains("exact version")),
-        other => panic!("expected Reported, got {other:#}"),
+        crate::ChefError::Other(e) => assert!(format!("{e:#}").contains("exact version")),
+        other => panic!("expected Reported or Other, got {other:#}"),
     }
 }
 
@@ -1371,7 +1372,7 @@ fn which_details_tree_matches_lock_digests() {
     });
     let (pkgs, lock) = packages::load_metadata(false).unwrap();
     let cleo_rows = || {
-        crate::commands::which::detail_rows(
+        crate::handlers::which::detail_rows(
             &pkgs,
             &lock,
             "cleo.sa",
@@ -1382,7 +1383,7 @@ fn which_details_tree_matches_lock_digests() {
         )
     };
     let sal_rows = || {
-        crate::commands::which::detail_rows(
+        crate::handlers::which::detail_rows(
             &pkgs,
             &lock,
             "silents-asi-loader.sa",
@@ -1417,7 +1418,7 @@ fn which_details_tree_matches_lock_digests() {
 
     // name@version restricts the tree to that release's paths; not one is
     // missing or unknown here.
-    let rows54 = crate::commands::which::detail_rows(
+    let rows54 = crate::handlers::which::detail_rows(
         &pkgs,
         &lock,
         "cleo.sa",
@@ -1462,7 +1463,7 @@ fn which_details_tree_matches_lock_digests() {
             .any(|(p, v)| p == "vorbisHooked.dll" && v == "1.5.0")
     );
     // A release that is not installed has no locked paths to walk.
-    let beta = crate::commands::which::detail_rows(
+    let beta = crate::handlers::which::detail_rows(
         &pkgs,
         &lock,
         "silents-asi-loader.sa",
@@ -1629,7 +1630,7 @@ fn setup_scenario(name: &str) -> TestEnv {
     std::fs::write(&lock_path, serde_json::to_vec_pretty(&lock_json).unwrap()).unwrap();
     // Point chef at the sandbox data home (test seam, not an env var).
     crate::packages::set_home_override(home.clone());
-    crate::dbg_trace(format_args!(
+    crate::emit::dbg_trace(format_args!(
         "TEST SETUP name={name} home={} game={} key={}",
         home.display(),
         game.display(),
@@ -1895,9 +1896,9 @@ fn game_specific_all_commands_are_filtered() {
         ("gta-vc", "cleo-redux.vc.iii"),
         ("gta-3", "cleo-redux.vc.iii"),
     ] {
-        let hits = crate::match_names::resolve(&pkgs, "cleo-redux", None).unwrap();
+        let hits = crate::packages::resolve(&pkgs, "cleo-redux", None).unwrap();
         assert_eq!(hits.len(), 2);
-        let narrowed = crate::match_names::narrow_by_game(hits, &pkgs, Some(game));
+        let narrowed = crate::packages::narrow_by_game(hits, &pkgs, Some(game));
         assert_eq!(narrowed.len(), 1, "cleo-redux must narrow to 1 in {game}");
         assert_eq!(narrowed[0].pkg.id, expected);
     }
@@ -1905,9 +1906,9 @@ fn game_specific_all_commands_are_filtered() {
         ("gta-sa", "silents-asi-loader.sa"),
         ("gta-vc", "universal-asi-loader.sa.vc.iii"),
     ] {
-        let hits = crate::match_names::resolve(&pkgs, "asi-loader", None).unwrap();
+        let hits = crate::packages::resolve(&pkgs, "asi-loader", None).unwrap();
         assert_eq!(hits.len(), 2);
-        let narrowed = crate::match_names::narrow_by_game(hits, &pkgs, Some(game));
+        let narrowed = crate::packages::narrow_by_game(hits, &pkgs, Some(game));
         // SA: both loaders cover SA, so still 2 (picker required). VC: only UAL covers VC.
         if game == "gta-sa" {
             assert_eq!(narrowed.len(), 2);
@@ -2199,7 +2200,7 @@ fn prune_stale_state_drops_only_fully_gone_installs() {
 fn resolve_id_is_game_strict_and_ambiguous() {
     let pkgs = unit_pkgs();
     // Game-incompatible packages fail like unknown ones.
-    let err = crate::match_names::resolve_id(&pkgs, "cleo.vc", Some("gta-sa")).unwrap_err();
+    let err = crate::packages::resolve_id(&pkgs, "cleo.vc", Some("gta-sa")).unwrap_err();
     assert!(
         format!("{err}").contains("unknown package"),
         "wrong-game name must be rejected: {err}"
@@ -2207,7 +2208,7 @@ fn resolve_id_is_game_strict_and_ambiguous() {
     assert!(
         format!(
             "{}",
-            crate::match_names::resolve_id(&pkgs, "zzz", None).unwrap_err()
+            crate::packages::resolve_id(&pkgs, "zzz", None).unwrap_err()
         )
         .contains("unknown package")
     );
@@ -2215,26 +2216,26 @@ fn resolve_id_is_game_strict_and_ambiguous() {
     // is game-rejected (never silently re-pointed). The `vc.cleo` alias
     // resolves the vc build.
     assert_eq!(
-        crate::match_names::resolve_id(&pkgs, "cleo", Some("gta-sa")).unwrap(),
+        crate::packages::resolve_id(&pkgs, "cleo", Some("gta-sa")).unwrap(),
         "cleo.sa"
     );
     assert_eq!(
-        crate::match_names::resolve_id(&pkgs, "vc.cleo", Some("gta-vc")).unwrap(),
+        crate::packages::resolve_id(&pkgs, "vc.cleo", Some("gta-vc")).unwrap(),
         "cleo.vc"
     );
     assert!(
-        crate::match_names::resolve_id(&pkgs, "vc.cleo", Some("gta-sa")).is_err(),
+        crate::packages::resolve_id(&pkgs, "vc.cleo", Some("gta-sa")).is_err(),
         "vc alias must be rejected in an SA game dir"
     );
     // Game narrowing turns an ambiguous name into a single match.
     assert_eq!(
-        crate::match_names::resolve_id(&pkgs, "asi-loader", Some("gta-vc")).unwrap(),
+        crate::packages::resolve_id(&pkgs, "asi-loader", Some("gta-vc")).unwrap(),
         "universal-asi-loader.sa.vc.iii"
     );
     // Both loaders cover SA -> still ambiguous -> exit-2 error (the picker
     // is never interactive inside the test binary, so the ambiguous error
     // fires deterministically).
-    let res = crate::match_names::resolve_id(&pkgs, "asi-loader", Some("gta-sa"));
+    let res = crate::packages::resolve_id(&pkgs, "asi-loader", Some("gta-sa"));
     match res {
         Err(crate::ChefError::Ambiguous(cands)) => {
             assert_eq!(cands.len(), 2);
@@ -2261,7 +2262,7 @@ fn fetch_asset_verifies_digest_and_heals_corrupt_cache() {
     // A corrupt cache entry is detected by digest and re-downloaded.
     std::fs::create_dir_all(cache.parent().unwrap()).unwrap();
     std::fs::write(&cache, b"garbage-not-the-archive").unwrap();
-    let got = store::fetch_asset(&res.url, &res.asset_sha256, "cleo.sa", "5.4.0").unwrap();
+    let got = packages::fetch_asset(&res.url, &res.asset_sha256, "cleo.sa", "5.4.0").unwrap();
     assert_eq!(
         crate::utils::fs::sha256_file(&got).unwrap(),
         res.asset_sha256
@@ -2274,7 +2275,7 @@ fn fetch_asset_verifies_digest_and_heals_corrupt_cache() {
 
     // A wrong expected digest is rejected and does not leave the file in cache.
     let bad = "0".repeat(64);
-    let err = store::fetch_asset(&res.url, &bad, "cleo.sa", "5.4.0").unwrap_err();
+    let err = packages::fetch_asset(&res.url, &bad, "cleo.sa", "5.4.0").unwrap_err();
     assert!(
         format!("{err:#}").contains("checksum mismatch"),
         "unexpected error: {err:#}"
@@ -2296,7 +2297,8 @@ fn ensure_payload_raw_single_file_asset() {
     let url = format!("file:///{}", dll.to_string_lossy().replace('\\', "/"));
     let sha = crate::utils::fs::sha256_file(&dll).unwrap();
 
-    let vdir = store::ensure_payload("raw-pkg", "Raw", "1.0.0", &url, &sha, false).unwrap();
+    let vdir =
+        crate::handlers::add::ensure_payload("raw-pkg", "Raw", "1.0.0", &url, &sha, false).unwrap();
     assert_eq!(
         std::fs::read(vdir.join("vorbisFile.dll")).unwrap(),
         b"MZ-raw-ual-dll"
@@ -2304,12 +2306,13 @@ fn ensure_payload_raw_single_file_asset() {
     assert!(vdir.join(".complete").exists(), "complete marker written");
 
     // The marker short-circuits a second resolution (no re-download).
-    let again = store::ensure_payload("raw-pkg", "Raw", "1.0.0", &url, &sha, false).unwrap();
+    let again =
+        crate::handlers::add::ensure_payload("raw-pkg", "Raw", "1.0.0", &url, &sha, false).unwrap();
     assert_eq!(vdir, again);
 
     // An unverified payload dir (no marker) is treated as a cache miss.
     std::fs::write(vdir.join(".complete"), b"").unwrap();
-    store::ensure_payload("raw-pkg", "Raw", "1.0.0", &url, &sha, false).unwrap();
+    crate::handlers::add::ensure_payload("raw-pkg", "Raw", "1.0.0", &url, &sha, false).unwrap();
 }
 
 // ===========================================================================
@@ -2617,6 +2620,256 @@ fn displaced_user_file_survives_version_replacement() {
 }
 
 // ===========================================================================
+// Integration: the undo script - every deploy records revertible ops and
+// `remove` is a pure reverse playback of them
+// ===========================================================================
+
+#[test]
+fn script_records_ops_per_file_and_remove_replays_them() {
+    let t = setup("scripts");
+    let key = game_dir::dir_hash_key(&t.game_dir);
+
+    // Fresh install: every payload file is an Overwrite with no prior
+    // occupant - the script is exactly the add X -> delete X mapping.
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@5.4.0".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    let inst = state().install_of(&key, "cleo.sa").unwrap().clone();
+    let ops = &inst.script;
+    assert_eq!(ops.len(), 3, "one op per deployed file: {ops:?}");
+    assert!(
+        ops.iter()
+            .all(|op| matches!(op, crate::game_dir::Op::Overwrite { before: None, .. }))
+    );
+    assert!(
+        ops.iter()
+            .any(|op| matches!(op, crate::game_dir::Op::Overwrite { to, .. } if to == "cleo.asi"))
+    );
+
+    // Replacing with 4.4.4 records the snapshots it took (the 5.4.0 files)
+    // and the files it deleted (5.4.0-only paths), so remove can undo it.
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@4.4.4".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    let inst = state().install_of(&key, "cleo.sa").unwrap().clone();
+    let ops = &inst.script;
+    let overwrite_asi = ops
+        .iter()
+        .find(|op| matches!(op, crate::game_dir::Op::Overwrite { to, .. } if to == "cleo.asi"))
+        .expect("cleo.asi overwrite recorded");
+    match overwrite_asi {
+        crate::game_dir::Op::Overwrite {
+            before: Some(_), ..
+        } => {}
+        other => panic!("replacement must snapshot the 5.4.0 file: {other:?}"),
+    }
+    assert!(ops.iter().any(|op| {
+        matches!(
+            op,
+            crate::game_dir::Op::Overwrite { to, before: None, .. } if to == "CLEO/notes.txt"
+        )
+    }));
+    assert!(ops.iter().any(|op| {
+        matches!(
+            op,
+            crate::game_dir::Op::Delete { path, before: Some(_) } if path == "README.md"
+        )
+    }));
+    assert!(ops.iter().any(|op| {
+        matches!(
+            op,
+            crate::game_dir::Op::Delete { path, before: Some(_) }
+                if path == "CLEO/cleo_plugins/Example.cleo"
+        )
+    }));
+
+    // Remove plays the script back in reverse: deleted 5.4.0 files return
+    // byte-exact, the 4.4.4-only file goes away, state entry is dropped.
+    run_ok(Cmd::Remove {
+        pkgs: vec!["cleo".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+    assert_eq!(
+        std::fs::read(t.game_dir.join("cleo.asi")).unwrap(),
+        b"MZ-cleo5-asi",
+        "replaced file restored to the 5.4.0 bytes"
+    );
+    assert_eq!(
+        std::fs::read(t.game_dir.join("README.md")).unwrap(),
+        b"CLEO 5"
+    );
+    assert_eq!(
+        std::fs::read(t.game_dir.join("CLEO/cleo_plugins/Example.cleo")).unwrap(),
+        b"dll"
+    );
+    assert!(!t.game_dir.join("CLEO/notes.txt").exists());
+    assert!(
+        state().install_of(&key, "cleo.sa").is_none(),
+        "install state dropped after remove"
+    );
+}
+
+#[test]
+fn script_revert_restores_exact_initial_state_across_a_chain() {
+    let t = setup("undo");
+    let key = game_dir::dir_hash_key(&t.game_dir);
+    std::fs::write(t.game_dir.join("cleo.asi"), b"user-owned-asi").unwrap();
+    std::fs::create_dir_all(t.game_dir.join("CLEO")).unwrap();
+    std::fs::write(t.game_dir.join("CLEO/notes.txt"), b"user-notes").unwrap();
+
+    let snapshot_tree = |g: &Path| -> Vec<(String, Vec<u8>)> {
+        let mut v: Vec<(String, Vec<u8>)> = crate::utils::walk::files(g)
+            .into_iter()
+            .map(|p| {
+                let rel = p
+                    .strip_prefix(g)
+                    .unwrap()
+                    .to_string_lossy()
+                    .replace('\\', "/");
+                (rel, std::fs::read(&p).unwrap())
+            })
+            .collect();
+        v.sort();
+        v
+    };
+    let before = snapshot_tree(&t.game_dir);
+
+    // A user file displaced, then two version replacements, then remove:
+    // the whole chain must unwind to the exact pre-install tree, byte for
+    // byte - whatever transformations were applied along the way.
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@5.4.0".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    assert!(t.game_dir.join("README.md").exists());
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@5.3.0".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    assert!(
+        !t.game_dir.join("README.md").exists(),
+        "5.3.0 ships no README"
+    );
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@4.4.4".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    run_ok(Cmd::Remove {
+        pkgs: vec!["cleo".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+
+    assert_eq!(
+        snapshot_tree(&t.game_dir),
+        before,
+        "remove must revert every transformation of the whole chain"
+    );
+    assert!(state().install_of(&key, "cleo.sa").is_none());
+}
+
+#[test]
+fn user_deleted_managed_file_is_restored_from_snapshot() {
+    let t = setup("redeleted");
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@5.4.0".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@4.4.4".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    // User removes the deployed 4.4.4 file by hand.
+    std::fs::remove_file(t.game_dir.join("cleo.asi")).unwrap();
+    run_ok(Cmd::Remove {
+        pkgs: vec!["cleo".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+    assert_eq!(
+        std::fs::read(t.game_dir.join("cleo.asi")).unwrap(),
+        b"MZ-cleo5-asi",
+        "a free path gets the pre-replace snapshot back"
+    );
+}
+
+#[test]
+fn legacy_install_without_script_still_removes() {
+    let t = setup("legacy");
+    let key = game_dir::dir_hash_key(&t.game_dir);
+    run_ok(Cmd::Add {
+        pkgs: vec!["cleo@5.4.0".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+
+    // Drop the recorded script from state (as if installed by an older
+    // chef that never tracked scripts). The legacy path must still remove.
+    let path = game_dir::state_path();
+    let mut st: serde_json::Value = serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+    for d in st["dirs"][key.as_str()]["installs"]
+        .as_object_mut()
+        .unwrap()
+        .values_mut()
+    {
+        d.as_object_mut().unwrap().remove("script");
+    }
+    std::fs::write(&path, serde_json::to_vec_pretty(&st).unwrap()).unwrap();
+
+    run_ok(Cmd::Remove {
+        pkgs: vec!["cleo".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+    assert!(!t.game_dir.join("cleo.asi").exists());
+    assert!(state().install_of(&key, "cleo.sa").is_none());
+}
+
+#[test]
+fn state_roundtrip_keeps_script_and_defaults_empty() {
+    use crate::game_dir::Op;
+    let inst = crate::game_dir::Install {
+        package: "p".into(),
+        version: "1.0.0".into(),
+        files: vec![],
+        owned_dirs: vec![],
+        backup: None,
+        displaced: vec![],
+        script: vec![
+            Op::Overwrite {
+                to: "a.dat".into(),
+                digest: "0".repeat(64),
+                before: Some("a.dat".into()),
+            },
+            Op::Delete {
+                path: "b.dat".into(),
+                before: None,
+            },
+            Op::Rename {
+                from: "c.dat".into(),
+                to: "d.dat".into(),
+            },
+        ],
+        at: 1,
+    };
+    let bytes = serde_json::to_vec(&inst).unwrap();
+    let back: crate::game_dir::Install = serde_json::from_slice(&bytes).unwrap();
+    assert_eq!(back.script, inst.script, "every op survives the round trip");
+
+    // An install recorded before chef tracked scripts loads with an empty
+    // script, which routes remove to the legacy path.
+    let legacy: crate::game_dir::Install =
+        serde_json::from_str(r#"{"package":"p","version":"1.0.0","files":[],"at":1}"#).unwrap();
+    assert!(legacy.script.is_empty());
+}
+
+// ===========================================================================
 // Unit: summary classification (one release / multiple / unknown / not
 // found; newest-match attribution; .ini configs ignored)
 // ===========================================================================
@@ -2625,7 +2878,7 @@ fn displaced_user_file_survives_version_replacement() {
 fn summarize_package_four_outcomes_and_attribution() {
     let _t = setup("wsumclass");
     let (pkgs, lock) = packages::load_metadata(false).unwrap();
-    let vf = crate::commands::which::version_files(&pkgs, &lock, "cleo.sa", Some("gta-sa"));
+    let vf = crate::handlers::which::version_files(&pkgs, &lock, "cleo.sa", Some("gta-sa"));
     let (_, files54) = vf
         .iter()
         .find(|(v, _)| v == "5.4.0")
@@ -2633,7 +2886,7 @@ fn summarize_package_four_outcomes_and_attribution() {
         .clone();
     let norm = |p: &str| p.replace('/', "\\").to_lowercase();
     let summarize = |tree: &std::collections::BTreeMap<String, String>, managed: bool| {
-        crate::commands::which::summarize_package(
+        crate::handlers::which::summarize_package(
             tree,
             &pkgs,
             &lock,
@@ -2703,16 +2956,16 @@ fn summarize_package_four_outcomes_and_attribution() {
     // Command references embedded in notes are quote-safe: a name with an
     // apostrophe (Silent's ASI Loader) falls back to its clean alias.
     assert_eq!(
-        crate::commands::which::command_ref(&pkgs, "silents-asi-loader.sa"),
+        crate::handlers::which::command_ref(&pkgs, "silents-asi-loader.sa"),
         "sal"
     );
     assert_eq!(
-        crate::commands::which::command_ref(&pkgs, "cleo.sa"),
+        crate::handlers::which::command_ref(&pkgs, "cleo.sa"),
         "cleo5"
     );
 
     // The sal notes embed the alias, and the note stays a valid command.
-    let sal_vf = crate::commands::which::version_files(
+    let sal_vf = crate::handlers::which::version_files(
         &pkgs,
         &lock,
         "silents-asi-loader.sa",
@@ -2728,7 +2981,7 @@ fn summarize_package_four_outcomes_and_attribution() {
         .map(|(p, sha)| (norm(p), sha.clone()))
         .collect();
     sal_tree.insert("vorbisfile.dll".to_string(), "custom-build".to_string());
-    let srow = crate::commands::which::summarize_package(
+    let srow = crate::handlers::which::summarize_package(
         &sal_tree,
         &pkgs,
         &lock,
@@ -2748,17 +3001,17 @@ fn summarize_package_four_outcomes_and_attribution() {
 
     // Newest-match attribution: 1.5.0-beta.1 outranks 1.3.0 and 1.4.0.
     assert_eq!(
-        crate::commands::which::newest_match(&["1.3.0", "1.5.0-beta.1", "1.4.0"]),
+        crate::handlers::which::newest_match(&["1.3.0", "1.5.0-beta.1", "1.4.0"]),
         "1.5.0-beta.1"
     );
 
     // Only .ini files count as user-editable config.
-    assert!(crate::commands::which::is_ignored_config(
+    assert!(crate::handlers::which::is_ignored_config(
         "scripts/global.ini"
     ));
-    assert!(crate::commands::which::is_ignored_config("X.INI"));
-    assert!(!crate::commands::which::is_ignored_config("cleo.asi"));
-    assert!(!crate::commands::which::is_ignored_config(
+    assert!(crate::handlers::which::is_ignored_config("X.INI"));
+    assert!(!crate::handlers::which::is_ignored_config("cleo.asi"));
+    assert!(!crate::handlers::which::is_ignored_config(
         "cleo/.config/sa.json"
     ));
 }
@@ -2779,7 +3032,7 @@ fn which_summary_splits_chef_and_user_rows() {
     // User-installed CLEO: every 5.4.0 payload present at its locked path,
     // identified by content, reported with no notes.
     let by_path = locked_path_map(&t.game_dir, &pkgs, &lock, "cleo.sa");
-    let row = crate::commands::which::summarize_package(
+    let row = crate::handlers::which::summarize_package(
         &by_path,
         &pkgs,
         &lock,
@@ -2802,14 +3055,14 @@ fn which_summary_splits_chef_and_user_rows() {
     });
     let key = game_dir::dir_hash_key(&t.game_dir);
     assert!(state().install_of(&key, "cleo.sa").is_some());
-    for (_, files) in crate::commands::which::version_files(&pkgs, &lock, "cleo.sa", Some("gta-sa"))
+    for (_, files) in crate::handlers::which::version_files(&pkgs, &lock, "cleo.sa", Some("gta-sa"))
     {
         for (p, _) in &files {
             let _ = std::fs::remove_file(t.game_dir.join(p));
         }
     }
     let by_path = locked_path_map(&t.game_dir, &pkgs, &lock, "cleo.sa");
-    let row = crate::commands::which::summarize_package(
+    let row = crate::handlers::which::summarize_package(
         &by_path,
         &pkgs,
         &lock,
@@ -2833,7 +3086,7 @@ fn locked_path_map(
     lock: &LockFile,
     id: &str,
 ) -> std::collections::BTreeMap<String, String> {
-    crate::commands::which::version_files(pkgs, lock, id, Some("gta-sa"))
+    crate::handlers::which::version_files(pkgs, lock, id, Some("gta-sa"))
         .into_iter()
         .flat_map(|(_, files)| files)
         .filter_map(|(p, _)| {
@@ -2855,7 +3108,7 @@ fn run_mode_ok(cmd: Cmd) {
 }
 
 fn json_doc() -> serde_json::Value {
-    let cap = crate::take_capture().expect("capture installed").out;
+    let cap = crate::emit::take_capture().expect("capture installed").out;
     assert_eq!(cap.len(), 1, "exactly one JSON document on stdout");
     serde_json::from_str(&cap[0]).expect("stdout document must parse as JSON")
 }
@@ -2865,7 +3118,7 @@ fn json_add_which_update_remove_documents() {
     let t = setup("jsonflow");
 
     // add: one row per package.
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Add {
         pkgs: vec!["cleo@5".into()],
         dir: Some(t.game_dir.clone()),
@@ -2877,7 +3130,7 @@ fn json_add_which_update_remove_documents() {
     assert_eq!(doc["add"][0]["status"], "installed");
 
     // The same request again -> status "already", still a valid document.
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Add {
         pkgs: vec!["cleo@5".into()],
         dir: Some(t.game_dir.clone()),
@@ -2887,7 +3140,7 @@ fn json_add_which_update_remove_documents() {
     assert_eq!(doc["add"][0]["status"], "already");
 
     // which: installs array, chef-managed section.
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Which {
         pkg: None,
         dir: Some(t.game_dir.clone()),
@@ -2897,7 +3150,7 @@ fn json_add_which_update_remove_documents() {
     assert_eq!(doc["installs"][0]["status"], "installed");
 
     // update with nothing newer -> up-to-date row.
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Update {
         pkg: None,
         dir: Some(t.game_dir.clone()),
@@ -2908,7 +3161,7 @@ fn json_add_which_update_remove_documents() {
     assert_eq!(doc["update"][0]["status"], "up-to-date");
 
     // remove: restored-file lists included.
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Remove {
         pkgs: vec!["cleo".into()],
         dir: Some(t.game_dir.clone()),
@@ -2925,7 +3178,7 @@ fn json_errors_are_machine_readable() {
 
     // A failing command produces no result document and raises an error
     // that main renders as one JSON object with the exit code.
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     let err = crate::run_mode(
         Cmd::Add {
             pkgs: vec!["cleo@6".into()],
@@ -2935,9 +3188,9 @@ fn json_errors_are_machine_readable() {
         true,
     )
     .unwrap_err();
-    let code = crate::write_error(&err, true);
+    let code = crate::emit::write_error(&err, true);
     assert_eq!(code, 1);
-    let cap = crate::take_capture().unwrap();
+    let cap = crate::emit::take_capture().unwrap();
     assert!(cap.out.is_empty(), "no result document on failure");
     let obj: serde_json::Value = serde_json::from_str(&cap.err[0]).unwrap();
     assert!(
@@ -2947,10 +3200,10 @@ fn json_errors_are_machine_readable() {
 
     // Ambiguous names carry the candidates for scripts to pick from.
     let amb = crate::ChefError::Ambiguous(vec!["CLEO".into(), "CLEO Redux".into()]);
-    crate::set_capture(crate::CapturedOutput::default());
-    let code = crate::write_error(&amb, true);
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
+    let code = crate::emit::write_error(&amb, true);
     assert_eq!(code, 2);
-    let cap = crate::take_capture().unwrap();
+    let cap = crate::emit::take_capture().unwrap();
     let obj: serde_json::Value = serde_json::from_str(&cap.err[0]).unwrap();
     assert_eq!(obj["candidates"].as_array().unwrap().len(), 2);
 }
@@ -2961,7 +3214,7 @@ fn json_errors_are_machine_readable() {
 
 #[test]
 fn attribute_prefers_installed_version() {
-    use crate::commands::which::attribute;
+    use crate::handlers::which::attribute;
     // Shared bytes across releases: the version chef installed wins.
     assert_eq!(attribute(Some("1.4.3"), &["1.5.0", "1.4.3"]), "1.4.3");
     // No state: newest match as before.
@@ -2981,7 +3234,7 @@ fn dry_run_add_plans_every_file() {
     let t = setup("dryplan");
 
     // Fresh folder: every payload path reports as add, nothing changes.
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Add {
         pkgs: vec!["cleo@5".into()],
         dir: Some(t.game_dir.clone()),
@@ -3003,7 +3256,7 @@ fn dry_run_add_plans_every_file() {
         dir: Some(t.game_dir.clone()),
         dry_run: false,
     });
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Add {
         pkgs: vec!["cleo@4.4.4".into()],
         dir: Some(t.game_dir.clone()),
@@ -3020,7 +3273,7 @@ fn dry_run_add_plans_every_file() {
     // A user-edited managed file -> replace with the reason; the intact
     // payload files stay keep.
     std::fs::write(t.game_dir.join("README.md"), b"edited by user").unwrap();
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Add {
         pkgs: vec!["cleo@5".into()],
         dir: Some(t.game_dir.clone()),
@@ -3046,7 +3299,7 @@ fn dry_run_backs_up_user_file_at_payload_path() {
     let t = setup("dryback");
     // A user file sitting where the package wants to deploy.
     std::fs::write(t.game_dir.join("cleo.asi"), b"MZ-user-asi").unwrap();
-    crate::set_capture(crate::CapturedOutput::default());
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
     run_mode_ok(Cmd::Add {
         pkgs: vec!["cleo@5".into()],
         dir: Some(t.game_dir.clone()),
@@ -3107,7 +3360,7 @@ fn history_log_rotates_and_appends() {
 #[test]
 fn debug_dump_add_state_paths() {
     let t = setup("debugdump");
-    crate::dbg_trace(format_args!(
+    crate::emit::dbg_trace(format_args!(
         "home_override={}",
         crate::packages::chef_home().display()
     ));
@@ -3122,7 +3375,7 @@ fn debug_dump_add_state_paths() {
     eprintln!("[chef-dbg] state.json content:\n{raw}");
     let inst = st.install_of(&key, "cleo.sa").unwrap();
     assert_eq!(inst.version, "5.4.0");
-    crate::dbg_trace(format_args!(
+    crate::emit::dbg_trace(format_args!(
         "installed cleo.sa at {} under key {key}",
         inst.version
     ));

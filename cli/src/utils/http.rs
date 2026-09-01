@@ -1,5 +1,5 @@
 use anyhow::bail;
-use std::io::Read as _;
+use std::io::Read;
 
 pub const USER_AGENT: &str = concat!("chef/", env!("CARGO_PKG_VERSION"));
 
@@ -25,7 +25,7 @@ pub fn fetch_url(
         .map_err(|e| anyhow::anyhow!("{e}"))?;
     let mut reader = resp.into_reader().take(max_bytes.saturating_add(1));
     let mut buf = Vec::new();
-    std::io::Read::read_to_end(&mut reader, &mut buf)?;
+    Read::read_to_end(&mut reader, &mut buf)?;
     if buf.len() as u64 > max_bytes {
         bail!("response exceeds {max_bytes} byte limit");
     }

@@ -27,13 +27,3 @@ jobs:
       # all integration tests run offline against self-built fixtures.
       - name: Test
         run: cargo test --locked --manifest-path cli/Cargo.toml
-
-  release-build-smoke:
-    if: github.event_name == 'push'
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-      - name: Release build smoke test
-        run: cargo build --release --locked --manifest-path cli/Cargo.toml

@@ -1,6 +1,11 @@
+//! User-facing package name matching (merged from `match_names`): exact,
+//! prefix/substring, and Levenshtein fallback resolution, game narrowing,
+//! and the interactive picker for ambiguous candidates.
+
 use crate::ChefError;
-use crate::packages::{PackageEntry, PackagesFile};
-use crate::utils::picker;
+use crate::utils::term;
+
+use super::catalog::{PackageEntry, PackagesFile};
 
 /// Normalize a package name or alias for matching.
 pub fn normalize(s: &str) -> String {
@@ -77,9 +82,9 @@ pub fn disambiguate<'a>(cands: Vec<NameMatch<'a>>) -> crate::Result<NameMatch<'a
         [one] => Ok(one.clone()),
         many => {
             let names: Vec<String> = many.iter().map(|m| m.display().to_string()).collect();
-            if picker::interactive() {
+            if term::interactive() {
                 let opts = names.clone();
-                match picker::pick("ambiguous package name - did you mean:", &opts) {
+                match term::pick("ambiguous package name - did you mean:", &opts) {
                     Some(i) => Ok(many[i].clone()),
                     None => Err(ChefError::Other(anyhow::anyhow!("no package selected"))),
                 }
