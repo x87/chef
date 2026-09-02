@@ -15,6 +15,25 @@ pub fn normalize(s: &str) -> String {
         .to_lowercase()
 }
 
+/// A package reference that is safe to paste inside single quotes in a
+/// `chef` command. By convention the first alias is the shortest usable
+/// name (`sal`, `cleo5`, `ual`), so notes and menus embed that; the
+/// display name is used only when the package has no aliases, the id as a
+/// last resort.
+pub fn command_ref(pkgs: &PackagesFile, id: &str) -> String {
+    let quote_free = |s: &str| !s.contains('\'');
+    let Some(pkg) = pkgs.pkg(id) else {
+        return id.to_string();
+    };
+    if let Some(a) = pkg.aliases.iter().find(|a| quote_free(a)) {
+        return a.clone();
+    }
+    if quote_free(&pkg.name) {
+        return pkg.name.clone();
+    }
+    pkg.id.clone()
+}
+
 /// A successful name match: one package entry.
 #[derive(Debug, Clone)]
 pub struct NameMatch<'a> {

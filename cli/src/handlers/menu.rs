@@ -5,11 +5,13 @@ use std::path::PathBuf;
 use crate::ChefError;
 use crate::packages::{self, PackagesFile};
 
-/// A display row: one package id and its product name.
+/// A display row: one package id, its product name, and the concrete
+/// command to install it (`chef add <name>`).
 #[derive(Clone)]
 struct Row {
     id: String,
     name: String,
+    cmd: String,
 }
 
 fn rows_for_all(pkgs: &PackagesFile) -> Vec<Row> {
@@ -18,6 +20,9 @@ fn rows_for_all(pkgs: &PackagesFile) -> Vec<Row> {
         .map(|p| Row {
             id: p.id.clone(),
             name: p.name.clone(),
+            // Same convention as `chef which` notes: the first (quote-free)
+            // alias, falling back to the name, then the id.
+            cmd: format!("chef add {}", packages::command_ref(pkgs, &p.id)),
         })
         .collect()
 }
@@ -133,6 +138,7 @@ pub fn run(
                     "versions": versions,
                     "latest": latest,
                     "preview": preview,
+                    "command": r.cmd,
                     // "managed": managed_for(r, &pkgs, dir.as_deref()),
                 })
             })
@@ -167,13 +173,22 @@ pub fn run(
         .max()
         .unwrap_or(9)
         .max(9);
-    println!("{:<w_title$} {:<w_avail$}", "TITLE", "AVAILABLE");
+    let w_cmd = rows
+        .iter()
+        .map(|r| r.cmd.chars().count())
+        .max()
+        .unwrap_or(14)
+        .max(14);
+    println!(
+        "{:<w_title$} {:<w_avail$} {:<w_cmd$}",
+        "TITLE", "AVAILABLE", "COMMAND"
+    );
 
     for r in &rows {
         let entries = packages::available_versions(&pkgs, &lock, &r.id, detected_game.as_deref());
         let avail = avail_texts(&entries).join(", ");
         // let inst = managed_for_display(r, &pkgs, dir.as_deref()).unwrap_or_else(|| "-".into());
-        println!("{:<w_title$} {:<w_avail$}", r.name, avail);
+        println!("{:<w_title$} {:<w_avail$} {:<w_cmd$}", r.name, avail, r.cmd);
     }
     Ok(())
 }

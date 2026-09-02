@@ -26,7 +26,8 @@ pub use fetch::{
 pub use home::{chef_home, clear_home_override, set_home_override};
 pub use identify::{identify_digests, payload_basenames, payload_index};
 pub use names::{
-    NameMatch, disambiguate, levenshtein, narrow_by_game, normalize, resolve, resolve_id,
+    NameMatch, command_ref, disambiguate, levenshtein, narrow_by_game, normalize, resolve,
+    resolve_id,
 };
 pub(crate) use version::parse_version_loose;
 pub use version::{

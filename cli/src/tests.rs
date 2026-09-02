@@ -2956,13 +2956,10 @@ fn summarize_package_four_outcomes_and_attribution() {
     // Command references embedded in notes are quote-safe: a name with an
     // apostrophe (Silent's ASI Loader) falls back to its clean alias.
     assert_eq!(
-        crate::handlers::which::command_ref(&pkgs, "silents-asi-loader.sa"),
+        crate::packages::command_ref(&pkgs, "silents-asi-loader.sa"),
         "sal"
     );
-    assert_eq!(
-        crate::handlers::which::command_ref(&pkgs, "cleo.sa"),
-        "cleo5"
-    );
+    assert_eq!(crate::packages::command_ref(&pkgs, "cleo.sa"), "cleo5");
 
     // The sal notes embed the alias, and the note stays a valid command.
     let sal_vf = crate::handlers::which::version_files(

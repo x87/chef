@@ -1,16 +1,18 @@
 # chef
 
-chef is a command-line tool to install, update and remove mods and plugins for GTA games. It detects current game, backs up replaced files, and quickly switches versions with `pkg@version`. Currently it is Windows-only.
+chef is a command-line tool to install, update and remove mods and plugins for GTA games. It detects current game, backs up replaced files, and quickly switches mod versions.
+
+⚠️ This is an early prototype. It may or may not work as advertised. Use at your own risk.
 
 ## Install
 
-PowerShell (Windows):
+Windows (Powershell):
 
 ```powershell
 irm https://raw.githubusercontent.com/x87/chef/master/install.ps1 | iex
 ```
 
-Git Bash (or any Unix shell):
+Linux:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/x87/chef/master/install.sh | bash
@@ -22,15 +24,15 @@ or download the binary from [the releases page](https://github.com/x87/chef/rele
 
 Once installed, run the following commands in your favorite terminal in the game folder (or use `--dir <folder>`):
 
-| Command               | What it does                             |
-| --------------------- | ---------------------------------------- |
-| `chef menu`           | list available packages for your game    |
-| `chef which [<pkg>]`  | show what is installed in current folder |
-| `chef add <pkg>`      | install a mod                            |
-| `chef remove <pkg>`   | uninstall a mod (replays the undo script)  |
-| `chef update [<pkg>]` | update installed mods                    |
-| `chef upgrade`        | update chef itself                       |
-| `chef help`           | all commands and options                 |
+| Command               | What it does                              |
+| --------------------- | ----------------------------------------- |
+| `chef menu`           | list available packages for your game     |
+| `chef which [<pkg>]`  | show what is installed in current folder  |
+| `chef add <pkg>`      | install a mod                             |
+| `chef remove <pkg>`   | uninstall a mod (replays the undo script) |
+| `chef update [<pkg>]` | update installed mods                     |
+| `chef upgrade`        | update chef itself                        |
+| `chef help`           | all commands and options                  |
 
 ## Options
 
@@ -42,7 +44,25 @@ Once installed, run the following commands in your favorite terminal in the game
 | `--refresh`      | `menu`               | re-download the catalog                      |
 | `--check`        | `upgrade`            | report whether an update exists              |
 
-## Examples
+## `chef menu`
+
+`chef menu` displays a list of packages available for the game in current directory:
+
+```
+$ chef menu
+TITLE                AVAILABLE            COMMAND
+CLEO                 5.4.0, 4.4.4         chef add cleo5
+CLEO Redux           1.5.0                chef add cleo-redux
+Silent's ASI Loader  1.5.0 (preview), 1.3.0 chef add sal
+Universal ASI Loader 9.7.4                chef add ual
+SilentPatch          34.1.0, 33.1.0       chef add silentpatch
+WidescreenFix        <no version>         chef add widescreenfix
+Mod Loader           0.3.10               chef add modloader
+```
+
+Pre-releases are marked `(preview)` and only selected via `@preview` or `@latest`. Use `@stable` to download the latest stable release.
+
+## `chef add`
 
 ```
 chef add cleo
@@ -51,9 +71,6 @@ chef add cleo@4.4.4                   exact version
 chef add cleo@latest                  newest release, pre-releases included
 chef add cleo@preview                 newest pre-release only
 chef add cleo@latest silentpatch sal  several packages at once
-chef remove cleo sal
-chef update --dry-run
-chef upgrade --check
 ```
 
 Names match loosely (`cleo-red` finds `cleo-redux`). If a name matches several packages, chef asks which one. Unknown versions are rejected:
@@ -63,19 +80,13 @@ $ chef add cleo@6
 error: version '6' does not match any tracked release (available majors: 4, 5)
 ```
 
-## `chef menu`
+## `chef remove`
+
+`chef remove <pkg>` uninstalls the package(s) reverting any modifications:
 
 ```
-$ chef menu
-TITLE                AVAILABLE            INSTALLED
-CLEO                 5.4.0, 4.4.4         -
-VC.CLEO              2.2.0                -
-CLEO Redux           1.5.0                -
-Silent's ASI Loader  1.5.0 (preview), 1.3.0 -
-Universal ASI Loader 9.7.4                -
+chef remove cleo sal
 ```
-
-Pre-releases are marked `(preview)` and only selected via `@preview` or `@latest`.
 
 ## `chef which`
 
@@ -121,27 +132,6 @@ Silent's ASI Loader 1.3.0
 ```
 
 `chef update --dry-run` prints the same plan for all installed packages.
-
-## `chef remove`
-
-Every install records an **undo script**: each filesystem operation it
-performed, paired with its exact revert. `chef remove` plays that script
-back **in reverse**, so uninstalling returns the game folder to its exact
-pre-install state no matter which transformations the install applied:
-
-| during install        | recorded op      | on `remove`              |
-| --------------------- | ---------------- | ------------------------ |
-| add file X            | write X          | delete X                 |
-| replace X with X2     | write X2 over X  | restore X over X2        |
-| rename X to Y         | rename X to Y    | rename Y to X            |
-| delete X              | delete X         | recreate X from backup   |
-
-Two rules protect your work:
-
-- a deployed file you **edited after installing** is handed back as-is
-  (never deleted, never overwritten by a restore);
-- a **user file displaced** by the install (its path was taken) is restored
-  exactly, across version replacements too.
 
 ## Notes
 

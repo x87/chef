@@ -69,24 +69,6 @@ pub(crate) fn is_ignored_config(path: &str) -> bool {
     path.to_lowercase().ends_with(".ini")
 }
 
-/// A package reference that is safe to paste inside single quotes in a
-/// `chef` command. By convention the first alias is the shortest usable
-/// name (`sal`, `cleo5`, `ual`), so notes embed that; the display name is
-/// used only when the package has no aliases, the id as a last resort.
-pub(crate) fn command_ref(pkgs: &PackagesFile, id: &str) -> String {
-    let quote_free = |s: &str| !s.contains('\'');
-    let Some(pkg) = pkgs.pkg(id) else {
-        return id.to_string();
-    };
-    if let Some(a) = pkg.aliases.iter().find(|a| quote_free(a)) {
-        return a.clone();
-    }
-    if quote_free(&pkg.name) {
-        return pkg.name.clone();
-    }
-    pkg.id.clone()
-}
-
 /// Every release of one package that covers `game`, newest first, with the
 /// payload files it ships. Identical semvers (one catalog entry per game
 /// group) collapse; a release is skipped when none of its digests are
@@ -220,7 +202,7 @@ pub(crate) fn summarize_package(
 
     let mut found: BTreeSet<String> = BTreeSet::new();
     let mut unknown = false;
-    let cmd = command_ref(pkgs, id);
+    let cmd = packages::command_ref(pkgs, id);
     for (key, (display, expected)) in paths {
         if is_ignored_config(&display) {
             continue;
