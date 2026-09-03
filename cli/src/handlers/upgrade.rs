@@ -149,10 +149,17 @@ fn run_notice() -> anyhow::Result<()> {
 // ---------------------------------------------------------------------------
 
 /// Release asset name for this build, e.g. `chef-x86_64-pc-windows-msvc.zip`.
+/// Must mirror the release CI matrix one-to-one: every published target has an
+/// entry here, and every entry here is published by the matrix in
+/// `.github/workflows/release.yml`. No assets for other targets may be listed.
 fn asset_stem() -> &'static str {
-    match (std::env::consts::OS, std::env::consts::ARCH) {
-        ("windows", "x86_64") => "chef-x86_64-pc-windows-msvc",
-        ("windows", "aarch64") => "chef-aarch64-pc-windows-msvc",
+    let musl = cfg!(target_env = "musl");
+    match (std::env::consts::OS, std::env::consts::ARCH, musl) {
+        ("windows", "x86_64", _) => "chef-x86_64-pc-windows-msvc",
+        ("linux", "x86_64", true) => "chef-x86_64-unknown-linux-musl",
+        ("linux", "x86_64", false) => "chef-x86_64-unknown-linux-gnu",
+        ("linux", "aarch64", true) => "chef-aarch64-unknown-linux-musl",
+        ("linux", "aarch64", false) => "chef-aarch64-unknown-linux-gnu",
         _ => panic!("unsupported platform for release builds"),
     }
 }
@@ -318,4 +325,29 @@ fn perform_upgrade(release: &serde_json::Value) -> anyhow::Result<()> {
         me_old.display()
     );
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::asset_stem;
+
+    /// The running build must map to an asset the release CI actually
+    /// publishes (`.github/workflows/release.yml`); exactly one arm applies
+    /// per build target, so a matrix/code drift fails the test on that target.
+    #[test]
+    fn asset_stem_matches_release_matrix() {
+        let expected = match () {
+            #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
+            () => "chef-x86_64-pc-windows-msvc",
+            #[cfg(all(target_os = "linux", target_env = "gnu", target_arch = "x86_64"))]
+            () => "chef-x86_64-unknown-linux-gnu",
+            #[cfg(all(target_os = "linux", target_env = "musl", target_arch = "x86_64"))]
+            () => "chef-x86_64-unknown-linux-musl",
+            #[cfg(all(target_os = "linux", target_env = "gnu", target_arch = "aarch64"))]
+            () => "chef-aarch64-unknown-linux-gnu",
+            #[cfg(all(target_os = "linux", target_env = "musl", target_arch = "aarch64"))]
+            () => "chef-aarch64-unknown-linux-musl",
+        };
+        assert_eq!(asset_stem(), expected);
+    }
 }

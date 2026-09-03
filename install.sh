@@ -14,9 +14,24 @@ REPO="x87/chef"
 case "$(uname -s)" in
     Linux*)
         BIN="chef"
-        ASSET="chef-x86_64-unknown-linux-gnu.zip"
         # Match dirs::data_local_dir on Linux ($XDG_DATA_HOME, else ~/.local/share)
         DEFAULT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/chef"
+        # Pick the release asset for this machine. The published set matches
+        # .github/workflows/release.yml: glibc (gnu) + musl, x86_64 + aarch64.
+        case "$(uname -m)" in
+            x86_64|amd64)   MACH="x86_64" ;;
+            aarch64|arm64)  MACH="aarch64" ;;
+            *)
+                echo "error: unsupported architecture: $(uname -m)" >&2
+                exit 1
+                ;;
+        esac
+        # glibc systems answer GNU_LIBC_VERSION; musl systems (Alpine etc.) don't.
+        if getconf GNU_LIBC_VERSION >/dev/null 2>&1; then
+            ASSET="chef-$MACH-unknown-linux-gnu.zip"
+        else
+            ASSET="chef-$MACH-unknown-linux-musl.zip"
+        fi
         ;;
     *)
         BIN="chef.exe"
