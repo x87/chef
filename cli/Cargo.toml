@@ -2,7 +2,7 @@
 name = "chef"
 description = "Install, update and remove mods and plugins for GTA games"
 edition = "2024"
-version = "0.1.1"
+version = "0.1.2"
 license = "MIT"
 
 [[bin]]
