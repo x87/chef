@@ -40,6 +40,16 @@ jobs:
         with:
           targets: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
+      # ring (pulled in via ureq/rustls tls) compiles C code with cc-rs, so
+      # a C toolchain targeting the cross target is required. gnu toolchains
+      # come from apt; musl toolchains come from musl.cc (Ubuntu has no
+      # aarch64-linux-musl-gcc package). x86_64-unknown-linux-gnu builds with
+      # the host compiler, so it needs no extra toolchain.
+      - name: Install cross toolchain
+        if: runner.os == 'Linux' && matrix.target != 'x86_64-unknown-linux-gnu'
+        uses: taiki-e/setup-cross-toolchain-action@v1
+        with:
+          target: ${{ matrix.target }}
       - name: Build
         run: cargo build --release --locked --target ${{ matrix.target }} --manifest-path cli/Cargo.toml
       - name: Package (zip)
