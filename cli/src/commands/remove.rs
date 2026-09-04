@@ -4,6 +4,7 @@ use crate::ChefError;
 use crate::commands::split_pkg_spec;
 use crate::game_dir;
 use crate::handlers;
+use crate::packages;
 
 /// Remove packages. Every argument is validated here, before anything is
 /// touched: a version spec must be an exact semver or a numeric prefix
@@ -18,8 +19,8 @@ pub fn run(pkgs: &[String], dir: Option<PathBuf>, json: bool) -> crate::Result<(
         let expect: Option<&str> = match spec {
             None => None,
             Some(s) => {
-                let norm = s.trim().strip_prefix(['v', 'V']).unwrap_or(s.trim());
-                let is_exact = semver::Version::parse(norm).is_ok();
+                let norm = packages::strip_v_prefix(s);
+                let is_exact = packages::is_exact_version(norm);
                 let is_prefix = !norm.is_empty()
                     && !norm.ends_with('.')
                     && norm.chars().all(|c| c.is_ascii_digit() || c == '.');

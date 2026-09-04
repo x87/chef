@@ -6,7 +6,7 @@ use log::{info, warn};
 use serde::{Deserialize, Serialize};
 
 use crate::ChefError;
-use crate::packages::chef_home;
+use crate::packages::{self, chef_home};
 use crate::utils::fs::write_atomic;
 use crate::utils::http;
 
@@ -27,9 +27,8 @@ pub fn run(check: bool, json: bool) -> crate::Result<()> {
         .trim_start_matches('v')
         .to_string();
 
-    let latest =
-        semver::Version::parse(&tag).map_err(|e| ChefError::Other(anyhow::anyhow!("{e}")))?;
-    let cur = current_version();
+    let latest = packages::parse_strict(&tag).map_err(ChefError::Other)?;
+    let cur = packages::current_version();
 
     if check {
         let available = latest > cur;
@@ -86,15 +85,6 @@ fn api_latest() -> anyhow::Result<serde_json::Value> {
     serde_json::from_slice(&buf).context("latest release response is not valid JSON")
 }
 
-fn current_version() -> semver::Version {
-    semver::Version::parse(env!("CARGO_PKG_VERSION")).unwrap()
-}
-
-fn parse_tag(v: &serde_json::Value) -> Option<semver::Version> {
-    let tag = v.get("tag_name")?.as_str()?;
-    semver::Version::parse(tag.trim_start_matches('v')).ok()
-}
-
 // ---------------------------------------------------------------------------
 // Update notice (non-blocking, at most once every 7 days)
 // ---------------------------------------------------------------------------
@@ -133,10 +123,10 @@ fn run_notice() -> anyhow::Result<()> {
 
     // Notice is non-blocking: fetch failures are silently ignored.
     if let Ok(v) = api_latest()
-        && let Some(latest) = parse_tag(&v)
+        && let Some(latest) = packages::parse_tag(&v)
     {
         st.latest_seen = latest.to_string();
-        if latest > current_version() {
+        if latest > packages::current_version() {
             info!("new version v{latest} available - run 'chef upgrade'");
         }
     }

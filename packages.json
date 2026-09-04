@@ -5,9 +5,9 @@
       "id": "cleo.sa",
       "name": "CLEO",
       "aliases": [
+        "cleo",
         "cleo5",
-        "cleo4",
-        "cleo"
+        "cleo4"
       ],
       "versions": [
         {
@@ -186,6 +186,26 @@
           "games": [
             "gta-vc"
           ]
+        },
+        {
+          "version": "2.1.1",
+          "release": "https://github.com/cleolibrary/III.VC.CLEO/releases/tag/2.1.1",
+          "assets": [
+            "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.1.1/CLEO.VC_v2.1.1.zip"
+          ],
+          "games": [
+            "gta-vc"
+          ]
+        },
+        {
+          "version": "2.0.0.6",
+          "release": "https://github.com/cleolibrary/III.VC.CLEO/releases/tag/2.0.0.6",
+          "assets": [
+            "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.0.0.6/VC.CLEOv2.0.0.6.zip"
+          ],
+          "games": [
+            "gta-vc"
+          ]
         }
       ]
     },
@@ -202,6 +222,26 @@
           "release": "https://github.com/cleolibrary/III.VC.CLEO/releases/tag/v2.2.0",
           "assets": [
             "https://github.com/cleolibrary/III.VC.CLEO/releases/download/v2.2.0/III.CLEO-v2.2.0.zip"
+          ],
+          "games": [
+            "gta-3"
+          ]
+        },
+        {
+          "version": "2.1.1",
+          "release": "https://github.com/cleolibrary/III.VC.CLEO/releases/tag/2.1.1",
+          "assets": [
+            "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.1.1/CLEO.III_v2.1.1.zip"
+          ],
+          "games": [
+            "gta-3"
+          ]
+        },
+        {
+          "version": "2.0.0.6",
+          "release": "https://github.com/cleolibrary/III.VC.CLEO/releases/tag/2.0.0.6",
+          "assets": [
+            "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.0.0.6/III.CLEOv2.0.0.6.zip"
           ],
           "games": [
             "gta-3"
@@ -701,6 +741,256 @@
             "Leia-me.txt",
             "modloader/.data/*.md",
             "modloader/.data/licenses/*"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "windowedmode.sa.vc.iii",
+      "name": "Windowed Mode",
+      "aliases": [
+        "windowedmode",
+        "wm"
+      ],
+      "versions": [
+        {
+          "version": "2.1.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v2.1",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.1/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "2.0.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v2.0",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.0/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.17.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.17",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.17/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.16.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.16",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.16/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.15.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.15",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.15/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.13.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.13",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.13/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.12.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.12",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.12/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.11.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.11",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.11/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.6.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.6",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.6/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.5.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.5",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.5/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.4.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.4",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.4/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.3.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.3",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.3/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.2.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.2",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.2/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.1.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.1",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.1/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
+          ]
+        },
+        {
+          "version": "1.0.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v1.0",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.0/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            "silents-asi-loader.sa",
+            "universal-asi-loader.sa.vc.iii"
           ]
         }
       ]

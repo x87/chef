@@ -29,7 +29,10 @@ pub use names::{
     NameMatch, command_ref, disambiguate, levenshtein, narrow_by_game, normalize, resolve,
     resolve_id,
 };
-pub(crate) use version::parse_version_loose;
 pub use version::{
     ResolvedVersion, available_versions, display_version, list_version, resolve_spec, version_word,
+};
+pub(crate) use version::{
+    current_version, display_spelling, is_exact_version, parse_strict, parse_tag,
+    parse_version_loose, same_version, strip_v_prefix, version_cmp_desc,
 };

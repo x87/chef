@@ -1347,9 +1347,9 @@ fn update_hint_direct(
     id: &str,
     installed: &str,
 ) -> Option<String> {
-    let cur = semver::Version::parse(installed).ok()?;
+    let cur = packages::parse_version_loose(installed)?;
     let latest = packages::resolve_spec(pkgs, lock, id, None, Some("stable")).ok()?;
-    let new = semver::Version::parse(&latest.version).ok()?;
+    let new = packages::parse_version_loose(&latest.version)?;
     (new > cur).then(|| {
         format!(
             "update available: {installed} -> {} - run 'chef update {id}'",
@@ -2400,6 +2400,89 @@ fn parse_loose_dot_beta_versions_sort_as_preview() {
             .version,
         "1.0.0",
         "stable resolution must skip the dot-beta entry"
+    );
+}
+
+// ===========================================================================
+// Unit: 4-part numeric versions (e.g. "2.0.0.6") resolve as stable
+// ===========================================================================
+
+#[test]
+fn parse_quad_numeric_version_resolves_as_stable_and_exact() {
+    let pkgs_json = serde_json::json!({
+        "schema": 2, "games": {},
+        "packages": [ { "id": "p", "name": "P", "versions": [
+            { "version": "2.2.0", "assets": ["u1"] },
+            { "version": "2.1.1", "assets": ["u2"] },
+            { "version": "2.0.0.6", "assets": ["u3"] }
+        ]} ]
+    });
+    let assets = ["u1", "u2", "u3"]
+        .iter()
+        .map(|u| {
+            (
+                (*u).to_string(),
+                serde_json::json!({
+                    "url": u, "sha256": "0".repeat(64), "files": []
+                }),
+            )
+        })
+        .collect::<serde_json::Map<_, _>>();
+    let lock_json = serde_json::json!({ "schema": 2, "generated_at": 0, "assets": assets });
+    let pkgs: PackagesFile = serde_json::from_value(pkgs_json).unwrap();
+    let lock: LockFile = serde_json::from_value(lock_json).unwrap();
+    // Default stable resolution skips nothing: the quad entry is stable.
+    assert_eq!(
+        packages::resolve_spec(&pkgs, &lock, "p", None, None)
+            .unwrap()
+            .version,
+        "2.2.0"
+    );
+    // Exact spec "2.0.0.6" reaches the quad release, keeping the upstream
+    // spelling (not the semver build form "2.0.0+6").
+    let res = packages::resolve_spec(&pkgs, &lock, "p", None, Some("2.0.0.6")).unwrap();
+    assert_eq!(res.version, "2.0.0.6");
+    assert_eq!(res.url, "u3");
+    // Menu listing: newest stable per major (the quad shares the 2.x major
+    // with 2.2.0) and, via its raw spelling, never misread as a preview.
+    let avail = packages::available_versions(&pkgs, &lock, "p", None);
+    assert_eq!(avail, vec![("2.2.0".to_string(), false)]);
+}
+
+// ===========================================================================
+// Unit: `chef which` labels use the upstream spelling ("2.0.0.6", not
+// "2.0.0+6") and attribute by parse-level equality across spellings
+// ===========================================================================
+
+#[test]
+fn which_version_files_label_quad_spelling() {
+    let pkgs_json = serde_json::json!({
+        "schema": 2, "games": {},
+        "packages": [ { "id": "p", "name": "P", "versions": [
+            { "version": "2.0.0.6", "assets": ["u"] }
+        ]} ]
+    });
+    let lock_json = serde_json::json!({
+        "schema": 2, "generated_at": 0,
+        "assets": { "u": {
+            "url": "u", "sha256": "0".repeat(64),
+            "files": [ { "path": "P.asi", "sha256": "1".repeat(64) } ]
+        } }
+    });
+    let pkgs: PackagesFile = serde_json::from_value(pkgs_json).unwrap();
+    let lock: LockFile = serde_json::from_value(lock_json).unwrap();
+    let vf = crate::handlers::which::version_files(&pkgs, &lock, "p", None);
+    assert_eq!(vf.len(), 1);
+    assert_eq!(
+        vf[0].0, "2.0.0.6",
+        "which labels must keep the upstream spelling"
+    );
+    // Attribution works across spellings: a state record written as
+    // "2.0.0+6" still attributes the file labeled "2.0.0.6".
+    let matched: [&str; 1] = [vf[0].0.as_str()];
+    assert_eq!(
+        crate::handlers::which::attribute(Some("2.0.0+6"), &matched),
+        "2.0.0.6"
     );
 }
 

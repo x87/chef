@@ -1,11 +1,15 @@
 {
   "schema": 2,
-  "generated_at": 1788189391,
+  "generated_at": 1788524016,
   "assets": {
     "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip": {
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip",
       "sha256": "bbc8b22bd4877bfb025ed5858f826f6ca6d00c6bfd49752a8b36e2acf90d0397",
       "files": [
+        {
+          "path": "ReadMe.txt",
+          "sha256": "d9fda69211538d427ec3068879971faefdf5d8d539728d49689eaa34bf0c14aa"
+        },
         {
           "path": "SilentPatchIII.asi",
           "sha256": "5cb5bc539c9ec81fb9c710f930c392ecbc876162851aec0c0b48a8c285acf8d9"
@@ -21,6 +25,10 @@
       "sha256": "028784e08b0b32461b226e816cf0f3c1cb1b0f27e8ecc3b9b000771b7f618664",
       "files": [
         {
+          "path": "ReadMe.txt",
+          "sha256": "ec63ad936156b397e28193d687ebd597c374d8a6c4552e4192001f8f22a348d6"
+        },
+        {
           "path": "SilentPatchSA.asi",
           "sha256": "a4c27d738c6cfb88a8303f19174f2ca604938b26c489bc14045648545b60856c"
         },
@@ -34,6 +42,10 @@
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchVC.zip",
       "sha256": "474282ffbe1ec18b50f77bbdf1666942b681e8241b282d5af461d4333789f256",
       "files": [
+        {
+          "path": "ReadMe.txt",
+          "sha256": "2eba7b70d39ba8532932941b5cd8366ac9de339448768a53363a1f4b4f795aaf"
+        },
         {
           "path": "SilentPatchVC.asi",
           "sha256": "7102382f2cd0a33952fd7009aed024030d606caa23c33ed3ea9bb8c48544cb34"
@@ -81,6 +93,10 @@
       "sha256": "90e9d41274668682f5ed597e091e9f7b3681eea2ae05edc610d8c5ec13bd974f",
       "files": [
         {
+          "path": "ReadMe.txt",
+          "sha256": "2b2326365449cb8d54ab429c93dbf910dcd3640845126a6da6f61666d30c4932"
+        },
+        {
           "path": "SilentPatchIII.asi",
           "sha256": "ad72c1ebd4be20bc9967c2f9cf0121fd661a642dbc19ccd6388266aeabf6d1f1"
         },
@@ -95,6 +111,10 @@
       "sha256": "620bb2000de57f0035c9ee8cbd8a3e2af244257fe160ad6b034b560ff131aa54",
       "files": [
         {
+          "path": "ReadMe.txt",
+          "sha256": "a2583e9bf39b5a77de9895bfb5e8bd0a309ed48ed3260633c7bf058c7093ee48"
+        },
+        {
           "path": "SilentPatchSA.asi",
           "sha256": "7b54a636920dfdd0ebf3db78ae7bda3e35c9b28d7b845d0ba4910fbe05343b7e"
         },
@@ -108,6 +128,10 @@
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34-SA/SilentPatchVC.zip",
       "sha256": "7f3adcdf8b64a4bb3df4ac487fd3b439a0678a09bed3090e427f9876c4c7d9cf",
       "files": [
+        {
+          "path": "ReadMe.txt",
+          "sha256": "039ff3ddc8c550a49dcf049daabbe5cec5c20358b3c075c0bbb6c0ae78ae46c6"
+        },
         {
           "path": "SilentPatchVC.asi",
           "sha256": "019877b3d04cf9f846baa80e3f0ac746c185a4586c9f5db2a6f847221a3ed83e"
@@ -155,6 +179,10 @@
       "sha256": "6d5ebab21126345a2b33e0aa5737a28eaa7c5822a45fa796690793c668a519f3",
       "files": [
         {
+          "path": "ReadMe.txt",
+          "sha256": "eb41e3c993880ed3bfc09993e453d46517e28835db14acaaee06f0fd5c79a510"
+        },
+        {
           "path": "SilentPatchIII.asi",
           "sha256": "97d162081032f048958c3de0a5d92eb08d15512fc972bb9ce24562e4d35c3c5c"
         },
@@ -169,6 +197,10 @@
       "sha256": "0837bbdc0548a4a952f924adefd2bb6eacc866407f153844fe1f56995668c42c",
       "files": [
         {
+          "path": "ReadMe.txt",
+          "sha256": "edf765b89113e367527eaf2e00005d5b7ac0c9eed6b2c037419f02f86617bce7"
+        },
+        {
           "path": "SilentPatchSA.asi",
           "sha256": "908e1d12e36ba809a8ce584be0bd29239349968259a5de593f9b0cc71dbb352b"
         },
@@ -182,6 +214,10 @@
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD34.1-SA/SilentPatchVC.zip",
       "sha256": "37189b72835316ac1d20d13e686d5fe986ffde51755de5d730ba5795378840ab",
       "files": [
+        {
+          "path": "ReadMe.txt",
+          "sha256": "463cf96a9f3790307547808331137306feddbfc317c929596478fb7c06e6aeaf"
+        },
         {
           "path": "SilentPatchVC.asi",
           "sha256": "71eaf21c9bcba7010c389dd57badd56cdaae55cf73cc52e1941529d598a6c771"
@@ -229,6 +265,10 @@
       "sha256": "7f57fb59707649e29168b025c0297be282a4ba7d8dc5109b7536e783a363d949",
       "files": [
         {
+          "path": "ReadMe.txt",
+          "sha256": "c5f842453210570f506e9fd4bba10404153c21abc70d6b53a887915f5103fc4e"
+        },
+        {
           "path": "SilentPatchIII.asi",
           "sha256": "a25418e3b56ae6d763b49b6fdb8ebfab30e6a758ad74e1e0b4879cf0b3e6cd78"
         },
@@ -243,6 +283,10 @@
       "sha256": "5d915e9f3bbab7137e1fb9d1c3f731e895a88a500557649291f9694c007ef611",
       "files": [
         {
+          "path": "ReadMe.txt",
+          "sha256": "464058e304524adf626a14125f739c2b83925283cf9d3b1d44b3d5bff98317ea"
+        },
+        {
           "path": "SilentPatchSA.asi",
           "sha256": "a95f9550175a8f41f68d24d93b34610fe5f6f486b9bf543438f698564543443b"
         },
@@ -256,6 +300,10 @@
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD9.2-III/SilentPatchVC.zip",
       "sha256": "1cd0bf2c6b5e186f4fd397cafc41bbd3ca2e9c8fc04333f6f73a14b7258d2b3d",
       "files": [
+        {
+          "path": "ReadMe.txt",
+          "sha256": "134490900e50a095370981c4d318027d86b5f9a0890e60aa64d0cda6169449ae"
+        },
         {
           "path": "SilentPatchVC.asi",
           "sha256": "3ee6b28f2d82ecec5d4cde9de75f170b2a555515cb544e9d9ed2e534afbb6091"
@@ -349,6 +397,224 @@
         {
           "path": "vorbisHooked.dll",
           "sha256": "a08923479000cec366967fb8259e0920b7aa18859722c7dda1415726bed4774f"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.0/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.0/III.VC.SA.WindowedMode.zip",
+      "sha256": "a68a7bd75892d9fedb4d2c9deddc4bbbdf47dc0a38495382bb4c00ec4ec6abac",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "7fba7f070233763972321f0c2fc23485b36e56ea3d949ce3302c1123370ae8c2"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "659abb942de46ee95eb7a85bf7fc8e810eb1e7094a45323b77e65cf904c66d5c"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.1/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.1/III.VC.SA.WindowedMode.zip",
+      "sha256": "b29f9cc8981f987cd2b0abb4a0a0d5bd63e258b105e2d71e992d9c866d2e64ef",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "7fba7f070233763972321f0c2fc23485b36e56ea3d949ce3302c1123370ae8c2"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "e405913811806fdf11020e1fa2d8e4ccf1eb3eb463a751c6d39206caa27be6fa"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.11/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.11/III.VC.SA.WindowedMode.zip",
+      "sha256": "303916d908244db52a38594a9c9dbd0e2b9741416040d2f2357d0db90d20fd0d",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "0e5c7bcd18f1bad217db530ac36d9e8e4cea881183cd82c51e10b3f1213ba5ac"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "8ebc49ea03b1b810870b1e01a2a74ac5dce965c389bb1dc7cdc096c463b60d14"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.12/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.12/III.VC.SA.WindowedMode.zip",
+      "sha256": "0e469ae180f8345402e288b9984717547b31fcaee7f920887cf4d536077e1e53",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "544e8a6c54c8e4ad1c29fe8148e4d13e9f4493312e032aa4a972b86fbfc7c96a"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "2f2219b945c4f5054b9e9d770dcfa06cb136f0c12efeab71e05bd2c26a2b913d"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.13/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.13/III.VC.SA.WindowedMode.zip",
+      "sha256": "4251f0ba9a99114e953dd7c261ffcf4732060f35b2690939cf9580672ac616a5",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "0347c444fdb30191aeefa94be220964e9a3a69b552289617054e4c72ef0a1bab"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "a26ef4b7fa46598330056bc9ab8dfff81232cb4169766df2e825ce01c5956e0e"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.15/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.15/III.VC.SA.WindowedMode.zip",
+      "sha256": "d8477b1b6a64a05463ecb1bd304b517464a6bee0cc0e211c677cdd2f2efe9054",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "6207c19bfe8751502ba5623081609228a60537d3bf3112f8be64e23b19c43a1e"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "d7f1798747346b54696a67b7b04e0bb39a4a530e7df98f86848ba4e04dbc983f"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.16/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.16/III.VC.SA.WindowedMode.zip",
+      "sha256": "bb6261fb3c315bf34949b1c0cb9b88948679428829e32ed0e122b60790943181",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "4d3ae1fb6dd7d51e6366d363cda6c2f1813148f4dd303ee92cce0d49bd982ffb"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "b399b5927a332fb0940e3e57e2e74b62f20824c6f5ebabb80b1bbd164e0a5627"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.17/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.17/III.VC.SA.WindowedMode.zip",
+      "sha256": "e25759d3ca12fb3947a31459e14b56d502f10b5e48be71475e793169e408d21e",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "3482f6c4541541e57bd7a371b8f29f24e1658e3588d5ed8a084a84fc23f38f92"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "6ea563afc5934a44108bea9a8420327c1819570831b86ecac77ca1fba1ce0e88"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.2/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.2/III.VC.SA.WindowedMode.zip",
+      "sha256": "506296bcbb75bf75a92324f8a5d675ac0c3c005051188d20a96824d0cbf39f8c",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "ca8bae84aebc0dd24692dd3776df528cfdbac9ccd20031c68cd995efc1484703"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "3d4876cf7ea86f0547ea90b61637475ba6ecdaccd704cf27a1f645be3124069d"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.3/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.3/III.VC.SA.WindowedMode.zip",
+      "sha256": "9371c8d58bcc1a4e71da53049f754745695c1d645927236e244424e58217927b",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "1dc526663ffc575d618cb4a2582b4b585ddde8c0d54f5bae541c7626b90ea3d3"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "182b16997dd056f769336b2e1809d1900859b5312cee0f64f1591809a0278a01"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.4/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.4/III.VC.SA.WindowedMode.zip",
+      "sha256": "0547aacde010e2699bfb35f8a668b958394dc8761d6939dca6f9175212e57116",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "1df00d768d505b879fc04ce9d696b5777909b3f7904fbd7dd496886625185bc9"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "36b9cf2cbd2f865582c1b1383be1b50a3938859a833c0cb8eb1d1cca5e2766d9"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.5/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.5/III.VC.SA.WindowedMode.zip",
+      "sha256": "17941fde2c5ff6c0dc26d40fb199652e29e57fe26daaec4ea3b0b8de85654481",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "a961b6daa207890f79ac127d2002628d0bc0c221a3ae4d7da4d9bbd7634f2a6f"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "9590e7b42cf7e1b97e0d9305601ad96cf93f9f5d36f632bae2eca04db12038cb"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.6/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.6/III.VC.SA.WindowedMode.zip",
+      "sha256": "485f53058aa492c8f07c36df8bd523b409c0cf010a35c40c6691c359c11c2a6e",
+      "files": [
+        {
+          "path": "III.VC.SA.CoordsManager.exe",
+          "sha256": "31e01e196c2a34aad1bbc82c9f602959e8ea1fbc843da81c0390f58ecd98a2bd"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "7c40832060dfaa2f9e209dfa6ee399f0aa295798416824b77c28de230cd5f34a"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.0/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.0/III.VC.SA.WindowedMode.zip",
+      "sha256": "4b48ef49cc187cb3a3b4b5ee4ddcc3831a5d40c35cb3aa662bc4632cf15e6fe6",
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "sha256": "69d648730ad33f9bd80d7e21146f75b4b0ce43a9756a3c4d366155c6f670f432"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "8c91dbea22c0b94250b713216b94de97cd0bfa9e06b86a850ca89cbe9d6c210f"
+        },
+        {
+          "path": "README.md",
+          "sha256": "9c61440cb798124a5982cefce39bf81c71681941c4ffc52b3a7d32f5f81dd779"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.1/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.1/III.VC.SA.WindowedMode.zip",
+      "sha256": "b97d74b604f6e66d199b91afa615de2454d69dddf4b6229dc6d24be62dac2505",
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "sha256": "69d648730ad33f9bd80d7e21146f75b4b0ce43a9756a3c4d366155c6f670f432"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "c8d37c7598ab363506b437fb9b637faedaa0e8c78fe63d0ab0865e326b85c85a"
+        },
+        {
+          "path": "README.md",
+          "sha256": "9c61440cb798124a5982cefce39bf81c71681941c4ffc52b3a7d32f5f81dd779"
         }
       ]
     },
@@ -999,6 +1265,142 @@
         {
           "path": "cleo/cleo_plugins/SA.Text.cleo",
           "sha256": "24f5505999f94cbbc1859d75b7c61cc59c44f1ef31aceb8320ee2e4190acd572"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.0.0.6/III.CLEOv2.0.0.6.zip": {
+      "url": "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.0.0.6/III.CLEOv2.0.0.6.zip",
+      "sha256": "8728b6db1256b7c63d2a06a303443db38ff381656c5c14dd0f79c8a71eeef292",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.ClipboardControl.cleo",
+          "sha256": "4360f1289808a4c286ce2a856dcf97bd9f17f643797d0a626b2834051cf02412"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.FileSystemOperations.cleo",
+          "sha256": "976772eff3c14323550b3a2f5c3da14cdafad011c544756558449d56e69a9210"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.IniFiles.cleo",
+          "sha256": "3042efac24d1c989e1a59b359958e8fc2150634f1a1b3a2b7be26e43941832af"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.IntOperations.cleo",
+          "sha256": "7d282a0b2235bfb2191b7432e607a773792697cb081451c080390a48f8d5da6f"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.MemoryModule.cleo",
+          "sha256": "a6b5c71af0391ebb28061a9da0fb596dfc2e0a38a92b13152803eb3abba139eb"
+        },
+        {
+          "path": "III.CLEO.asi",
+          "sha256": "19670e9e52a75b3c597040803e38a62d3942e02a29090be9e3613576ecf0ff7c"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.0.0.6/VC.CLEOv2.0.0.6.zip": {
+      "url": "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.0.0.6/VC.CLEOv2.0.0.6.zip",
+      "sha256": "05f8136ecd61aba0f30aac2ce048a0358a5da301b3bcc0362a1c0cdea655b8cc",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.ClipboardControl.cleo",
+          "sha256": "441ef12683ec6b225d42aa7b02adc4ba620d196a60a4cf42518fb137d35afa9d"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.FileSystemOperations.cleo",
+          "sha256": "fa417935a919a83af6870e7a7e545668c37490063e7c123c0c4fc337d7d592d2"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.IniFiles.cleo",
+          "sha256": "b34cd88c8624c1171f427c949d804aa02241762cb726b1b1ded6c0a08e68b2cc"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.IntOperations.cleo",
+          "sha256": "a7e1e9c3516e9dc865cf800b96e276f6d0482100b50ad51b4599a66b52568d48"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.MemoryModule.cleo",
+          "sha256": "af0c2d8e6812174aac6972957e82b8a79e5f8f77c5144bd5f1d6e24faedf27f5"
+        },
+        {
+          "path": "VC.CLEO.asi",
+          "sha256": "a083a4f138bdce3aaeb1ef39ac7704b940e98899977a87a5903825d24f06e909"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.1.1/CLEO.III_v2.1.1.zip": {
+      "url": "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.1.1/CLEO.III_v2.1.1.zip",
+      "sha256": "e9f3a06d03d05b4d9bc2a995ca141bd02da25831116a394e79d43f472eee6eaa",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.ClipboardControl.cleo",
+          "sha256": "b75049fb415359de29908382e0a1affd2980d6b26d78aafddcf9d1f56d1549a1"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.FileSystemOperations.cleo",
+          "sha256": "c0e6191e9c54efbf07a7ef7df5d701538e89bb37b9fe7cb65e5705703a95c596"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.IniFiles.cleo",
+          "sha256": "162ecc62fc10d50797d2a1c369fe1f1f38909e39a5c6ab03e299acf4b19267bb"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.IntOperations.cleo",
+          "sha256": "6f4b76ea5b80a577ced7d6be5bc381263231055bfe3bafc52c5d13776c202518"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/III.MemoryModule.cleo",
+          "sha256": "b2d4f9800e96cec98e94482bf056b95b0795ef27cb7c43d5b9193db785b8c1e2"
+        },
+        {
+          "path": "CLEO_Readme/Changelog.txt",
+          "sha256": "c05ceebb1eb05a67144910ff64144337d87fb07728ec9660e61b8f21c1ef5682"
+        },
+        {
+          "path": "CLEO_Readme/Readme.txt",
+          "sha256": "08a664d209644111e42881d9f7ce9f51d46d6bc0e8f28e0a9696702f7ccd86b2"
+        },
+        {
+          "path": "III.CLEO.asi",
+          "sha256": "01071c074f88e35083449b06e175aea80fbd10cc86efb73cd237d226d66c6a28"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.1.1/CLEO.VC_v2.1.1.zip": {
+      "url": "https://github.com/cleolibrary/III.VC.CLEO/releases/download/2.1.1/CLEO.VC_v2.1.1.zip",
+      "sha256": "3a7de13dbf0c83ec7e83011eec9157c7d5b43b828a26f12991ea0da367b3c3ab",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.ClipboardControl.cleo",
+          "sha256": "d1cfefeff8517784384f5a5962f34f1b4774bbc7ebb4bf247b81b7b1825cb8b0"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.FileSystemOperations.cleo",
+          "sha256": "f2def57105d49c10421fe7d97e7b8663c65d7d2299f6a82042480bc3a610517b"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.IniFiles.cleo",
+          "sha256": "1bff12dc5b3208f057d3ecb0fdc1dadadbfb8c1e8aff62c33615247f0a6cfb1e"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.IntOperations.cleo",
+          "sha256": "66f9e6a918c393d1640762c378acc66409d7f7e30c9f117d1dd6ecdc648d0aa2"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/VC.MemoryModule.cleo",
+          "sha256": "0091a75f1733dd57059c54f088b94b8b6c7c30497cb7cc36fe52af6d4a40d8cd"
+        },
+        {
+          "path": "CLEO_Readme/Changelog.txt",
+          "sha256": "c05ceebb1eb05a67144910ff64144337d87fb07728ec9660e61b8f21c1ef5682"
+        },
+        {
+          "path": "CLEO_Readme/Readme.txt",
+          "sha256": "55f20d5ff37f46d457690d9155b64ac3bbdbd4d6b2a48fbe2fd6eb8ed733a36a"
+        },
+        {
+          "path": "VC.CLEO.asi",
+          "sha256": "fdd5883fdfc3589c23dede6565527aee37af28127ebc5c6ab3fe64bf0479b2da"
         }
       ]
     },

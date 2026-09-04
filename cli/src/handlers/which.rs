@@ -34,7 +34,7 @@ pub(crate) struct PackageSummary {
 /// whose bytes match several releases to its newest one).
 pub(crate) fn newest_match<'a>(vs: &[&'a str]) -> &'a str {
     let mut s: Vec<&str> = vs.to_vec();
-    s.sort_by(|a, b| version_cmp_desc(a, b));
+    s.sort_by(|a, b| packages::version_cmp_desc(a, b));
     s.into_iter().next().unwrap_or_default()
 }
 
@@ -46,21 +46,14 @@ pub(crate) fn newest_match<'a>(vs: &[&'a str]) -> &'a str {
 /// files would read as gaps.
 pub(crate) fn attribute<'a>(installed: Option<&str>, matched: &[&'a str]) -> &'a str {
     if let Some(ins) = installed
-        && let Some(v) = matched.iter().copied().find(|m| m == &ins)
+        && let Some(v) = matched
+            .iter()
+            .copied()
+            .find(|m| packages::same_version(m, ins))
     {
         return v;
     }
     newest_match(matched)
-}
-
-fn version_cmp_desc(a: &str, b: &str) -> std::cmp::Ordering {
-    let ka = semver::Version::parse(a)
-        .map(|v| (v.major, v.minor, v.patch))
-        .unwrap_or((0, 0, 0));
-    let kb = semver::Version::parse(b)
-        .map(|v| (v.major, v.minor, v.patch))
-        .unwrap_or((0, 0, 0));
-    kb.cmp(&ka).then_with(|| b.cmp(a))
 }
 
 /// User-editable `.ini` config files never decide the outcome: users tune
@@ -116,10 +109,12 @@ pub(crate) fn version_files(
             }
         }
         if !files.is_empty() {
-            out.push((v.to_string(), files));
+            // Label with the upstream spelling ("2.0.0.6"), not the parsed
+            // semver text ("2.0.0+6"): these labels are what `which` shows.
+            out.push((packages::display_spelling(&rec.version, &v), files));
         }
     }
-    out.sort_by(|a, b| version_cmp_desc(&a.0, &b.0));
+    out.sort_by(|a, b| packages::version_cmp_desc(&a.0, &b.0));
     out
 }
 
@@ -229,7 +224,7 @@ pub(crate) fn summarize_package(
     if unknown {
         let note = format!("run 'chef which {cmd}' for more details");
         let mut versions: Vec<String> = found.into_iter().collect();
-        versions.sort_by(|a, b| version_cmp_desc(a, b));
+        versions.sort_by(|a, b| packages::version_cmp_desc(a, b));
         return Some(PackageSummary {
             id: id.to_string(),
             name,
@@ -242,7 +237,7 @@ pub(crate) fn summarize_package(
     }
 
     let mut found_vec: Vec<String> = found.into_iter().collect();
-    found_vec.sort_by(|a, b| version_cmp_desc(a, b));
+    found_vec.sort_by(|a, b| packages::version_cmp_desc(a, b));
 
     if found_vec.is_empty() {
         // Nothing of any release is present. Only a chef-managed package
@@ -339,7 +334,7 @@ pub(crate) fn detail_rows(
                     v => {
                         if anchor
                             .as_deref()
-                            .is_none_or(|a| version_cmp_desc(v, a).is_lt())
+                            .is_none_or(|a| packages::version_cmp_desc(v, a).is_lt())
                         {
                             anchor = Some(v.to_string());
                         }

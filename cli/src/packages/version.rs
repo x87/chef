@@ -1,5 +1,3 @@
-//! Version-spec resolution (`pkg@spec`) and the resolved-release model.
-
 use std::collections::{BTreeMap, BTreeSet};
 
 use anyhow::{Context, bail};
@@ -33,8 +31,15 @@ fn parse_ver_spec(spec: &str) -> anyhow::Result<VerSpec> {
         "preview" | "beta" => return Ok(VerSpec::Preview),
         _ => {}
     }
-    let norm = spec.trim().strip_prefix(['v', 'V']).unwrap_or(spec.trim());
+    let norm = strip_v_prefix(spec);
     if let Ok(v) = semver::Version::parse(norm) {
+        return Ok(VerSpec::Exact(v));
+    }
+    // 4-part numeric releases (e.g. "2.0.0.6") map onto build metadata
+    // ("2.0.0+6") so quad versions resolve as exact semvers.
+    if let Some(quad) = normalize_quad(norm)
+        && let Ok(v) = semver::Version::parse(&quad)
+    {
         return Ok(VerSpec::Exact(v));
     }
     if !norm.is_empty() && norm.chars().all(|c| c.is_ascii_digit() || c == '.') {
@@ -98,7 +103,103 @@ pub(crate) fn parse_version_loose(s: &str) -> Option<semver::Version> {
             return Some(v);
         }
     }
+    // 4-part numeric releases (e.g. "2.0.0.6") map onto build metadata
+    // ("2.0.0+6") so quad versions are tracked, ordered as their base
+    // release and considered stable (build metadata is not a prerelease).
+    if let Some(quad) = normalize_quad(s)
+        && let Ok(v) = semver::Version::parse(&quad)
+    {
+        return Some(v);
+    }
     None
+}
+
+/// Map a 4-part numeric version ("2.0.0.6" = major.minor.patch.build) onto
+/// semver build metadata ("2.0.0+6"). Returns None for anything that is not
+/// exactly four dot-separated numeric components.
+fn normalize_quad(s: &str) -> Option<String> {
+    let parts: Vec<&str> = s.split('.').collect();
+    if parts.len() == 4
+        && parts
+            .iter()
+            .all(|p| !p.is_empty() && p.chars().all(|c| c.is_ascii_digit()))
+    {
+        Some(format!(
+            "{}.{}.{}+{}",
+            parts[0], parts[1], parts[2], parts[3]
+        ))
+    } else {
+        None
+    }
+}
+
+/// The version text users see: the exact upstream spelling whenever the
+/// catalog entry is parseable as-is or is a 4-part numeric version, so
+/// "2.0.0.6" shows as "2.0.0.6" rather than the intermediate semver build
+/// form "2.0.0+6". Loose spellings that only parse after normalization
+/// (e.g. "2.0.0.beta" -> 2.0.0-beta) still show the parsed form.
+pub(crate) fn display_spelling(raw: &str, v: &semver::Version) -> String {
+    if semver::Version::parse(raw).is_ok() || normalize_quad(raw).is_some() {
+        raw.to_string()
+    } else {
+        v.to_string()
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Shared version primitives. Consumers access these through `packages::*`;
+// the semver crate stays confined to this module.
+// ---------------------------------------------------------------------------
+
+/// Strip a leading `v`/`V` and surrounding whitespace from a version text
+/// ("v2.1" -> "2.1").
+pub(crate) fn strip_v_prefix(s: &str) -> &str {
+    s.trim().strip_prefix(['v', 'V']).unwrap_or(s.trim())
+}
+
+/// Is `s` a complete exact version ("4.4.4")? Strict semver: a quad like
+/// "2.0.0.6" is not exact here - it flows through the loose machinery.
+pub(crate) fn is_exact_version(s: &str) -> bool {
+    semver::Version::parse(s).is_ok()
+}
+
+/// Strict parse with a proper error, for release tags that must parse
+/// (chef's own version tags).
+pub(crate) fn parse_strict(s: &str) -> anyhow::Result<semver::Version> {
+    semver::Version::parse(s).map_err(|e| anyhow::anyhow!("invalid version '{s}': {e}"))
+}
+
+/// Chef's own current version, from the crate manifest.
+pub(crate) fn current_version() -> semver::Version {
+    semver::Version::parse(env!("CARGO_PKG_VERSION")).unwrap()
+}
+
+/// Parse a GitHub release JSON object's `tag_name` ("v1.2.3") into a
+/// version.
+pub(crate) fn parse_tag(v: &serde_json::Value) -> Option<semver::Version> {
+    let tag = v.get("tag_name")?.as_str()?;
+    semver::Version::parse(strip_v_prefix(tag)).ok()
+}
+
+/// Order two version texts newest-first: parsed versions by their numeric
+/// components (unparseable sorts as 0.0.0), tie-breaking by string.
+pub(crate) fn version_cmp_desc(a: &str, b: &str) -> std::cmp::Ordering {
+    let ka = parse_version_loose(a)
+        .map(|v| (v.major, v.minor, v.patch))
+        .unwrap_or((0, 0, 0));
+    let kb = parse_version_loose(b)
+        .map(|v| (v.major, v.minor, v.patch))
+        .unwrap_or((0, 0, 0));
+    kb.cmp(&ka).then_with(|| b.cmp(a))
+}
+
+/// The same release under two spellings ("2.0.0.6" vs "2.0.0+6", or
+/// exact text): equal as text or equal after parsing.
+pub(crate) fn same_version(a: &str, b: &str) -> bool {
+    a == b
+        || parse_version_loose(a)
+            .zip(parse_version_loose(b))
+            .is_some_and(|(x, y)| x == y)
 }
 
 fn is_preview_rec(rec: &VersionEntry, v: &semver::Version) -> bool {
@@ -200,6 +301,9 @@ pub fn resolve_spec(
     #[derive(Clone)]
     struct Entry<'a> {
         version: semver::Version,
+        /// Upstream spelling for user-facing text ("2.0.0.6"), not the
+        /// parsed semver text ("2.0.0+6").
+        display: String,
         rec: &'a VersionEntry,
         url: String,
         locked: &'a LockedAsset,
@@ -225,6 +329,7 @@ pub fn resolve_spec(
             format!("no digest recorded for {url} - regenerate packages.lock (tools/gen_hashes)")
         })?;
         entries.push(Entry {
+            display: display_spelling(&rec.version, &v),
             version: v,
             rec,
             url,
@@ -240,7 +345,7 @@ pub fn resolve_spec(
         it.into_iter().next().map(|e| ResolvedVersion {
             id: id.to_string(),
             name: pkg.name.clone(),
-            version: e.version.to_string(),
+            version: e.display.clone(),
             release: e.rec.release.clone(),
             url: e.url,
             asset_sha256: e.locked.sha256.clone(),
@@ -274,7 +379,7 @@ pub fn resolve_spec(
             .map(|e| ResolvedVersion {
                 id: id.to_string(),
                 name: pkg.name.clone(),
-                version: e.version.to_string(),
+                version: e.display.clone(),
                 release: e.rec.release.clone(),
                 url: e.url,
                 asset_sha256: e.locked.sha256.clone(),
@@ -334,8 +439,8 @@ pub fn available_versions(
         return Vec::new();
     };
     let mut seen: BTreeSet<String> = BTreeSet::new();
-    let mut best_stable: BTreeMap<u64, semver::Version> = BTreeMap::new();
-    let mut newest_preview: Option<semver::Version> = None;
+    let mut best_stable: BTreeMap<u64, (semver::Version, String)> = BTreeMap::new();
+    let mut newest_preview: Option<(semver::Version, String)> = None;
     for rec in &pkg.versions {
         if let Some(g) = game
             && !version_covers_game(rec, g)
@@ -354,34 +459,35 @@ pub fn available_versions(
         if !seen.insert(v.to_string()) {
             continue;
         }
+        let display = display_spelling(&rec.version, &v);
         if !is_preview_rec(rec, &v) {
             best_stable
                 .entry(v.major)
                 .and_modify(|b| {
-                    if v > *b {
-                        *b = v.clone()
+                    if v > b.0 {
+                        *b = (v.clone(), display.clone())
                     }
                 })
-                .or_insert(v.clone());
+                .or_insert((v.clone(), display));
         } else {
             newest_preview = Some(match newest_preview {
-                Some(cur) if cur >= v => cur,
-                _ => v.clone(),
+                Some((cur, cur_display)) if cur >= v => (cur, cur_display),
+                _ => (v.clone(), display),
             });
         }
     }
-    let mut out: Vec<(semver::Version, bool)> = Vec::new();
-    for (_, v) in best_stable {
-        out.push((v, false));
+    let mut out: Vec<(semver::Version, String, bool)> = Vec::new();
+    for (_, (v, display)) in best_stable {
+        out.push((v, display, false));
     }
-    if let Some(pv) = newest_preview
-        && out.iter().all(|(v, _)| pv > *v)
+    if let Some((pv, pdisplay)) = newest_preview
+        && out.iter().all(|(v, _, _)| pv > *v)
     {
-        out.push((pv, true));
+        out.push((pv, pdisplay, true));
     }
     out.sort_by(|a, b| b.0.cmp(&a.0));
     out.dedup();
     out.into_iter()
-        .map(|(v, pre)| (v.to_string(), pre))
+        .map(|(_, display, pre)| (display, pre))
         .collect()
 }

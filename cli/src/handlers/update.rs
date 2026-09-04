@@ -75,7 +75,7 @@ pub fn run(pkg: Option<&str>, game_dir: &Path, dry_run: bool, json: bool) -> cra
             continue;
         };
 
-        let Ok(cur) = semver::Version::parse(&inst.version) else {
+        let Some(cur) = packages::parse_version_loose(&inst.version) else {
             continue;
         };
 
@@ -92,7 +92,7 @@ pub fn run(pkg: Option<&str>, game_dir: &Path, dry_run: bool, json: bool) -> cra
         let res = packages::resolve_spec(&pkgs, &lock, id, game.as_deref(), Some("stable"))
             .map_err(ChefError::Other)?;
 
-        let Ok(new) = semver::Version::parse(&res.version) else {
+        let Some(new) = packages::parse_version_loose(&res.version) else {
             continue;
         };
 
