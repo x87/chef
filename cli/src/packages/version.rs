@@ -250,8 +250,8 @@ pub struct ResolvedVersion {
     /// Payload to deploy: (deployed path, archive entry path). Postinstall
     /// renames have been applied to the deployed side.
     pub payload: Vec<(String, String)>,
-    /// Package ids this version requires to be present.
-    pub dependencies: Vec<String>,
+    /// Any-of dependency requirements this version needs satisfied.
+    pub dependencies: Vec<crate::packages::DependencyGroup>,
     /// Ids occupying the same slot (this one + `replaces` partners).
     pub slot: Vec<String>,
 }

@@ -16,8 +16,8 @@ pub mod version;
 pub use archive::{extract_zip, sanitize_entry};
 pub use assets::select_asset_url;
 pub use catalog::{
-    LockFile, LockedAsset, LockedFile, PackageEntry, PackagesFile, PostInstall, VersionEntry,
-    existent_slot, slot_ids, version_covers_game,
+    DependencyGroup, LockFile, LockedAsset, LockedFile, PackageEntry, PackagesFile, PostInstall,
+    VersionEntry, existent_slot, slot_ids, version_covers_game,
 };
 pub use download::{download, fetch_asset, store_root};
 pub use fetch::{

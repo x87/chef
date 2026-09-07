@@ -1,5 +1,5 @@
 {
-  "schema": 2,
+  "schema": 3,
   "packages": [
     {
       "id": "cleo.sa",
@@ -23,8 +23,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -40,8 +44,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -57,8 +65,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -74,8 +86,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -91,8 +107,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -108,8 +128,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -125,8 +149,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -142,8 +170,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -163,8 +195,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         }
       ]
@@ -415,8 +451,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -429,8 +469,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -443,8 +487,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -457,8 +505,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         }
       ]
@@ -481,8 +533,12 @@
             "gta-vc"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -495,8 +551,12 @@
             "gta-vc"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -509,8 +569,12 @@
             "gta-vc"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -523,8 +587,12 @@
             "gta-vc"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         }
       ]
@@ -547,8 +615,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -561,8 +633,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -575,8 +651,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -589,8 +669,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         }
       ]
@@ -616,8 +700,12 @@
             "gta-sa"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         }
       ]
@@ -689,8 +777,12 @@
             "https://github.com/thelink2012/modloader/releases/download/v0.3.7/modloader.zip"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ],
           "exclude": [
             "Readme.txt",
@@ -711,8 +803,12 @@
             "https://github.com/thelink2012/modloader/releases/download/v0.3.9/modloader.zip"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ],
           "exclude": [
             "Readme.txt",
@@ -733,8 +829,12 @@
             "https://github.com/thelink2012/modloader/releases/download/v0.3.10/modloader.zip"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ],
           "exclude": [
             "Readme.txt",
@@ -765,8 +865,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -781,8 +885,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -797,8 +905,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -813,8 +925,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -829,8 +945,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -845,8 +965,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -861,8 +985,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -877,8 +1005,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -893,8 +1025,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -909,8 +1045,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -925,8 +1065,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -941,8 +1085,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -957,8 +1105,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -973,8 +1125,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         },
         {
@@ -989,8 +1145,12 @@
             "gta-3"
           ],
           "dependencies": [
-            "silents-asi-loader.sa",
-            "universal-asi-loader.sa.vc.iii"
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
           ]
         }
       ]

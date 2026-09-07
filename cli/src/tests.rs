@@ -24,6 +24,7 @@ struct TestEnv {
     guard: MutexGuard<'static, ()>,
     pub home: PathBuf,
     pub game_dir: PathBuf,
+    pub game3_dir: PathBuf,
 }
 
 fn assert_under_temp(p: &Path) {
@@ -143,6 +144,10 @@ fn setup(name: &str) -> TestEnv {
     copy_tree(&checkout_root().join(".dev/.test/games/san-andreas"), &game);
     assert!(game.join("gta_sa.exe").exists());
 
+    // GTA III mock for cross-game dependency tests.
+    let game3 = root.join("game-iii");
+    copy_tree(&checkout_root().join(".dev/.test/games/gta3"), &game3);
+
     // Payloads. Archive layout mirrors the real releases: root-level
     // payloads (cleo.asi, dlls) plus per-package data dirs.
     let payloads = root.join("payloads");
@@ -229,7 +234,7 @@ fn setup(name: &str) -> TestEnv {
     let ual_url = file_uri(&ual_zip);
 
     let pkgs_json = serde_json::json!({
-        "schema": 2,
+        "schema": 3,
         "games": { "gta_sa.exe": "gta-sa" },
         "packages": [
             {
@@ -242,25 +247,25 @@ fn setup(name: &str) -> TestEnv {
                         "release": "https://example.invalid/cleo5/v5.4.0",
                         "assets": [sa_url],
                         "games": ["gta-sa"],
-                        "dependencies": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"]
+                        "dependencies": [ { "any": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"] } ]
                     },
                     {
                         "version": "5.3.0",
                         "assets": [sa53_url],
                         "games": ["gta-sa"],
-                        "dependencies": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"]
+                        "dependencies": [ { "any": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"] } ]
                     },
                     {
                         "version": "5.5.0-beta.1",
                         "assets": [sa55b_url],
                         "games": ["gta-sa"],
-                        "dependencies": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"]
+                        "dependencies": [ { "any": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"] } ]
                     },
                     {
                         "version": "4.4.4",
                         "assets": [cleo4_url],
                         "games": ["gta-sa"],
-                        "dependencies": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"]
+                        "dependencies": [ { "any": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"] } ]
                     }
                 ]
             },
@@ -346,6 +351,7 @@ fn setup(name: &str) -> TestEnv {
         guard,
         home,
         game_dir: game,
+        game3_dir: game3,
     }
 }
 
@@ -384,7 +390,7 @@ fn state() -> StateFile {
 
 fn unit_pkgs() -> PackagesFile {
     let json = serde_json::json!({
-        "schema": 2,
+        "schema": 3,
         "games": { "gta_sa.exe": "gta-sa" },
         "packages": [
             { "id": "cleo.sa", "name": "CLEO", "aliases": ["cleo5", "cleo4"],
@@ -536,7 +542,7 @@ fn resolve_id<'a>(pkgs: &'a PackagesFile, s: &str) -> &'a str {
 #[test]
 fn resolve_spec_picks_stable_preview_latest_exact_prefix() {
     let pkgs_json = serde_json::json!({
-        "schema": 2, "games": {},
+        "schema": 3, "games": {},
         "packages": [ { "id": "p", "name": "P", "versions": [
             { "version": "1.0.0", "assets": ["u1"] },
             { "version": "1.5.0", "assets": ["u2"] },
@@ -1535,6 +1541,10 @@ fn setup_scenario(name: &str) -> TestEnv {
     // San Andreas mock, refreshed pristine from `.dev/.test/games`.
     copy_tree(&checkout_root().join(".dev/.test/games/san-andreas"), &game);
     assert!(game.join("gta_sa.exe").exists());
+
+    // GTA III mock for cross-game dependency tests.
+    let game3 = root.join("game-iii");
+    copy_tree(&checkout_root().join(".dev/.test/games/gta3"), &game3);
     let payloads = root.join("payloads");
     let cleo5_zip = payloads.join("cleo.sa/5.4.0/SA.CLEO-v5.4.0.zip");
     write_test_zip(
@@ -1576,6 +1586,8 @@ fn setup_scenario(name: &str) -> TestEnv {
     );
     let ual_zip = payloads.join("universal-asi-loader/9.7.4/UAL.zip");
     write_test_zip(&ual_zip, &[("dinput8.dll", b"MZ-ual")], None);
+    let modloader_zip = payloads.join("modloader/0.3.10/ModLoader.zip");
+    write_test_zip(&modloader_zip, &[("modloader.asi", b"MZ-modloader")], None);
     fn file_uri(p: &Path) -> String {
         let s = p.to_string_lossy().replace('\\', "/");
         format!("file:///{s}")
@@ -1598,6 +1610,7 @@ fn setup_scenario(name: &str) -> TestEnv {
     add(&file_uri(&sal13_zip), &sal13_zip);
     add(&file_uri(&sal15b_zip), &sal15b_zip);
     add(&file_uri(&ual_zip), &ual_zip);
+    add(&file_uri(&modloader_zip), &modloader_zip);
     let lock_json = serde_json::json!({ "schema": 2, "generated_at": 0, "assets": serde_json::Value::Object(assets) });
     let sa_url = file_uri(&cleo5_zip);
     let sa4_url = file_uri(&cleo4_zip);
@@ -1605,13 +1618,14 @@ fn setup_scenario(name: &str) -> TestEnv {
     let sal13_url = file_uri(&sal13_zip);
     let sal15b_url = file_uri(&sal15b_zip);
     let ual_url = file_uri(&ual_zip);
+    let modloader_url = file_uri(&modloader_zip);
     let pkgs_json = serde_json::json!({
-        "schema": 2,
-        "games": { "gta_sa.exe": "gta-sa" },
+        "schema": 3,
+        "games": { "gta_sa.exe": "gta-sa", "gta3.exe": "gta-3" },
         "packages": [
             { "id": "cleo.sa", "name": "CLEO", "aliases": ["cleo5","cleo4","cleo-sa"], "versions": [
-                { "version": "5.4.0", "assets": [sa_url], "games": ["gta-sa"], "dependencies": ["silents-asi-loader.sa","universal-asi-loader.sa.vc.iii"] },
-                { "version": "4.4.4", "assets": [sa4_url], "games": ["gta-sa"], "dependencies": ["silents-asi-loader.sa","universal-asi-loader.sa.vc.iii"] }
+                { "version": "5.4.0", "assets": [sa_url], "games": ["gta-sa"], "dependencies": [ { "any": ["silents-asi-loader.sa","universal-asi-loader.sa.vc.iii"] } ] },
+                { "version": "4.4.4", "assets": [sa4_url], "games": ["gta-sa"], "dependencies": [ { "any": ["silents-asi-loader.sa","universal-asi-loader.sa.vc.iii"] } ] }
             ]},
             { "id": "cleo-redux.sa", "name": "CLEO Redux", "aliases": ["cleo-redux","cleoredux"], "versions": [{ "version": "1.5.0", "assets": [redux_url], "games": ["gta-sa"] }]},
             { "id": "silents-asi-loader.sa", "name": "Silent's ASI Loader", "aliases": ["sal","silents-asi-loader","asi-loader"], "replaces": ["universal-asi-loader.sa.vc.iii"], "versions": [
@@ -1621,6 +1635,9 @@ fn setup_scenario(name: &str) -> TestEnv {
             { "id": "universal-asi-loader.sa.vc.iii", "name": "Universal ASI Loader", "aliases": ["ual","universal-asi-loader","asi-loader"], "replaces": ["silents-asi-loader.sa"], "versions": [
                 { "version": "9.7.4", "assets": [ual_url], "games": ["gta-sa"], "postinstall": { "rename": { "dinput8.dll": "vorbisFile.dll" } } },
                 { "version": "9.7.4", "assets": [ual_url], "games": ["gta-3","gta-vc"] }
+            ]},
+            { "id": "modloader.sa.vc.iii", "name": "Mod Loader", "aliases": ["modloader"], "versions": [
+                { "version": "0.3.10", "assets": [modloader_url], "games": ["gta-sa","gta-vc","gta-3"], "dependencies": [ { "any": ["silents-asi-loader.sa","universal-asi-loader.sa.vc.iii"] } ] }
             ]}
         ]
     });
@@ -1640,6 +1657,7 @@ fn setup_scenario(name: &str) -> TestEnv {
         guard,
         home,
         game_dir: game,
+        game3_dir: game3,
     }
 }
 
@@ -2322,7 +2340,7 @@ fn ensure_payload_raw_single_file_asset() {
 #[test]
 fn detect_game_is_case_insensitive_and_errors_on_multiple_exes() {
     let pkgs: PackagesFile = serde_json::from_value(serde_json::json!({
-        "schema": 2,
+        "schema": 3,
         "games": { "gta_sa.exe": "gta-sa", "gta-vc.exe": "gta-vc" },
         "packages": []
     }))
@@ -2375,7 +2393,7 @@ fn write_atomic_creates_parents() {
 #[test]
 fn parse_loose_dot_beta_versions_sort_as_preview() {
     let pkgs_json = serde_json::json!({
-        "schema": 2, "games": {},
+        "schema": 3, "games": {},
         "packages": [ { "id": "p", "name": "P", "versions": [
             { "version": "2.0.0.beta", "assets": ["u"] },
             { "version": "1.0.0", "assets": ["u"] }
@@ -2410,7 +2428,7 @@ fn parse_loose_dot_beta_versions_sort_as_preview() {
 #[test]
 fn parse_quad_numeric_version_resolves_as_stable_and_exact() {
     let pkgs_json = serde_json::json!({
-        "schema": 2, "games": {},
+        "schema": 3, "games": {},
         "packages": [ { "id": "p", "name": "P", "versions": [
             { "version": "2.2.0", "assets": ["u1"] },
             { "version": "2.1.1", "assets": ["u2"] },
@@ -2457,7 +2475,7 @@ fn parse_quad_numeric_version_resolves_as_stable_and_exact() {
 #[test]
 fn which_version_files_label_quad_spelling() {
     let pkgs_json = serde_json::json!({
-        "schema": 2, "games": {},
+        "schema": 3, "games": {},
         "packages": [ { "id": "p", "name": "P", "versions": [
             { "version": "2.0.0.6", "assets": ["u"] }
         ]} ]
@@ -3459,4 +3477,261 @@ fn debug_dump_add_state_paths() {
         "installed cleo.sa at {} under key {key}",
         inst.version
     ));
+}
+
+// ===========================================================================
+// Dependencies (any-of groups), dedupe and slot clashes
+// ===========================================================================
+
+#[test]
+fn dependency_offer_members_are_game_filtered() {
+    let _t = setup_scenario("depoffer");
+    let (pkgs, lock) = packages::load_metadata(false).unwrap();
+    let loader_group = packages::DependencyGroup {
+        any: vec![
+            "silents-asi-loader.sa".into(),
+            "universal-asi-loader.sa.vc.iii".into(),
+        ],
+    };
+    // SA: both loaders cover it -> both offered, in declaration order.
+    assert_eq!(
+        crate::handlers::add::offered_members(&pkgs, &lock, Some("gta-sa"), &loader_group),
+        vec!["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"]
+    );
+    // GTA III: S'AL has no gta-3 record -> only UAL is offered.
+    assert_eq!(
+        crate::handlers::add::offered_members(&pkgs, &lock, Some("gta-3"), &loader_group),
+        vec!["universal-asi-loader.sa.vc.iii"]
+    );
+    // No detected game -> every member offered.
+    assert_eq!(
+        crate::handlers::add::offered_members(&pkgs, &lock, None, &loader_group).len(),
+        2
+    );
+    // Duplicate members collapse to one offer.
+    let dup = packages::DependencyGroup {
+        any: vec![
+            "silents-asi-loader.sa".into(),
+            "silents-asi-loader.sa".into(),
+        ],
+    };
+    assert_eq!(
+        crate::handlers::add::offered_members(&pkgs, &lock, Some("gta-sa"), &dup),
+        vec!["silents-asi-loader.sa"]
+    );
+}
+
+#[test]
+fn dependency_key_is_order_independent() {
+    let g1 = packages::DependencyGroup {
+        any: vec!["b".into(), "a".into()],
+    };
+    let g2 = packages::DependencyGroup {
+        any: vec!["a".into(), "b".into()],
+    };
+    assert_eq!(
+        crate::handlers::add::dependency_key(&g1),
+        crate::handlers::add::dependency_key(&g2),
+        "the same group in a different order is one requirement"
+    );
+    let g3 = packages::DependencyGroup {
+        any: vec!["a".into(), "c".into()],
+    };
+    assert_ne!(
+        crate::handlers::add::dependency_key(&g1),
+        crate::handlers::add::dependency_key(&g3)
+    );
+}
+
+#[test]
+fn dependency_satisfied_covers_planned_installed_and_disk() {
+    let t = setup_scenario("depsat");
+    let (pkgs, lock) = packages::load_metadata(false).unwrap();
+    let members = vec![
+        "silents-asi-loader.sa".into(),
+        "universal-asi-loader.sa.vc.iii".into(),
+    ];
+    let none: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+    let key = game_dir::dir_hash_key(&t.game_dir);
+
+    // Nothing anywhere -> unsatisfied.
+    assert!(!crate::handlers::add::dependency_satisfied(
+        &members,
+        &none,
+        &pkgs,
+        &lock,
+        Some("gta-sa"),
+        &t.game_dir
+    ));
+
+    // A planned member satisfies (the `chef add modloader ual` case).
+    let mut planned = none.clone();
+    planned.insert("universal-asi-loader.sa.vc.iii".into());
+    assert!(crate::handlers::add::dependency_satisfied(
+        &members,
+        &planned,
+        &pkgs,
+        &lock,
+        Some("gta-sa"),
+        &t.game_dir
+    ));
+
+    // A known payload file the user placed by hand satisfies on disk.
+    std::fs::write(t.game_dir.join("vorbisfile.dll"), b"MZ-user-loader").unwrap();
+    assert!(crate::handlers::add::dependency_satisfied(
+        &members,
+        &none,
+        &pkgs,
+        &lock,
+        Some("gta-sa"),
+        &t.game_dir
+    ));
+
+    // An installed member satisfies via state.
+    std::fs::remove_file(t.game_dir.join("vorbisfile.dll")).unwrap();
+    run_ok(Cmd::Add {
+        pkgs: vec!["ual".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    assert!(
+        state()
+            .install_of(&key, "universal-asi-loader.sa.vc.iii")
+            .is_some()
+    );
+    assert!(crate::handlers::add::dependency_satisfied(
+        &members,
+        &none,
+        &pkgs,
+        &lock,
+        Some("gta-sa"),
+        &t.game_dir
+    ));
+}
+
+#[test]
+fn integration_add_modloader_ual_in_gta3_installs_each_once() {
+    let t = setup_scenario("mod3");
+    let key3 = game_dir::dir_hash_key(&t.game3_dir);
+    // The user's exact scenario: `chef add modloader ual` inside GTA III.
+    // UAL is requested, so the any-of loader requirement is already
+    // satisfied - no dependency prompt, no double-install of UAL.
+    run_ok(Cmd::Add {
+        pkgs: vec!["modloader".into(), "ual".into()],
+        dir: Some(t.game3_dir.clone()),
+        dry_run: false,
+    });
+    assert!(state().install_of(&key3, "modloader.sa.vc.iii").is_some());
+    assert!(
+        state()
+            .install_of(&key3, "universal-asi-loader.sa.vc.iii")
+            .is_some()
+    );
+    assert!(state().install_of(&key3, "silents-asi-loader.sa").is_none());
+    // GTA III UAL record ships dinput8.dll as-is (no rename); Mod Loader
+    // deploys its asi alongside.
+    assert!(t.game3_dir.join("modloader.asi").exists());
+    assert!(t.game3_dir.join("dinput8.dll").exists());
+
+    // Repeating ual in the same command is deduped - still one install.
+    run_ok(Cmd::Add {
+        pkgs: vec!["modloader".into(), "ual".into(), "ual".into()],
+        dir: Some(t.game3_dir.clone()),
+        dry_run: false,
+    });
+    assert!(
+        state()
+            .install_of(&key3, "universal-asi-loader.sa.vc.iii")
+            .is_some()
+    );
+}
+
+#[test]
+fn integration_add_duplicate_requests_install_once() {
+    let t = setup("dup");
+    let key = game_dir::dir_hash_key(&t.game_dir);
+    run_ok(Cmd::Add {
+        pkgs: vec!["ual".into(), "ual".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    assert!(
+        state()
+            .install_of(&key, "universal-asi-loader.sa.vc.iii")
+            .is_some()
+    );
+    // The same id under a different alias/spec is one install too; the
+    // first occurrence wins.
+    run_ok(Cmd::Add {
+        pkgs: vec!["sal".into(), "silents-asi-loader".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    assert_eq!(
+        state()
+            .install_of(&key, "silents-asi-loader.sa")
+            .unwrap()
+            .version,
+        "1.5.0"
+    );
+}
+
+#[test]
+fn integration_same_slot_pair_warns_and_last_wins() {
+    let t = setup_scenario("slotclash");
+    let key = game_dir::dir_hash_key(&t.game_dir);
+    // SAL and UAL occupy the same slot; the command warns, then the later
+    // install replaces the earlier one.
+    run_ok(Cmd::Add {
+        pkgs: vec!["sal".into(), "universal-asi-loader".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    assert!(state().install_of(&key, "silents-asi-loader.sa").is_none());
+    assert!(
+        state()
+            .install_of(&key, "universal-asi-loader.sa.vc.iii")
+            .is_some()
+    );
+    // UAL replaced S'AL's payload on the SA fixture: its renamed
+    // vorbisFile.dll overwrote S'AL's, and S'AL-only vorbisHooked.dll is
+    // gone.
+    assert!(!t.game_dir.join("vorbishooked.dll").exists());
+    assert!(t.game_dir.join("vorbisFile.dll").exists());
+}
+
+#[test]
+fn stale_schema_mirror_reports_outdated_not_parse_error() {
+    let _t = setup("staleschema");
+    // Overwrite the freshly-seeded mirror with a legacy schema-2 catalog
+    // (string-form dependencies) - exactly what an upgraded user has on
+    // disk. The schema gate must report "outdated" clearly, not a
+    // DependencyGroup deserialization error.
+    let legacy = serde_json::json!({
+        "schema": 2,
+        "games": {},
+        "packages": [
+            { "id": "cleo.sa", "name": "CLEO", "versions": [
+                { "version": "5.4.0", "assets": ["u"], "games": ["gta-sa"],
+                  "dependencies": ["silents-asi-loader.sa", "universal-asi-loader.sa.vc.iii"] }
+            ]}
+        ]
+    });
+    let mirror = packages::chef_home().join("packages.json");
+    std::fs::write(&mirror, serde_json::to_vec(&legacy).unwrap()).unwrap();
+    // Fresh mtime (<24h) keeps the fetch path quiet so the mirror is parsed.
+    let err = packages::load_metadata(false).unwrap_err();
+    let msg = format!("{err}");
+    assert!(
+        msg.contains("schema 2 is outdated"),
+        "expected the schema-outdated message, got: {msg}"
+    );
+    assert!(
+        !msg.contains("DependencyGroup"),
+        "legacy shape must not surface a parse error: {msg}"
+    );
+    assert!(
+        msg.contains("chef menu --refresh"),
+        "the message must point the user at the fix command, got: {msg}"
+    );
 }

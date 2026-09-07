@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::bail;
@@ -331,29 +331,74 @@ pub(crate) fn ensure_payload(
     Ok(vdir)
 }
 
-/// Is the dependency package `dep` satisfied: named in this run's plan,
-/// managed by chef in this game dir, or present as a known payload file on
-/// disk? `dep` is any id in the dependency's replacement slot.
-fn dep_present(
-    dep: &str,
-    planned: &[String],
+/// Canonical key for one dependency requirement: the sorted member ids, so
+/// the same group declared twice (or in another order) is one requirement.
+pub(crate) fn dependency_key(group: &packages::DependencyGroup) -> String {
+    let mut ids = group.any.clone();
+    ids.sort();
+    ids.join(",")
+}
+
+/// Display titles for member ids (falls back to the id itself).
+fn member_titles(pkgs: &PackagesFile, ids: &[String]) -> Vec<String> {
+    ids.iter()
+        .map(|id| {
+            pkgs.pkg(id)
+                .map(|p| p.name.clone())
+                .unwrap_or_else(|| id.clone())
+        })
+        .collect()
+}
+
+/// Members of `group` offered to the user: deduped, in declaration order,
+/// and - when a game is detected - restricted to ids with at least one
+/// version record installable for that game (an ASI loader that only
+/// covers gta-sa is never offered inside GTA III).
+pub(crate) fn offered_members(
+    pkgs: &PackagesFile,
+    lock: &LockFile,
+    game: Option<&str>,
+    group: &packages::DependencyGroup,
+) -> Vec<String> {
+    let mut seen: BTreeSet<String> = BTreeSet::new();
+    group
+        .any
+        .iter()
+        .filter(|id| {
+            if !seen.insert((*id).clone()) {
+                return false;
+            }
+            match game {
+                Some(g) => !packages::available_versions(pkgs, lock, id, Some(g)).is_empty(),
+                None => true,
+            }
+        })
+        .cloned()
+        .collect()
+}
+
+/// Is the dependency group satisfied: any member planned in this run
+/// (requested or already picked), installed by chef in this game dir, or
+/// present on disk as a known payload file (e.g. an ASI loader the user
+/// installed by hand)? `members` carries the full declared member list - a
+/// member planned/installed under a sibling requirement satisfies it too.
+pub(crate) fn dependency_satisfied(
+    members: &[String],
+    planned: &BTreeSet<String>,
     pkgs: &PackagesFile,
     lock: &LockFile,
     game: Option<&str>,
     game_dir: &Path,
 ) -> bool {
-    let slot = packages::existent_slot(pkgs, dep);
-    if planned.iter().any(|n| slot.iter().any(|s| s == n)) {
+    if members.iter().any(|m| planned.contains(m)) {
         return true;
     }
     if let Ok(state) = crate::game_dir::StateFile::load() {
         let key = game_dir::dir_hash_key(game_dir);
-        if slot.iter().any(|s| state.install_of(&key, s).is_some()) {
+        if members.iter().any(|m| state.install_of(&key, m).is_some()) {
             return true;
         }
     }
-    // Known payload files of the slot's packages present on disk (e.g. an
-    // ASI loader the user installed by hand) satisfy the dependency too.
     let known = packages::payload_basenames(pkgs, lock, game);
     let Ok(entries) = std::fs::read_dir(game_dir) else {
         return false;
@@ -364,7 +409,7 @@ fn dep_present(
         }
         let name = e.file_name().to_string_lossy().to_lowercase();
         if let Some(ids) = known.get(&name)
-            && ids.iter().any(|i| slot.iter().any(|s| s == i))
+            && ids.iter().any(|i| members.iter().any(|m| m == i))
         {
             return true;
         }
@@ -400,21 +445,38 @@ pub fn run(
         plan.push(Planned { product: res });
     }
 
-    // Dependencies: every planned version may require other packages (e.g.
-    // classic CLEO needs an ASI loader). Satisfied when the dependency's
-    // slot is being installed in this run, already managed by chef, or
-    // otherwise present on disk. Otherwise warn and offer the slot's
-    // packages.
-    let planned_names: Vec<String> = plan.iter().map(|p| p.product.id.clone()).collect();
-    let mut handled_deps: Vec<String> = Vec::new();
+    // Deduplicate repeated requests: the same module id listed twice (or
+    // under several specs) is installed once - the first spec wins.
+    let mut seen_ids: BTreeSet<String> = BTreeSet::new();
+    plan.retain(|p| {
+        if seen_ids.insert(p.product.id.clone()) {
+            true
+        } else {
+            info!("{} is requested twice - installing once", p.product.name);
+            false
+        }
+    });
+
+    // Dependencies: every requested version may require other packages
+    // (e.g. classic CLEO needs an ASI loader). Each `dependencies` entry
+    // is an any-of group - one member suffices. A group is satisfied when
+    // a member is planned in this run (requested or already picked),
+    // already managed by chef, or otherwise present on disk. Missing ->
+    // offer the group's installable members once; the picked package also
+    // satisfies sibling groups sharing a member, so nothing is offered
+    // twice. `planned_ids` grows as picks land, keeping every earlier
+    // decision visible to later requirements.
+    let mut planned_ids: BTreeSet<String> = plan.iter().map(|p| p.product.id.clone()).collect();
+    let mut handled: Vec<String> = Vec::new();
     for i in 0..plan.len() {
         let p_title = plan[i].product.name.clone();
         let deps = plan[i].product.dependencies.clone();
-        for dep in deps {
-            if handled_deps.contains(&dep)
-                || dep_present(
-                    &dep,
-                    &planned_names,
+        for group in deps {
+            let key = dependency_key(&group);
+            if handled.contains(&key)
+                || dependency_satisfied(
+                    &group.any,
+                    &planned_ids,
                     &pkgs,
                     &lock,
                     game.as_deref(),
@@ -423,44 +485,68 @@ pub fn run(
             {
                 continue;
             }
-            handled_deps.push(dep.clone());
-            let slot = packages::existent_slot(&pkgs, &dep);
-            if dry_run {
-                info!(
-                    "note: {} needs {} - none found (would offer to install)",
-                    p_title,
-                    slot.first().cloned().unwrap_or_default()
-                );
+            handled.push(key);
+            let members = offered_members(&pkgs, &lock, game.as_deref(), &group);
+            if members.is_empty() {
+                // No member is installable for this game - nothing to
+                // offer; report the requirement the same way the warn
+                // branch does.
+                let titles = member_titles(&pkgs, &group.any).join(", ");
+                if dry_run {
+                    info!(
+                        "note: {} needs one of: {titles} - none found (would offer to install)",
+                        p_title
+                    );
+                } else {
+                    warn!(
+                        "{} needs one of: {titles} but none is installed - 'chef add {}' adds it",
+                        p_title,
+                        group.any.join("' or 'chef add ")
+                    );
+                }
                 continue;
             }
-            let opts: Vec<String> = slot
-                .iter()
-                .map(|sid| {
-                    pkgs.pkg(sid)
-                        .map(|p| p.name.clone())
-                        .unwrap_or_else(|| sid.clone())
-                })
-                .collect();
+            let titles = member_titles(&pkgs, &members);
+            let need = format!("{} needs one of: {}", p_title, titles.join(", "));
+            if dry_run {
+                info!("note: {need} - none found (would offer to install)");
+                continue;
+            }
             if term::interactive()
-                && let Some(i) = term::pick(
-                    &format!(
-                        "{} needs {} - set up one?",
-                        p_title,
-                        opts.first().cloned().unwrap_or_default()
-                    ),
-                    &opts,
-                )
+                && let Some(chosen) = term::pick(&format!("{need} - set up one?"), &titles)
             {
-                let dep_id = &slot[i];
+                let dep_id = &members[chosen];
+                if planned_ids.contains(dep_id) {
+                    continue;
+                }
                 let dres = packages::resolve_spec(&pkgs, &lock, dep_id, game.as_deref(), None)
                     .map_err(ChefError::Other)?;
+                planned_ids.insert(dep_id.clone());
                 plan.push(Planned { product: dres });
             } else {
                 warn!(
-                    "{} needs {} but none is installed - 'chef add <dir> {}' adds it",
-                    p_title,
-                    opts.first().cloned().unwrap_or_default(),
-                    slot.join("' or '")
+                    "{need} but none is installed - 'chef add {}' adds it",
+                    members.join("' or 'chef add ")
+                );
+            }
+        }
+    }
+
+    // Warn when the plan lines up two same-slot packages: they cannot
+    // coexist, and the later install replaces the earlier one.
+    for i in 0..plan.len() {
+        for j in (i + 1)..plan.len() {
+            let a = &plan[i].product;
+            let b = &plan[j].product;
+            if a.id == b.id {
+                continue;
+            }
+            let sa = packages::existent_slot(&pkgs, &a.id);
+            let sb = packages::existent_slot(&pkgs, &b.id);
+            if sa.iter().any(|s| sb.iter().any(|t| t == s)) {
+                warn!(
+                    "{} and {} occupy the same slot - installing the later replaces the earlier",
+                    a.name, b.name
                 );
             }
         }

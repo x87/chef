@@ -21,7 +21,7 @@ const TTL: Duration = Duration::from_secs(24 * 60 * 60);
 const PACKAGES_MAX_BYTES: u64 = 20 * 1024 * 1024;
 /// The lock carries per-file digests; it can legitimately be larger.
 const LOCK_MAX_BYTES: u64 = 64 * 1024 * 1024;
-pub const SUPPORTED_PACKAGES_SCHEMA: u32 = 2;
+pub const SUPPORTED_PACKAGES_SCHEMA: u32 = 3;
 pub const SUPPORTED_LOCK_SCHEMA: u32 = 2;
 
 // ---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ fn check_schema<F: FnOnce() -> String>(actual: u32, supported: u32, what: F) -> 
     }
     if actual < supported {
         bail!(
-            "{} schema {} is outdated (this chef needs {}) - delete the cached copy and refresh",
+            "{} schema {} is outdated (this chef needs {}) - run 'chef menu --refresh' to update it",
             what(),
             actual,
             supported
@@ -49,11 +49,20 @@ fn check_schema<F: FnOnce() -> String>(actual: u32, supported: u32, what: F) -> 
 }
 
 fn parse_packages(bytes: &[u8]) -> anyhow::Result<PackagesFile> {
-    let pf: PackagesFile =
+    let raw: serde_json::Value =
         serde_json::from_slice(bytes).context("packages.json is not valid JSON")?;
-    check_schema(pf.schema, SUPPORTED_PACKAGES_SCHEMA, || {
+    // Gate on the catalog schema before full deserialization: an older (or
+    // newer) catalog may not even parse under the current struct shape, so
+    // the schema check must run on the raw `schema` field first to surface
+    // the clear "outdated / please upgrade" message instead of a
+    // misleading type error (e.g. legacy string-form dependencies vs the
+    // schema-3 DependencyGroup).
+    let schema = raw.get("schema").and_then(|s| s.as_u64()).unwrap_or(0) as u32;
+    check_schema(schema, SUPPORTED_PACKAGES_SCHEMA, || {
         "package catalog".to_string()
     })?;
+    let pf: PackagesFile =
+        serde_json::from_value(raw).context("packages.json is not valid JSON")?;
     Ok(pf)
 }
 

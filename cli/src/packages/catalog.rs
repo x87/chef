@@ -60,9 +60,14 @@ pub struct VersionEntry {
     /// game-agnostic.
     #[serde(default)]
     pub games: Vec<String>,
-    /// Package ids required to be present alongside this version.
+    /// Requirements this version must be able to rely on. Each entry is an
+    /// any-of group: at least one member id must be present (planned in this
+    /// run, installed by chef, or on disk). Members are alternatives, not
+    /// cumulative - e.g. Mod Loader needs *an* ASI loader, so its only
+    /// dependency is `[ { "any": [silents-asi-loader.sa,
+    /// universal-asi-loader.sa.vc.iii] } ]`.
     #[serde(default)]
-    pub dependencies: Vec<String>,
+    pub dependencies: Vec<DependencyGroup>,
     #[serde(default)]
     pub postinstall: Option<PostInstall>,
 }
@@ -99,6 +104,16 @@ pub struct LockedFile {
     /// Archive-relative path (`/`-separated).
     pub path: String,
     pub sha256: String,
+}
+
+/// One any-of dependency requirement: any single member id satisfies it.
+/// Members normally occupy the same slot (mutual `replaces`), but the group
+/// is the declaration; chef does not re-derive it from `replaces`.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct DependencyGroup {
+    /// Alternative package ids; at least one must be present.
+    pub any: Vec<String>,
 }
 
 impl PackagesFile {
