@@ -46,6 +46,12 @@ pub struct Install {
     /// remove falls back to `files`/`backup`/`displaced` for those).
     #[serde(default)]
     pub script: Vec<Op>,
+    /// The generation this install replaced in its slot, if any. Removing
+    /// this install plays the script back, which puts that generation's
+    /// payload on disk again - so `chef remove` reinstates this record
+    /// instead of forgetting the package (see `game_dir::remove`).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub previous: Option<Box<Install>>,
     pub at: u64,
 }
 

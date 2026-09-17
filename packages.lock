@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generated_at": 1788524016,
+  "generated_at": 1789663328,
   "assets": {
     "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip": {
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip",
@@ -397,6 +397,72 @@
         {
           "path": "vorbisHooked.dll",
           "sha256": "a08923479000cec366967fb8259e0920b7aa18859722c7dda1415726bed4774f"
+        }
+      ]
+    },
+    "https://github.com/JuniorDjjr/CLEOPlus/releases/download/v1.2.0/CLEO+.cleo": {
+      "url": "https://github.com/JuniorDjjr/CLEOPlus/releases/download/v1.2.0/CLEO+.cleo",
+      "sha256": "ff4d164f13f2c6be32d28c93c713ee4c7ee44065fe70ec972cf0b483cf5f642d",
+      "files": [
+        {
+          "path": "CLEO+.cleo",
+          "sha256": "ff4d164f13f2c6be32d28c93c713ee4c7ee44065fe70ec972cf0b483cf5f642d"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.3/III.VC.SA.SaveLoader.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.3/III.VC.SA.SaveLoader.zip",
+      "sha256": "c26fd10a4f230f5a5c3753ae09c7c04bbd39c04617ba71337cca35a2b1edccd6",
+      "files": [
+        {
+          "path": "III.VC.SA.SaveLoader.asi",
+          "sha256": "5cd2f256f6815c05dfe5fae0eb26fd2d5a7ec7ef3d891336a64f4888dcba67ca"
+        },
+        {
+          "path": "III.VC.SA.SaveLoader.ini",
+          "sha256": "3dd8cb67952fe066e114b5bda4943c2c9d724f04e5939823d204233a2bd4aefe"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.4/III.VC.SA.SaveLoader.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.4/III.VC.SA.SaveLoader.zip",
+      "sha256": "6ba66610a86b01271ac3c67c601d0c530ef11686de08595f60100612dead062b",
+      "files": [
+        {
+          "path": "III.VC.SA.SaveLoader.asi",
+          "sha256": "3863c5ef04b25a08beadb4532146d4463258d6680ab798e3a4969f754f1daa2f"
+        },
+        {
+          "path": "III.VC.SA.SaveLoader.ini",
+          "sha256": "3dd8cb67952fe066e114b5bda4943c2c9d724f04e5939823d204233a2bd4aefe"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.5/III.VC.SA.SaveLoader.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.5/III.VC.SA.SaveLoader.zip",
+      "sha256": "917e701600056d628d8998905063b7e2ef5eaa2218aec825a4d75c346a423e49",
+      "files": [
+        {
+          "path": "III.VC.SA.SaveLoader.asi",
+          "sha256": "f5da99d1669d9c2bd9a1e9237b6fe00f5d28647bbdde94083b6d6b3bcba445fc"
+        },
+        {
+          "path": "III.VC.SA.SaveLoader.ini",
+          "sha256": "7ad6d94379e13ccf7a82fa99c963d8506c43812b07b02dfdfec9102750e25d18"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.7/III.VC.SA.SaveLoader.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.7/III.VC.SA.SaveLoader.zip",
+      "sha256": "05bdc11136c9aa94adaebe89f13187b547c8f1cfbc2922f4e724622d3ab347e7",
+      "files": [
+        {
+          "path": "III.VC.SA.SaveLoader.asi",
+          "sha256": "81b2c1b26be97643673c5ddef6d10aaa3b59edd0f43639b09ce37360035e3367"
+        },
+        {
+          "path": "III.VC.SA.SaveLoader.ini",
+          "sha256": "7ad6d94379e13ccf7a82fa99c963d8506c43812b07b02dfdfec9102750e25d18"
         }
       ]
     },
@@ -1461,6 +1527,26 @@
         {
           "path": "VC.CLEO.asi",
           "sha256": "e6a22f5432d62815d29ae9377526efc32fc48e7ad65e11d45c60b96d15ed2551"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/NewOpcodes/releases/download/v2.5.0/NewOpcodes.cleo": {
+      "url": "https://github.com/cleolibrary/NewOpcodes/releases/download/v2.5.0/NewOpcodes.cleo",
+      "sha256": "9269e76498d2afb067e2f3529e23a1a678f13c2e081218013e5d5d1f59f71edb",
+      "files": [
+        {
+          "path": "NewOpcodes.cleo",
+          "sha256": "9269e76498d2afb067e2f3529e23a1a678f13c2e081218013e5d5d1f59f71edb"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/NewOpcodes/releases/download/v2.5.1/NewOpcodes.cleo": {
+      "url": "https://github.com/cleolibrary/NewOpcodes/releases/download/v2.5.1/NewOpcodes.cleo",
+      "sha256": "66e20a5183c6f9d02620625fe75f853ee211e3f8bb643d11dc76b57e1186eec3",
+      "files": [
+        {
+          "path": "NewOpcodes.cleo",
+          "sha256": "66e20a5183c6f9d02620625fe75f853ee211e3f8bb643d11dc76b57e1186eec3"
         }
       ]
     },

@@ -4,12 +4,21 @@ use std::path::Path;
 
 use crate::ChefError;
 use crate::game_dir::{self, StateFile};
-use crate::packages::{self, LockFile, PackagesFile};
+use crate::packages::{self, LockFile, PackagesFile, PayloadEntry};
 
 /// One package release with the payload it ships: (version, [(deployed
 /// path, sha256)]). Postinstall renames are applied to the deployed path,
 /// so the presence check targets the file as it sits on disk.
 pub(crate) type VersionFiles = Vec<(String, Vec<(String, String)>)>;
+
+/// Catalog, lock and the payload digest index - assembled once per `which`
+/// run and handed to the classifiers, so "whose file is this?" costs one
+/// lookup instead of a catalog scan per package.
+pub(crate) struct Catalog<'a> {
+    pub pkgs: &'a PackagesFile,
+    pub lock: &'a LockFile,
+    pub index: &'a [PayloadEntry],
+}
 
 /// One row of the summary, for one package.
 #[derive(Debug, Clone)]
@@ -132,15 +141,10 @@ fn display_path(s: &str) -> String {
 /// Hash only the payload paths the catalog expects below the game root.
 /// Presence in the summary is path-anchored, so this never hashes the
 /// whole tree - a game folder can hold gigabytes of unrelated files.
-fn expected_tree(
-    pkgs: &PackagesFile,
-    lock: &LockFile,
-    game: Option<&str>,
-    game_dir: &Path,
-) -> BTreeMap<String, String> {
+fn expected_tree(cat: &Catalog, game: Option<&str>, game_dir: &Path) -> BTreeMap<String, String> {
     let mut needed: BTreeMap<String, String> = BTreeMap::new(); // norm key -> deployed rel
-    for id in pkgs.sorted_ids() {
-        for (_, files) in version_files(pkgs, lock, id, game) {
+    for id in cat.pkgs.sorted_ids() {
+        for (_, files) in version_files(cat.pkgs, cat.lock, id, game) {
             for (deployed, _) in &files {
                 needed.insert(norm_key(deployed), deployed.clone());
             }
@@ -158,26 +162,26 @@ fn expected_tree(
 /// Classify one package from the scanned tree.
 ///
 /// `tree` maps lowercase backslash paths to digests. Presence is
-/// path-anchored: a file counts for a release when it sits at the
-/// release's locked path with the release's bytes. `.ini` config paths
-/// are ignored - users edit them freely.
+/// path-anchored: a file counts for a release when it sits at the release's
+/// locked path with the release's bytes. `.ini` config paths are ignored -
+/// users edit them freely.
 ///
 /// Returns `None` when the package has no evidence and was never installed
 /// by chef (those packages never appear in the summary).
 pub(crate) fn summarize_package(
+    cat: &Catalog,
     tree: &BTreeMap<String, String>,
-    pkgs: &PackagesFile,
-    lock: &LockFile,
     id: &str,
     game: Option<&str>,
     installed: Option<&str>,
     managed: bool,
 ) -> Option<PackageSummary> {
-    let name = pkgs
+    let name = cat
+        .pkgs
         .pkg(id)
         .map(|p| p.name.clone())
         .unwrap_or_else(|| id.to_string());
-    let versions = version_files(pkgs, lock, id, game);
+    let versions = version_files(cat.pkgs, cat.lock, id, game);
     if versions.is_empty() {
         return None;
     }
@@ -197,7 +201,7 @@ pub(crate) fn summarize_package(
 
     let mut found: BTreeSet<String> = BTreeSet::new();
     let mut unknown = false;
-    let cmd = packages::command_ref(pkgs, id);
+    let cmd = packages::command_ref(cat.pkgs, id);
     for (key, (display, expected)) in paths {
         if is_ignored_config(&display) {
             continue;
@@ -213,6 +217,15 @@ pub(crate) fn summarize_package(
         matched.dedup();
         let newest = attribute(installed, &matched);
         if newest.is_empty() {
+            // Present, matching none of this package's releases. When the
+            // bytes are another package's payload (SAL and UAL both deploy
+            // `vorbisFile.dll` in GTA SA) the file is not evidence for this
+            // package at all: the owner's own row carries it, and a
+            // chef-managed package whose payload was swapped out reports
+            // not-found instead of unknown.
+            if packages::digest_owner_other_than(cat.index, sha, id).is_some() {
+                continue;
+            }
             // The file is there but matches no known release: a custom
             // build or an edited file. The version cannot be stated.
             unknown = true;
@@ -288,8 +301,7 @@ pub(crate) fn summarize_package(
 /// they stand in for no release and would only confuse. `only` restricts
 /// the walk to one release's paths (its absent ones are still reported).
 pub(crate) fn detail_rows(
-    pkgs: &PackagesFile,
-    lock: &LockFile,
+    cat: &Catalog,
     id: &str,
     game: Option<&str>,
     installed: Option<&str>,
@@ -298,7 +310,7 @@ pub(crate) fn detail_rows(
 ) -> Vec<(String, String)> {
     // lower rel key -> (deployed path, [(version, expected digest)])
     let mut paths: BTreeMap<String, (String, Vec<(String, String)>)> = BTreeMap::new();
-    for (ver, files) in version_files(pkgs, lock, id, game) {
+    for (ver, files) in version_files(cat.pkgs, cat.lock, id, game) {
         if let Some(only) = only
             && packages::parse_version_loose(&ver) != packages::parse_version_loose(only)
         {
@@ -330,7 +342,7 @@ pub(crate) fn detail_rows(
                     .collect();
                 matched.dedup();
                 match attribute(installed, &matched) {
-                    "" => rows.push((display, "unknown".to_string())),
+                    "" => rows.push((display, unowned_label(cat, &sha, id))),
                     v => {
                         if anchor
                             .as_deref()
@@ -365,23 +377,21 @@ pub(crate) fn detail_rows(
 /// installed and rows the user installed by hand. Packages with no locked
 /// release for this game, no evidence and no chef record are left out.
 fn build_rows(
+    cat: &Catalog,
     by_path: &BTreeMap<String, String>,
-    pkgs: &PackagesFile,
-    lock: &LockFile,
     game: Option<&str>,
     state: &StateFile,
     key: &str,
 ) -> (Vec<PackageSummary>, Vec<PackageSummary>) {
     let mut chef: Vec<PackageSummary> = Vec::new();
     let mut user: Vec<PackageSummary> = Vec::new();
-    for id in pkgs.sorted_ids() {
-        if version_files(pkgs, lock, id, game).is_empty() {
+    for id in cat.pkgs.sorted_ids() {
+        if version_files(cat.pkgs, cat.lock, id, game).is_empty() {
             continue;
         }
         let installed = state.install_of(key, id).map(|i| i.version.clone());
         let managed = installed.is_some();
-        if let Some(row) =
-            summarize_package(by_path, pkgs, lock, id, game, installed.as_deref(), managed)
+        if let Some(row) = summarize_package(cat, by_path, id, game, installed.as_deref(), managed)
         {
             if row.managed {
                 chef.push(row);
@@ -391,6 +401,21 @@ fn build_rows(
         }
     }
     (chef, user)
+}
+
+/// Label for an on-disk file that matches no release of the package whose
+/// path it occupies: name its real owner when another package ships those
+/// exact bytes, otherwise it is a custom build or an edited file.
+fn unowned_label(cat: &Catalog, sha: &str, id: &str) -> String {
+    let Some(owner) = packages::digest_owner_other_than(cat.index, sha, id) else {
+        return "unknown".to_string();
+    };
+    let title = cat
+        .pkgs
+        .pkg(owner)
+        .map(|p| p.name.clone())
+        .unwrap_or_else(|| owner.to_string());
+    format!("installed by {title}")
 }
 
 fn print_rows(header: &str, rows: &[PackageSummary]) {
@@ -473,6 +498,12 @@ pub fn run(pkg: Option<(&str, Option<&str>)>, game_dir: &Path, json: bool) -> cr
 
     let game_detected = game_dir::detect_game(&pkgs, game_dir).map_err(ChefError::Other)?;
     let game = game_detected.as_ref().map(|g| g.family.clone());
+    let index = packages::payload_index(&pkgs, &lock);
+    let cat = Catalog {
+        pkgs: &pkgs,
+        lock: &lock,
+        index: &index,
+    };
 
     // Both modes below read only paths recorded in the lock: the summary
     // hashes expected payload paths, the details view the target package's
@@ -481,8 +512,8 @@ pub fn run(pkg: Option<(&str, Option<&str>)>, game_dir: &Path, json: bool) -> cr
         None => {
             let state = StateFile::load().map_err(ChefError::Other)?;
             let key = game_dir::dir_hash_key(game_dir);
-            let by_path = expected_tree(&pkgs, &lock, game.as_deref(), game_dir);
-            let (chef, user) = build_rows(&by_path, &pkgs, &lock, game.as_deref(), &state, &key);
+            let by_path = expected_tree(&cat, game.as_deref(), game_dir);
+            let (chef, user) = build_rows(&cat, &by_path, game.as_deref(), &state, &key);
 
             if json {
                 let installs = chef
@@ -532,8 +563,7 @@ pub fn run(pkg: Option<(&str, Option<&str>)>, game_dir: &Path, json: bool) -> cr
                 .install_of(&game_dir::dir_hash_key(game_dir), &id)
                 .map(|i| i.version.clone());
             let rows = detail_rows(
-                &pkgs,
-                &lock,
+                &cat,
                 &id,
                 game.as_deref(),
                 installed.as_deref(),

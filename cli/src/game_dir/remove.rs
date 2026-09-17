@@ -8,9 +8,22 @@ use anyhow::bail;
 use crate::utils::walk::{prune_empty_tree, restore_tree};
 
 use super::backup::backup_root_for;
-use super::state::{Install, StateFile};
+use super::state::{Install, ManagedFile, StateFile};
 use super::undo::revert_op;
 use super::{DigestVerdict, compare_digest, dir_hash_key};
+
+/// What removing one install did to the game directory and to the tracked
+/// state (`chef remove` reports it).
+pub struct RemoveReport {
+    /// Files the user changed after install - handed back, not deleted.
+    pub preserved: Vec<String>,
+    /// The user's own files put back from the backups.
+    pub restored: Vec<String>,
+    /// The generation this install had replaced, tracked again because the
+    /// playback put its payload back on disk. `None` when the package is
+    /// gone for good.
+    pub reinstated: Option<Install>,
+}
 
 /// Remove a managed installation. Installs recorded with an undo script
 /// (every install since the script model landed) are removed by playing the
@@ -18,11 +31,16 @@ use super::{DigestVerdict, compare_digest, dir_hash_key};
 /// install performed. Installs recorded before that fall back to the legacy
 /// files/backup/displaced logic, which is behaviourally equivalent for
 /// simple deploys. Caller must hold the lock.
+///
+/// The playback can put a replaced generation's payload back on disk; that
+/// generation is then reinstated in the state file (`RemoveReport::reinstated`)
+/// so `which` keeps reporting it as chef-managed instead of leaving an
+/// untracked file behind.
 pub fn remove_install(
     game_dir: &Path,
     id: &str,
     expect_version: Option<&str>,
-) -> anyhow::Result<(Install, Vec<String>, Vec<String>)> {
+) -> anyhow::Result<(Install, RemoveReport)> {
     let mut state = StateFile::load()?;
     let key = dir_hash_key(game_dir);
     let inst = state
@@ -77,18 +95,81 @@ pub fn remove_install(
         (preserved, restored)
     };
 
+    // Playback put back two kinds of file: the user's own displaced files,
+    // and the payload of the generation this install replaced (the script
+    // reverts to the state right before this install). The first kind is
+    // the user's again; the second is still chef's, so that generation's
+    // record is reinstated instead of being forgotten with this one.
+    // Legacy installs (no script) never recorded a predecessor: their
+    // restore report is passed through unchanged.
+    let (user_restored, previous_restored): (Vec<String>, Vec<String>) = if inst.script.is_empty() {
+        (restored, Vec::new())
+    } else {
+        restored
+            .into_iter()
+            .partition(|p| inst.displaced.iter().any(|d| d.eq_ignore_ascii_case(p)))
+    };
+    let reinstated = inst
+        .previous
+        .as_deref()
+        .and_then(|prev| reinstate(prev, &previous_restored));
+
     // Prune owned directories (only when empty).
     prune_owned_dirs(game_dir, &inst);
 
-    state
-        .dirs
-        .get_mut(&key)
-        .expect("entry exists")
-        .installs
-        .remove(id);
+    let dir_state = state.dirs.get_mut(&key).expect("entry exists");
+    dir_state.installs.remove(id);
+    if let Some(prev) = &reinstated {
+        // Replaced ids may differ (slot partners, e.g. UAL evicting SAL).
+        dir_state
+            .installs
+            .insert(prev.package.clone(), prev.clone());
+    }
     state.save()?;
 
-    Ok((inst, preserved, restored))
+    Ok((
+        inst,
+        RemoveReport {
+            preserved,
+            restored: user_restored,
+            reinstated,
+        },
+    ))
+}
+
+/// Rebuild the replaced generation for the state file: exactly the files the
+/// playback put back (its own payload, not files that turned out to be the
+/// user's), with the ops that remove those files kept so it can be removed
+/// like any other install. `None` when nothing of it is on disk.
+fn reinstate(prev: &Install, restored: &[String]) -> Option<Install> {
+    let keep = |path: &str| restored.iter().any(|r| r.eq_ignore_ascii_case(path));
+    let files: Vec<ManagedFile> = prev
+        .files
+        .iter()
+        .filter(|f| keep(&f.path))
+        .cloned()
+        .collect();
+    if files.is_empty() {
+        return None;
+    }
+    Some(Install {
+        package: prev.package.clone(),
+        version: prev.version.clone(),
+        owned_dirs: super::owned_dirs_of(files.iter().map(|f| f.path.as_str())),
+        // Keep the snapshots that generation took: they are what `remove`
+        // must put back when *it* is removed.
+        backup: prev.backup.clone(),
+        displaced: prev.displaced.iter().filter(|d| keep(d)).cloned().collect(),
+        script: prev
+            .script
+            .iter()
+            .filter(|op| keep(op.path()))
+            .cloned()
+            .collect(),
+        previous: prev.previous.clone(),
+        files,
+        at: prev.at,
+    })
 }
 
 /// Legacy removal for installs recorded before chef tracked undo scripts:

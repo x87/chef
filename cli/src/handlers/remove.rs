@@ -16,6 +16,16 @@ struct Removed {
     preserved: Vec<String>,
     /// Originals chef had displaced, now back from the backup.
     restored: Vec<String>,
+    /// The installation this one had replaced, tracked again because the
+    /// revert put its payload back (null when the package is gone).
+    reinstated: Option<Reinstated>,
+}
+
+#[derive(serde::Serialize)]
+struct Reinstated {
+    id: String,
+    name: String,
+    version: String,
 }
 
 /// Remove every `name@<version>` request in `specs` from `game_dir`.
@@ -41,6 +51,13 @@ pub fn run(specs: &[(&str, Option<&str>)], game_dir: &Path, json: bool) -> crate
                     }
                     for rel in &info.restored {
                         info!("restored your original file: {rel}");
+                    }
+                    if let Some(prev) = &info.reinstated {
+                        info!(
+                            "restored previous installation: {}{}",
+                            prev.name,
+                            packages::version_word(&prev.version)
+                        );
                     }
                 }
             }
@@ -92,7 +109,7 @@ fn remove_one(spec: &(&str, Option<&str>), game_dir: &Path) -> crate::Result<Rem
     let id = packages::resolve_id(&pkgs, name, game.as_ref().map(|g| g.family.as_str()))?;
 
     let _lock = game_dir::Lock::acquire(game_dir).map_err(ChefError::Other)?;
-    let (inst, preserved, restored) =
+    let (inst, report) =
         game_dir::remove_install(game_dir, &id, expect_version).map_err(ChefError::Other)?;
     drop(_lock);
 
@@ -101,11 +118,21 @@ fn remove_one(spec: &(&str, Option<&str>), game_dir: &Path) -> crate::Result<Rem
         .map(|p| p.name.clone())
         .unwrap_or_else(|| inst.package.clone());
 
+    let reinstated = report.reinstated.as_ref().map(|prev| Reinstated {
+        id: prev.package.clone(),
+        name: pkgs
+            .pkg(&prev.package)
+            .map(|p| p.name.clone())
+            .unwrap_or_else(|| prev.package.clone()),
+        version: prev.version.clone(),
+    });
+
     Ok(Removed {
         id: inst.package.clone(),
         name: title,
         version: inst.version.clone(),
-        preserved,
-        restored,
+        preserved: report.preserved,
+        restored: report.restored,
+        reinstated,
     })
 }

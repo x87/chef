@@ -1257,7 +1257,12 @@ fn integration_version_spec_semantics() {
         pkgs: vec!["cleo@4".into()],
         dir: Some(t.game_dir.clone()),
     });
-    assert!(state().install_of(&key, "cleo.sa").is_none());
+    // The revert put 5.3.0 back on disk, so chef tracks that generation
+    // again instead of leaving an untracked file behind.
+    assert_eq!(
+        state().install_of(&key, "cleo.sa").unwrap().version,
+        "5.3.0"
+    );
     // reinstall for the next check (remove with non-version spec still errors)
     run_ok(Cmd::Add {
         pkgs: vec!["cleo@4.4.4".into()],
@@ -1377,10 +1382,15 @@ fn which_details_tree_matches_lock_digests() {
         dry_run: false,
     });
     let (pkgs, lock) = packages::load_metadata(false).unwrap();
+    let index = packages::payload_index(&pkgs, &lock);
+    let cat = crate::handlers::which::Catalog {
+        pkgs: &pkgs,
+        lock: &lock,
+        index: &index,
+    };
     let cleo_rows = || {
         crate::handlers::which::detail_rows(
-            &pkgs,
-            &lock,
+            &cat,
             "cleo.sa",
             Some("gta-sa"),
             None,
@@ -1390,8 +1400,7 @@ fn which_details_tree_matches_lock_digests() {
     };
     let sal_rows = || {
         crate::handlers::which::detail_rows(
-            &pkgs,
-            &lock,
+            &cat,
             "silents-asi-loader.sa",
             Some("gta-sa"),
             None,
@@ -1425,8 +1434,7 @@ fn which_details_tree_matches_lock_digests() {
     // name@version restricts the tree to that release's paths; not one is
     // missing or unknown here.
     let rows54 = crate::handlers::which::detail_rows(
-        &pkgs,
-        &lock,
+        &cat,
         "cleo.sa",
         Some("gta-sa"),
         None,
@@ -1470,8 +1478,7 @@ fn which_details_tree_matches_lock_digests() {
     );
     // A release that is not installed has no locked paths to walk.
     let beta = crate::handlers::which::detail_rows(
-        &pkgs,
-        &lock,
+        &cat,
         "silents-asi-loader.sa",
         Some("gta-sa"),
         None,
@@ -1479,6 +1486,76 @@ fn which_details_tree_matches_lock_digests() {
         &t.game_dir,
     );
     assert!(beta.is_empty());
+}
+
+/// `chef which` (summary) rows in JSON mode.
+fn which_rows(t: &TestEnv) -> Vec<serde_json::Value> {
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
+    run_mode_ok(Cmd::Which {
+        pkg: None,
+        dir: Some(t.game_dir.clone()),
+    });
+    json_doc()["installs"]
+        .as_array()
+        .cloned()
+        .unwrap_or_default()
+}
+
+/// SAL and UAL both deploy `vorbisFile.dll` in GTA SA: UAL's release ships
+/// `dinput8.dll` and the catalog's postinstall rename turns it into the same
+/// path. One file has two claimants, so the digest decides whose payload it
+/// is - the other package must not be reported as a hand-installed
+/// "unknown" row (which is how a reverted version used to resurface as an
+/// untracked leftover).
+#[test]
+fn shared_payload_path_is_credited_to_its_digest_owner() {
+    let t = setup("owner");
+
+    // Chef installed UAL: UAL is the only row, SAL is invisible.
+    run_ok(Cmd::Add {
+        pkgs: vec!["ual".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    let rows = which_rows(&t);
+    assert_eq!(rows.len(), 1, "one claimant only: {rows:?}");
+    assert_eq!(rows[0]["id"], "universal-asi-loader.sa.vc.iii");
+    assert_eq!(rows[0]["section"], "chef");
+    assert_eq!(rows[0]["version"], "9.7.4");
+
+    // `which sal` names the real owner instead of calling the file SAL's
+    // own unknown build.
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
+    run_mode_ok(Cmd::Which {
+        pkg: Some("sal".into()),
+        dir: Some(t.game_dir.clone()),
+    });
+    let doc = json_doc();
+    let files = doc["files"].as_array().unwrap();
+    assert_eq!(files.len(), 1, "only the shared path is on disk: {doc}");
+    assert_eq!(files[0]["path"], "vorbisFile.dll");
+    assert_eq!(files[0]["version"], "installed by Universal ASI Loader");
+
+    // Hand-installed (no chef record): the owner still carries the file,
+    // the other claimant stays invisible.
+    std::fs::remove_file(crate::game_dir::state_path()).unwrap();
+    let rows = which_rows(&t);
+    assert_eq!(rows.len(), 1, "one claimant only: {rows:?}");
+    assert_eq!(rows[0]["id"], "universal-asi-loader.sa.vc.iii");
+    assert_eq!(rows[0]["section"], "user");
+    assert_eq!(rows[0]["version"], "9.7.4");
+
+    // SAL replaces UAL in the slot, so the bytes are SAL's now: same rule,
+    // other direction.
+    run_ok(Cmd::Add {
+        pkgs: vec!["sal".into()],
+        dir: Some(t.game_dir.clone()),
+        dry_run: false,
+    });
+    let rows = which_rows(&t);
+    assert_eq!(rows.len(), 1, "one claimant only: {rows:?}");
+    assert_eq!(rows[0]["id"], "silents-asi-loader.sa");
+    assert_eq!(rows[0]["section"], "chef");
 }
 
 #[test]
@@ -1820,6 +1897,44 @@ fn integration_scenario_san_andreas() {
             .install_of(&key, "universal-asi-loader.sa.vc.iii")
             .is_none()
     );
+    // The revert put sal's beta payload back, so chef tracks sal again - not
+    // as a stray user file.
+    assert_eq!(
+        state()
+            .install_of(&key, "silents-asi-loader.sa")
+            .unwrap()
+            .version,
+        "1.5.0-beta.1"
+    );
+    assert_eq!(
+        std::fs::read(t.game_dir.join("vorbisFile.dll")).unwrap(),
+        b"MZ-sal15b"
+    );
+    run_ok(Cmd::Which {
+        pkg: None,
+        dir: Some(t.game_dir.clone()),
+    });
+    // Removing sal steps back to the generation *it* replaced; removing that
+    // one finally leaves nothing tracked.
+    run_ok(Cmd::Remove {
+        pkgs: vec!["sal".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+    assert_eq!(
+        state()
+            .install_of(&key, "silents-asi-loader.sa")
+            .unwrap()
+            .version,
+        "1.3.0"
+    );
+    assert_eq!(
+        std::fs::read(t.game_dir.join("vorbisFile.dll")).unwrap(),
+        b"MZ-sal13"
+    );
+    run_ok(Cmd::Remove {
+        pkgs: vec!["sal".into()],
+        dir: Some(t.game_dir.clone()),
+    });
     // which -> nothing
     assert!(state().installs_in(&key).is_empty());
     run_ok(Cmd::Which {
@@ -2718,6 +2833,17 @@ fn displaced_user_file_survives_version_replacement() {
         b"user-original",
         "user file must come back unchanged across a version replacement"
     );
+    // The user's cleo.asi is theirs again, so the reinstated 5.4.0 record
+    // covers only the payload that actually came back.
+    let st = state();
+    let inst = st.install_of(&key, "cleo.sa").expect("5.4.0 reinstated");
+    assert_eq!(inst.version, "5.4.0");
+    let paths: Vec<&str> = inst.files.iter().map(|f| f.path.as_str()).collect();
+    assert!(
+        !paths.iter().any(|p| p.eq_ignore_ascii_case("cleo.asi")),
+        "a displaced user file is not part of the record: {paths:?}"
+    );
+    assert!(paths.contains(&"README.md"), "{paths:?}");
 }
 
 // ===========================================================================
@@ -2808,10 +2934,28 @@ fn script_records_ops_per_file_and_remove_replays_them() {
         b"dll"
     );
     assert!(!t.game_dir.join("CLEO/notes.txt").exists());
-    assert!(
-        state().install_of(&key, "cleo.sa").is_none(),
-        "install state dropped after remove"
+    // The 4.4.4 install had replaced a 5.4.0 install; the playback put that
+    // generation's payload back, so it is tracked again (not a stray file).
+    let reinstated = state().install_of(&key, "cleo.sa").unwrap().clone();
+    assert_eq!(reinstated.version, "5.4.0");
+    assert_eq!(
+        reinstated.files.len(),
+        3,
+        "the reinstated generation keeps its own payload"
     );
+    assert!(
+        reinstated.previous.is_none(),
+        "5.4.0 was the first generation"
+    );
+
+    // Removing the reinstated generation uninstalls for real.
+    run_ok(Cmd::Remove {
+        pkgs: vec!["cleo".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+    assert!(state().install_of(&key, "cleo.sa").is_none());
+    assert!(!t.game_dir.join("cleo.asi").exists());
+    assert!(!t.game_dir.join("README.md").exists());
 }
 
 #[test]
@@ -2872,7 +3016,74 @@ fn script_revert_restores_exact_initial_state_across_a_chain() {
         before,
         "remove must revert every transformation of the whole chain"
     );
+    // Everything the playback put back was a displaced user file, so no
+    // generation is reinstated and the package is gone.
     assert!(state().install_of(&key, "cleo.sa").is_none());
+}
+
+/// A version switch that chef reverts must not leave the package untracked:
+/// the playback puts the previous generation's payload back on disk, so its
+/// record is reinstated and `which` reports it as chef-managed again.
+/// Before this, those files showed up under "installed by user" and
+/// `chef remove` could no longer clean them up.
+#[test]
+fn removed_version_reinstates_the_replaced_generation_as_managed() {
+    let t = setup("reinstates");
+    let key = game_dir::dir_hash_key(&t.game_dir);
+
+    for spec in ["cleo@5.4.0", "cleo@5.3.0"] {
+        run_ok(Cmd::Add {
+            pkgs: vec![spec.into()],
+            dir: Some(t.game_dir.clone()),
+            dry_run: false,
+        });
+    }
+    run_ok(Cmd::Remove {
+        pkgs: vec!["cleo@5.3.0".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+
+    assert_eq!(
+        std::fs::read(t.game_dir.join("cleo.asi")).unwrap(),
+        b"MZ-cleo5-asi",
+        "the replaced 5.4.0 payload is back on disk"
+    );
+    let st = state();
+    let inst = st.install_of(&key, "cleo.sa").expect("5.4.0 reinstated");
+    assert_eq!(inst.version, "5.4.0");
+
+    // `which` reports it under chef, not as a user file.
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
+    run_mode_ok(Cmd::Which {
+        pkg: None,
+        dir: Some(t.game_dir.clone()),
+    });
+    let doc = json_doc();
+    let rows = doc["installs"].as_array().unwrap();
+    assert_eq!(rows.len(), 1, "one row: {doc}");
+    assert_eq!(rows[0]["section"], "chef");
+    assert_eq!(rows[0]["id"], "cleo.sa");
+    assert_eq!(rows[0]["version"], "5.4.0");
+
+    // The reinstated generation removes like any other install.
+    run_ok(Cmd::Remove {
+        pkgs: vec!["cleo".into()],
+        dir: Some(t.game_dir.clone()),
+    });
+    assert!(state().installs_in(&key).is_empty());
+    assert!(!t.game_dir.join("cleo.asi").exists());
+    assert!(!t.game_dir.join("README.md").exists());
+
+    crate::emit::set_capture(crate::emit::JsonOutput::default());
+    run_mode_ok(Cmd::Which {
+        pkg: None,
+        dir: Some(t.game_dir.clone()),
+    });
+    let doc = json_doc();
+    assert!(
+        doc["installs"].as_array().unwrap().is_empty(),
+        "nothing tracked or detected afterwards: {doc}"
+    );
 }
 
 #[test]
@@ -2958,10 +3169,15 @@ fn state_roundtrip_keeps_script_and_defaults_empty() {
             },
         ],
         at: 1,
+        previous: None,
     };
     let bytes = serde_json::to_vec(&inst).unwrap();
     let back: crate::game_dir::Install = serde_json::from_slice(&bytes).unwrap();
     assert_eq!(back.script, inst.script, "every op survives the round trip");
+    assert!(
+        back.previous.is_none(),
+        "no predecessor round-trips as none"
+    );
 
     // An install recorded before chef tracked scripts loads with an empty
     // script, which routes remove to the legacy path.
@@ -2979,6 +3195,12 @@ fn state_roundtrip_keeps_script_and_defaults_empty() {
 fn summarize_package_four_outcomes_and_attribution() {
     let _t = setup("wsumclass");
     let (pkgs, lock) = packages::load_metadata(false).unwrap();
+    let index = packages::payload_index(&pkgs, &lock);
+    let cat = crate::handlers::which::Catalog {
+        pkgs: &pkgs,
+        lock: &lock,
+        index: &index,
+    };
     let vf = crate::handlers::which::version_files(&pkgs, &lock, "cleo.sa", Some("gta-sa"));
     let (_, files54) = vf
         .iter()
@@ -2988,9 +3210,8 @@ fn summarize_package_four_outcomes_and_attribution() {
     let norm = |p: &str| p.replace('/', "\\").to_lowercase();
     let summarize = |tree: &std::collections::BTreeMap<String, String>, managed: bool| {
         crate::handlers::which::summarize_package(
+            &cat,
             tree,
-            &pkgs,
-            &lock,
             "cleo.sa",
             Some("gta-sa"),
             None,
@@ -3080,9 +3301,8 @@ fn summarize_package_four_outcomes_and_attribution() {
         .collect();
     sal_tree.insert("vorbisfile.dll".to_string(), "custom-build".to_string());
     let srow = crate::handlers::which::summarize_package(
+        &cat,
         &sal_tree,
-        &pkgs,
-        &lock,
         "silents-asi-loader.sa",
         Some("gta-sa"),
         None,
@@ -3126,14 +3346,19 @@ fn which_summary_splits_chef_and_user_rows() {
     std::fs::remove_file(crate::game_dir::state_path()).unwrap();
 
     let (pkgs, lock) = packages::load_metadata(false).unwrap();
+    let index = packages::payload_index(&pkgs, &lock);
+    let cat = crate::handlers::which::Catalog {
+        pkgs: &pkgs,
+        lock: &lock,
+        index: &index,
+    };
 
     // User-installed CLEO: every 5.4.0 payload present at its locked path,
     // identified by content, reported with no notes.
     let by_path = locked_path_map(&t.game_dir, &pkgs, &lock, "cleo.sa");
     let row = crate::handlers::which::summarize_package(
+        &cat,
         &by_path,
-        &pkgs,
-        &lock,
         "cleo.sa",
         Some("gta-sa"),
         None,
@@ -3161,9 +3386,8 @@ fn which_summary_splits_chef_and_user_rows() {
     }
     let by_path = locked_path_map(&t.game_dir, &pkgs, &lock, "cleo.sa");
     let row = crate::handlers::which::summarize_package(
+        &cat,
         &by_path,
-        &pkgs,
-        &lock,
         "cleo.sa",
         Some("gta-sa"),
         None,
@@ -3268,6 +3492,10 @@ fn json_add_which_update_remove_documents() {
     assert_eq!(doc["remove"][0]["id"], "cleo.sa");
     assert_eq!(doc["remove"][0]["version"], "5.4.0");
     assert!(doc["remove"][0]["restored"].is_array());
+    assert!(
+        doc["remove"][0]["reinstated"].is_null(),
+        "nothing was replaced, so nothing is reinstated"
+    );
 }
 
 #[test]

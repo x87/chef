@@ -9,15 +9,17 @@ use super::catalog::{LockFile, PackagesFile, version_covers_game};
 // Payload identification (used by `which` for unmanaged files)
 // ---------------------------------------------------------------------------
 
-/// basename -> (package id, version) for every payload file in the lock.
+/// One payload entry as indexed from the lock: (sha256, package id,
+/// release version, archive path). The digest does not depend on the
+/// deployed name, so it names the owner of a file whatever a postinstall
+/// rename called it.
+pub type PayloadEntry = (String, String, String, String);
+
+/// One entry per payload file in the lock (see [`PayloadEntry`]).
 /// Lets chef name an unknown on-disk file by its sha256 alone, and map
 /// root payload filenames back to the ids that ship them.
-pub fn payload_index<'a>(
-    pkgs: &'a PackagesFile,
-    lock: &'a LockFile,
-) -> Vec<(String, String, String, String)> {
-    // (sha256, id, version, path)
-    let mut out: Vec<(String, String, String, String)> = Vec::new();
+pub fn payload_index(pkgs: &PackagesFile, lock: &LockFile) -> Vec<PayloadEntry> {
+    let mut out: Vec<PayloadEntry> = Vec::new();
     for pkg in &pkgs.packages {
         for rec in &pkg.versions {
             for url in &rec.assets {
@@ -80,13 +82,25 @@ pub fn payload_basenames(
 /// order. A single match is discriminating evidence for that exact
 /// version; several matches mean the file is byte-identical across those
 /// releases and cannot tell them apart on its own.
-pub fn identify_digests<'a>(
-    index: &'a [(String, String, String, String)],
-    sha256: &str,
-) -> Vec<(&'a str, &'a str)> {
+pub fn identify_digests<'a>(index: &'a [PayloadEntry], sha256: &str) -> Vec<(&'a str, &'a str)> {
     index
         .iter()
         .filter(|(s, _, _, _)| s.as_str() == sha256)
         .map(|(_, id, version, _)| (id.as_str(), version.as_str()))
         .collect()
+}
+
+/// The id of a package that ships these exact bytes, other than `exclude`.
+/// Two packages can claim one path (SAL and UAL both deploy
+/// `vorbisFile.dll` in GTA SA); the digest says whose payload the file
+/// really is.
+pub fn digest_owner_other_than<'a>(
+    index: &'a [PayloadEntry],
+    sha256: &str,
+    exclude: &str,
+) -> Option<&'a str> {
+    identify_digests(index, sha256)
+        .into_iter()
+        .find(|(id, _)| *id != exclude)
+        .map(|(id, _)| id)
 }

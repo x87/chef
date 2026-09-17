@@ -52,6 +52,18 @@ pub enum Op {
     Rename { from: String, to: String },
 }
 
+impl Op {
+    /// The path inside the game dir this op's revert touches (the path the
+    /// install put into place).
+    pub fn path(&self) -> &str {
+        match self {
+            Op::Overwrite { to, .. } => to,
+            Op::Delete { path, .. } => path,
+            Op::Rename { from, .. } => from,
+        }
+    }
+}
+
 /// Apply one recorded op's revert. `preserved` collects deployed files the
 /// user modified after install (handed back, never reverted); `restored`
 /// collects every path the playback brings back from a snapshot (or renames

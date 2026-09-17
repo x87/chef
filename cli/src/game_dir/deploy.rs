@@ -180,7 +180,7 @@ pub fn deploy(game_dir: &Path, req: DeployRequest<'_>) -> anyhow::Result<DeployO
         .as_ref()
         .and_then(|p| p.file_name().map(|f| f.to_string_lossy().to_string()));
 
-    let owned_dirs = owned_dirs_of(req.files);
+    let owned_dirs = super::owned_dirs_of(req.files.iter().map(|f| f.dest_rel.as_str()));
 
     // Undo script: record every filesystem operation this deploy performs,
     // built after all snapshot + carry-over work so each `before` refers to
@@ -244,6 +244,10 @@ pub fn deploy(game_dir: &Path, req: DeployRequest<'_>) -> anyhow::Result<DeployO
         backup: backup_name,
         displaced: displaced.clone(),
         script,
+        // Keep the generation this one replaces: the script reverts to it,
+        // so `remove` reinstates that record rather than forgetting the
+        // package (see `game_dir::remove`).
+        previous: previous.clone().map(Box::new),
         at: unix_now(),
     };
 
@@ -314,24 +318,4 @@ pub fn deploy(game_dir: &Path, req: DeployRequest<'_>) -> anyhow::Result<DeployO
         preserved_modified: preserved,
         displaced,
     })
-}
-
-/// Top-level directories used by the staged files (owned by the package
-/// and pruned when empty on replace/remove). Derived from the payload
-/// paths - the catalog declares nothing extra.
-fn owned_dirs_of(files: &[DeployFile]) -> Vec<String> {
-    let mut out: Vec<String> = Vec::new();
-    for f in files {
-        let Some(first) = f.dest_rel.split('/').next() else {
-            continue;
-        };
-
-        if !first.is_empty()
-            && f.dest_rel.contains('/')
-            && !out.iter().any(|d| d.eq_ignore_ascii_case(first))
-        {
-            out.push(first.to_string());
-        }
-    }
-    out
 }

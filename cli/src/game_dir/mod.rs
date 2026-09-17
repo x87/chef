@@ -22,7 +22,7 @@ pub use check::{InstallCheck, check_install, prune_stale_state};
 pub use deploy::{DeployFile, DeployOutcome, DeployRequest, deploy};
 pub use detect::{DetectedGame, detect_game, family_title};
 pub use lock::Lock;
-pub use remove::remove_install;
+pub use remove::{RemoveReport, remove_install};
 pub use resolve::resolve_game_dir;
 pub use state::{
     GameDirState, Install, ManagedFile, SUPPORTED_STATE_SCHEMA, StateFile, state_path,
@@ -30,6 +30,25 @@ pub use state::{
 pub use undo::Op;
 
 use std::path::Path;
+
+/// Top-level directories used by deploy payload paths (owned by the
+/// package and pruned when empty on replace/remove). Derived from the
+/// payload paths - the catalog declares nothing extra.
+pub(crate) fn owned_dirs_of<'a>(paths: impl Iterator<Item = &'a str>) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for path in paths {
+        let Some(first) = path.split('/').next() else {
+            continue;
+        };
+        if !first.is_empty()
+            && path.contains('/')
+            && !out.iter().any(|d| d.eq_ignore_ascii_case(first))
+        {
+            out.push(first.to_string());
+        }
+    }
+    out
+}
 
 fn dir_hash(dir: &Path) -> String {
     // Canonicalize so every spelling of the same directory (raw path, 8.3

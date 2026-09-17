@@ -1154,6 +1154,179 @@
           ]
         }
       ]
+    },
+    {
+      "id": "saveloader.sa.vc.iii",
+      "name": "SaveLoader",
+      "aliases": [
+        "saveloader"
+      ],
+      "versions": [
+        {
+          "version": "2.7.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/tag/v2.7",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.7/III.VC.SA.SaveLoader.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
+          "version": "2.5.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/tag/v2.5",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.5/III.VC.SA.SaveLoader.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
+          "version": "2.4.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/tag/v2.4",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.4/III.VC.SA.SaveLoader.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
+          "version": "2.3.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/tag/v2.3",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v2.3/III.VC.SA.SaveLoader.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleoplus.sa",
+      "name": "CLEO Plus",
+      "aliases": [
+        "cleoplus"
+      ],
+      "versions": [
+        {
+          "version": "1.2.0",
+          "release": "https://github.com/JuniorDjjr/CLEOPlus/releases/tag/v1.2.0",
+          "assets": [
+            "https://github.com/JuniorDjjr/CLEOPlus/releases/download/v1.2.0/CLEO+.cleo"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "cleo.sa"
+              ]
+            }
+          ],
+          "postinstall": {
+            "rename": {
+              "CLEO+.cleo": "cleo/CLEO+.cleo"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "newopcodes.sa",
+      "name": "NewOpcodes",
+      "aliases": [
+        "newopcodes"
+      ],
+      "versions": [
+        {
+          "version": "2.5.1",
+          "release": "https://github.com/cleolibrary/NewOpcodes/releases/tag/v2.5.1",
+          "assets": [
+            "https://github.com/cleolibrary/NewOpcodes/releases/download/v2.5.1/NewOpcodes.cleo"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "cleo.sa"
+              ]
+            }
+          ],
+          "postinstall": {
+            "rename": {
+              "NewOpcodes.cleo": "cleo/NewOpcodes.cleo"
+            }
+          }
+        },
+        {
+          "version": "2.5.0",
+          "release": "https://github.com/cleolibrary/NewOpcodes/releases/tag/v2.5.0",
+          "assets": [
+            "https://github.com/cleolibrary/NewOpcodes/releases/download/v2.5.0/NewOpcodes.cleo"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "cleo.sa"
+              ]
+            }
+          ],
+          "postinstall": {
+            "rename": {
+              "NewOpcodes.cleo": "cleo/NewOpcodes.cleo"
+            }
+          }
+        }
+      ]
     }
   ],
   "games": {

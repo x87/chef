@@ -51,13 +51,17 @@ Once installed, run the following commands in your favorite terminal in the game
 ```
 $ chef menu
 TITLE                AVAILABLE            COMMAND
-CLEO                 5.4.0, 4.4.4         chef add cleo5
+CLEO                 5.4.0, 4.4.4         chef add cleo
 CLEO Redux           1.5.0                chef add cleo-redux
 Silent's ASI Loader  1.5.0 (preview), 1.3.0 chef add sal
 Universal ASI Loader 9.7.4                chef add ual
 SilentPatch          34.1.0, 33.1.0       chef add silentpatch
 WidescreenFix        <no version>         chef add widescreenfix
 Mod Loader           0.3.10               chef add modloader
+Windowed Mode        2.1.0, 1.17.0        chef add windowedmode
+SaveLoader           2.7.0                chef add saveloader
+CLEO Plus            1.2.0                chef add cleoplus
+NewOpcodes           2.5.1                chef add newopcodes
 ```
 
 Pre-releases are marked `(preview)` and only selected via `@preview` or `@latest`. Use `@stable` to download the latest stable release.
@@ -88,9 +92,17 @@ error: version '6' does not match any tracked release (available majors: 4, 5)
 chef remove cleo sal
 ```
 
+If the version you remove had replaced an older one, that older version comes back:
+
+```
+$ chef remove newopcodes@2.5.0
+removed NewOpcodes 2.5.0
+restored previous installation: NewOpcodes 2.5.1
+```
+
 ## `chef which`
 
-`chef which` lists installed mods in two groups: chef-managed and user-installed (user mods are found by checksum):
+`chef which` lists installed mods in two groups: chef-managed and user-installed (mods you installed yourself are found by their contents):
 
 ```
 $ chef which
@@ -116,7 +128,7 @@ vorbisFile.dll      unknown
 vorbisHooked.dll    1.5.0
 ```
 
-`unknown` means the file is present but its checksum does not match any known version;
+`unknown` means the file is there, but its contents do not match any version chef knows for that mod.
 
 ## `chef --dry-run`
 
@@ -135,5 +147,5 @@ Silent's ASI Loader 1.3.0
 
 ## Notes
 
-- chef records every file operation with its exact revert (an undo script) and `remove` plays it back in reverse, restoring the initial state
+- chef writes down every file it touches and how to undo each change, so `remove` can put the game folder back exactly the way it was before that install; if the install had replaced an older version, that version comes back and stays listed as installed instead of being left behind as a stray file
 - State, cache and backups live in `%LOCALAPPDATA%\Chef`; `history.log` there keeps track of recent messages and executed commands for debugging
