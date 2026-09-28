@@ -428,14 +428,8 @@ fn normalization_strips_non_alphanumerics() {
 }
 
 #[test]
-fn alias_matching_precedence() {
+fn name_and_alias_matching_is_exact() {
     let pkgs = unit_pkgs();
-    // exact canonical ids
-    assert_eq!(resolve_id(&pkgs, "cleo.sa"), "cleo.sa");
-    assert_eq!(
-        resolve_id(&pkgs, "silents-asi-loader.sa"),
-        "silents-asi-loader.sa"
-    );
     // aliases (shortcuts) resolve to their package
     assert_eq!(resolve_id(&pkgs, "cleo5"), "cleo.sa");
     assert_eq!(resolve_id(&pkgs, "cleo4"), "cleo.sa");
@@ -443,16 +437,21 @@ fn alias_matching_precedence() {
     assert_eq!(resolve_id(&pkgs, "iii.cleo"), "cleo.iii");
     assert_eq!(resolve_id(&pkgs, "sal"), "silents-asi-loader.sa");
     assert_eq!(resolve_id(&pkgs, "ual"), "universal-asi-loader.sa.vc.iii");
-    // unique prefix: cleo-red -> both redux ids? no: prefix "cleored" starts
-    // with cleo-* ids only ("cleoreduxs", "cleoreduxvciii") -> still two.
-    let hits = crate::packages::resolve(&pkgs, "cleo-red", None).unwrap();
-    assert_eq!(hits.len(), 2, "cleo-red matches both redux ids");
-    // god-agnostic narrowing resolves the ambiguity on a known game.
+    // product names resolve too (normalized: case/punctuation ignored)
+    assert_eq!(resolve_id(&pkgs, "CLEO"), "cleo.sa");
+    assert_eq!(
+        resolve_id(&pkgs, "Universal ASI Loader"),
+        "universal-asi-loader.sa.vc.iii"
+    );
+    // a shared alias returns every package listing it; game narrowing
+    // (or the picker / exit 2) resolves the ambiguity.
+    let hits = crate::packages::resolve(&pkgs, "cleo-redux", None).unwrap();
+    assert_eq!(hits.len(), 2, "cleo-redux matches both redux ids");
     let norm = crate::packages::narrow_by_game(hits, &pkgs, Some("gta-sa"));
     assert_eq!(norm.len(), 1);
     assert_eq!(norm[0].pkg.id, "cleo-redux.sa");
-    // bare "asi-loader" is unambiguous-intent but two packages -> both
-    // loader candidates (CLI turns that into a pick / exit 2).
+    // bare "asi-loader" is a shared alias of two packages -> both loader
+    // candidates (CLI turns that into a pick / exit 2).
     let amb = crate::packages::resolve(&pkgs, "asi-loader", None).unwrap();
     assert_eq!(amb.len(), 2, "asi-loader must match both loader packages");
     assert!(amb.iter().any(|m| m.pkg.id == "silents-asi-loader.sa"));
@@ -460,12 +459,25 @@ fn alias_matching_precedence() {
         amb.iter()
             .any(|m| m.pkg.id == "universal-asi-loader.sa.vc.iii")
     );
-    // levenshtein <= 2 fallback
-    assert_eq!(resolve_id(&pkgs, "cleoreduxx"), "cleo-redux.sa");
+    // loose matching is gone: ids, prefixes and typos no longer resolve.
+    for loose in [
+        "cleo.sa",
+        "silents-asi-loader.sa",
+        "cleored",
+        "cleo-red",
+        "cleoreduxx",
+        "silent",
+    ] {
+        assert!(
+            crate::packages::resolve(&pkgs, loose, None).is_err(),
+            "loose key {loose:?} must not resolve"
+        );
+    }
 }
 
-/// All normalized match keys for a package: id, name, aliases. The id is
-/// the addressable canonical name; the name and aliases are extra routes.
+/// All normalized match keys for a package: name, aliases - and the id so
+/// the catalog test still flags duplicate canonical keys. Only name/alias
+/// are user-facing match keys now; the id is not addressable.
 /// (test helper; the production resolver inlines its own key collection)
 fn alias_keys(pkg: &crate::packages::PackageEntry) -> Vec<String> {
     let mut keys = vec![
@@ -519,8 +531,12 @@ fn catalog_has_no_unexpected_duplicate_normalized_aliases() {
 #[test]
 fn ambiguous_match_returns_candidates_exit2() {
     let pkgs = unit_pkgs();
-    let hits = crate::packages::resolve(&pkgs, "asi", None).unwrap();
-    assert_eq!(hits.len(), 2, "'asi' must match both loader packages");
+    let hits = crate::packages::resolve(&pkgs, "asi-loader", None).unwrap();
+    assert_eq!(
+        hits.len(),
+        2,
+        "'asi-loader' must match both loader packages"
+    );
     assert!(
         crate::packages::resolve(&pkgs, "zzzz", None)
             .unwrap_err()
@@ -2773,10 +2789,10 @@ fn integration_ambiguous_name_reports_exit2() {
 // ===========================================================================
 
 #[test]
-fn integration_list_exact_id_works_unknown_errors() {
+fn integration_list_name_resolves_unknown_errors() {
     let t = setup("listnames");
     run_ok(Cmd::Menu {
-        pkg: Some("cleo.sa".into()),
+        pkg: Some("cleo-sa".into()),
         dir: Some(t.game_dir.clone()),
         refresh: false,
     });
@@ -2785,6 +2801,16 @@ fn integration_list_exact_id_works_unknown_errors() {
         dir: Some(t.game_dir.clone()),
         refresh: false,
     });
+    // loose/partial names no longer resolve.
+    assert!(
+        chef_run(Cmd::Menu {
+            pkg: Some("cle".into()),
+            dir: Some(t.game_dir.clone()),
+            refresh: false,
+        })
+        .is_err(),
+        "a prefix must not resolve"
+    );
     let err = chef_run(Cmd::Menu {
         pkg: Some("zzz-unknown".into()),
         dir: Some(t.game_dir.clone()),

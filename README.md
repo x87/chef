@@ -52,13 +52,13 @@ Once installed, run the following commands in your favorite terminal in the game
 $ chef menu
 TITLE                AVAILABLE            COMMAND
 CLEO                 5.4.0, 4.4.4         chef add cleo
-CLEO Redux           1.5.0                chef add cleo-redux
+CLEO Redux           1.5.1                chef add cleo-redux
 Silent's ASI Loader  1.5.0 (preview), 1.3.0 chef add sal
 Universal ASI Loader 9.7.4                chef add ual
 SilentPatch          34.1.0, 33.1.0       chef add silentpatch
 WidescreenFix        <no version>         chef add widescreenfix
 Mod Loader           0.3.10               chef add modloader
-Windowed Mode        2.1.0, 1.17.0        chef add windowedmode
+Windowed Mode        2.2.0, 2.1.0         chef add windowedmode
 SaveLoader           2.7.0                chef add saveloader
 CLEO Plus            1.2.0                chef add cleoplus
 NewOpcodes           2.5.1                chef add newopcodes
@@ -77,7 +77,7 @@ chef add cleo@preview                 newest pre-release only
 chef add cleo@latest silentpatch sal  several packages at once
 ```
 
-Names match loosely (`cleo-red` finds `cleo-redux`). If a name matches several packages, chef asks which one. Unknown versions are rejected:
+Names match exactly against a package's full name or one of its aliases (for example `cleo-redux` or `redux`). Partial names and typos are rejected. If a name matches several packages, chef asks which one. Unknown versions are rejected:
 
 ```
 $ chef add cleo@6

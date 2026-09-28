@@ -28,8 +28,7 @@ pub use identify::{
     PayloadEntry, digest_owner_other_than, identify_digests, payload_basenames, payload_index,
 };
 pub use names::{
-    NameMatch, command_ref, disambiguate, levenshtein, narrow_by_game, normalize, resolve,
-    resolve_id,
+    NameMatch, command_ref, disambiguate, narrow_by_game, normalize, resolve, resolve_id,
 };
 pub use version::{
     ResolvedVersion, available_versions, display_version, list_version, resolve_spec, version_word,

@@ -42,8 +42,8 @@ fn avail_texts(entries: &[(String, bool)]) -> Vec<String> {
         .collect()
 }
 
-/// Restrict `all` rows to one user-supplied package. Exact id wins;
-/// otherwise name/alias resolution with `list`'s convention: ambiguous
+/// Restrict `all` rows to one user-supplied package. Name/alias
+/// resolution only (`id`s are not user-facing match keys); ambiguous
 /// candidates are an error (exit 2), never a picker.
 fn narrow_rows(
     all: Vec<Row>,
@@ -51,12 +51,6 @@ fn narrow_rows(
     name: &str,
     game: Option<&str>,
 ) -> crate::Result<Vec<Row>> {
-    let norm = packages::normalize(name);
-
-    if let Some(exact) = all.iter().find(|r| packages::normalize(&r.id) == norm) {
-        return Ok(vec![exact.clone()]);
-    }
-
     let hits = packages::resolve(pkgs, name, game).map_err(ChefError::Other)?;
     if let Some(g) = game
         && hits.iter().all(|m| !pkgs.covers_game(&m.pkg.id, g))

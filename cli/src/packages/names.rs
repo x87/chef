@@ -1,6 +1,8 @@
-//! User-facing package name matching (merged from `match_names`): exact,
-//! prefix/substring, and Levenshtein fallback resolution, game narrowing,
-//! and the interactive picker for ambiguous candidates.
+//! User-facing package name matching (merged from `match_names`): strict
+//! exact matching against a package's product `name` or one of its
+//! `aliases`, game narrowing, and the interactive picker for ambiguous
+//! candidates. Loose matching (prefix / substring / edit distance) and
+//! matching against the internal package `id` were removed.
 
 use crate::ChefError;
 use crate::utils::term;
@@ -60,12 +62,10 @@ struct Key<'a> {
 fn collect_keys(pkgs: &PackagesFile) -> Vec<Key<'_>> {
     let mut keys = Vec::new();
     for p in &pkgs.packages {
-        for raw in [&p.id, &p.name] {
-            keys.push(Key {
-                text: normalize(raw),
-                pkg: p,
-            });
-        }
+        keys.push(Key {
+            text: normalize(&p.name),
+            pkg: p,
+        });
         for a in &p.aliases {
             keys.push(Key {
                 text: normalize(a),
@@ -75,23 +75,6 @@ fn collect_keys(pkgs: &PackagesFile) -> Vec<Key<'_>> {
     }
     keys.retain(|k| !k.text.is_empty());
     keys
-}
-
-/// Levenshtein edit distance (small DP; inputs are short names).
-pub fn levenshtein(a: &str, b: &str) -> usize {
-    let a: Vec<char> = a.chars().collect();
-    let b: Vec<char> = b.chars().collect();
-    let mut prev: Vec<usize> = (0..=b.len()).collect();
-    let mut cur = vec![0usize; b.len() + 1];
-    for i in 1..=a.len() {
-        cur[0] = i;
-        for j in 1..=b.len() {
-            let cost = usize::from(a[i - 1] != b[j - 1]);
-            cur[j] = (prev[j] + 1).min(cur[j - 1] + 1).min(prev[j - 1] + cost);
-        }
-        std::mem::swap(&mut prev, &mut cur);
-    }
-    prev[b.len()]
 }
 
 /// Pick among candidates: a single one wins; several go to the
@@ -132,6 +115,11 @@ pub fn resolve_id(pkgs: &PackagesFile, name: &str, game: Option<&str>) -> crate:
 
 /// Resolve a user-supplied name to package candidates.
 ///
+/// Matching is strict: the input must equal, after normalization, a
+/// package's product `name` or one of its `aliases`. Prefix, substring
+/// and edit-distance matching are gone, and the canonical `id` is not a
+/// user-facing match key. Anything else is unknown.
+///
 /// Zero matches is an error; multiple candidates are returned so the
 /// caller can pick interactively or fail with exit code 2.
 pub fn resolve<'a>(
@@ -146,75 +134,17 @@ pub fn resolve<'a>(
 
     let keys = collect_keys(pkgs);
 
-    fn collect<'a>(hits: &mut Vec<NameMatch<'a>>, seen: &mut Vec<&'a PackageEntry>, k: &Key<'a>) {
-        if !seen.iter().any(|p| p.id == k.pkg.id) {
-            seen.push(k.pkg);
+    let mut hits: Vec<NameMatch<'a>> = Vec::new();
+    for k in &keys {
+        if k.text == norm && !hits.iter().any(|m| m.pkg.id == k.pkg.id) {
             hits.push(NameMatch { pkg: k.pkg });
         }
     }
 
-    let mut hits: Vec<NameMatch<'a>> = Vec::new();
-    let mut seen: Vec<&'a PackageEntry> = Vec::new();
-
-    // 1. exact normalized match wins outright.
-    for k in &keys {
-        if k.text == norm {
-            collect(&mut hits, &mut seen, k);
-        }
+    if hits.is_empty() {
+        anyhow::bail!("unknown package '{}'", input);
     }
-    if !hits.is_empty() {
-        return Ok(hits);
-    }
-
-    // 2+3. prefix + substring/token candidates together.
-    for k in &keys {
-        if k.text.starts_with(&norm) {
-            collect(&mut hits, &mut seen, k);
-        }
-    }
-    for k in &keys {
-        if k.text.contains(&norm) {
-            collect(&mut hits, &mut seen, k);
-        }
-    }
-    if !hits.is_empty() {
-        return Ok(hits);
-    }
-
-    // 4. Levenshtein <= 2 fallback - keep only the closest distance
-    // (prevents a 1-edit typo of a filtered package from falling back to a
-    // 2-edit typo of an unrelated package and leaking its existence via
-    // game-filtered `which`).
-    let mut best: Option<usize> = None;
-    let mut cands: Vec<&Key<'_>> = Vec::new();
-
-    for k in &keys {
-        let d = levenshtein(&norm, &k.text);
-        if d <= 2 {
-            match best {
-                None => {
-                    best = Some(d);
-                    cands = vec![k];
-                }
-                Some(b) if d < b => {
-                    best = Some(d);
-                    cands = vec![k];
-                }
-                Some(b) if d == b => cands.push(k),
-                _ => {}
-            }
-        }
-    }
-
-    for k in cands {
-        collect(&mut hits, &mut seen, k);
-    }
-
-    if !hits.is_empty() {
-        return Ok(hits);
-    }
-
-    anyhow::bail!("unknown package '{}'", input)
+    Ok(hits)
 }
 
 /// Narrow candidates to the ones usable in a detected game (a version

@@ -22,18 +22,7 @@ pub fn run(pkg: Option<&str>, game_dir: &Path, dry_run: bool, json: bool) -> cra
     // Decide which packages to consider: the requested one, or everything
     // installed in this game directory.
     let targets: Vec<String> = match pkg {
-        Some(name) => {
-            let norm = packages::normalize(name);
-            if let Some(p) = pkgs
-                .packages
-                .iter()
-                .find(|p| packages::normalize(&p.id) == norm)
-            {
-                vec![p.id.clone()]
-            } else {
-                vec![packages::resolve_id(&pkgs, name, game.as_deref())?]
-            }
-        }
+        Some(name) => vec![packages::resolve_id(&pkgs, name, game.as_deref())?],
         None => state
             .installs_in(&key)
             .into_iter()

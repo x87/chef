@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generated_at": 1789663328,
+  "generated_at": 1790564472,
   "assets": {
     "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip": {
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip",
@@ -684,6 +684,24 @@
         }
       ]
     },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.2/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v2.2/III.VC.SA.WindowedMode.zip",
+      "sha256": "68039e974af4d0312281e5802fce8ef385b4291fbfc77a94229542fa57140b2a",
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "sha256": "5b760970a71f0ad60657c3e76468bfd47f4a4d16ef588b078f618a77d2e0f2f7"
+        },
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "2d41a4bba901c05fa31e0cf246c01cfc7ec8c040f1755bd25640b72c0a0282f3"
+        },
+        {
+          "path": "README.md",
+          "sha256": "67e2e2b850792111f1f19af932f21eb3075a636e28d9322e8e1a37336b87e96e"
+        }
+      ]
+    },
     "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip": {
       "url": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip",
       "sha256": "952cebfc30d525afc2bdbaca954329d405ded3aa688a83027354dae14dfd5c5f",
@@ -696,43 +714,43 @@
     },
     "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gta3/GTA3.WidescreenFix.zip": {
       "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gta3/GTA3.WidescreenFix.zip",
-      "sha256": "38bdeb3b901a4953f1f635685fbd91342dcd3ba4c5a70c621b37ab6f017889e1",
+      "sha256": "a8ceb0399db0b34f92979d8cd05efaaccd7d4c98922f09f7ad1f4261b68c5df0",
       "files": [
         {
           "path": "scripts/GTA3.WidescreenFix.asi",
-          "sha256": "988f87f5f7fb74c0ae281ad5253d1fa8ede38dbb840bf0f4b01bd158b3e50e0c"
+          "sha256": "5f884bee45536f64265c300db6ddaf29f38ec24fbeafaf676af8be89caeb9c2c"
         },
         {
           "path": "scripts/GTA3.WidescreenFix.ini",
-          "sha256": "975d83a3e5c026fa5d1cd65158bdff0bd7c7a527d8d78a907c5e2e347ff2579c"
+          "sha256": "4acbfbd58684fc5c9353ccf8cd5670bef6ec1eeb4159e17c39662d919536afa5"
         }
       ]
     },
     "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtasa/GTASA.WidescreenFix.zip": {
       "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtasa/GTASA.WidescreenFix.zip",
-      "sha256": "38d648c33d43b3459f3b8e2ab2ee5086fbd84f2567c9d9b4d191a2239f68810e",
+      "sha256": "e0530806e75ee6f0387965a7ddab947c0c56a3caf76c8ea7a2bc6e06afdb2d83",
       "files": [
         {
           "path": "scripts/GTASA.WidescreenFix.asi",
-          "sha256": "31247defdde4dc496a506b5361854423cce88980e10fb1dac1cf25fb7c5c0161"
+          "sha256": "5c2ad3b16565e287ece59fe5d6ca0366690ef9ee5c7e7df66b4693e193ca3a10"
         },
         {
           "path": "scripts/GTASA.WidescreenFix.ini",
-          "sha256": "07d8ef3149ec2c82b1a087c525fa63e42c6c4840076192ebe2990a66c387a4b4"
+          "sha256": "d5c7ef9ef57b20c77b1ffed793c1ef5be5fb7f688601895646ba4d7a63b96ba1"
         }
       ]
     },
     "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtavc/GTAVC.WidescreenFix.zip": {
       "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtavc/GTAVC.WidescreenFix.zip",
-      "sha256": "2a8c8b46f6b50bfaea063d3be4c2c13acac0066385ffec4d51bfe5812af0f5e3",
+      "sha256": "10e22c06d31987ef49d4f7f3e6f147111cb878f530f78f07622213e5d5ff7745",
       "files": [
         {
           "path": "scripts/GTAVC.WidescreenFix.asi",
-          "sha256": "0e27490664f6e0c5ef3a0fd495f69c5430ceba509d057743c992d3601c083036"
+          "sha256": "74f6d52755787a28a01a803fa53dfd33e5c6064552f65b1e953e237ad2dd305b"
         },
         {
           "path": "scripts/GTAVC.WidescreenFix.ini",
-          "sha256": "b91fcf6d00587d19d919c72e20ab0f7bd41755a6b7a138d4ba05e21559e3e43c"
+          "sha256": "dfbe185b08e91cb4901cbb0939efada5fbef1adb6ab6ba9c684d3ecc9eb4f7b2"
         }
       ]
     },
@@ -813,6 +831,48 @@
         {
           "path": "cleo_redux.asi",
           "sha256": "d38c08a0a67df851d5cb6e13e507b761cd198c8271222ac1d7f2b3117c2c7da4"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.5.1/cleo_redux_1.5.1.x86.zip": {
+      "url": "https://github.com/cleolibrary/CLEO-Redux/releases/download/1.5.1/cleo_redux_1.5.1.x86.zip",
+      "sha256": "8dcc0e83e25ab8c57a52d4ca65470b8ec6fc4e94121e5905b826079d75c2807b",
+      "files": [
+        {
+          "path": "CLEO/CLEO_PLUGINS/Events.cleo",
+          "sha256": "abe618b70b6fa7efe912868b708aad0a27cd0a335a4fec96384297912831d9e6"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/Frontend.cleo",
+          "sha256": "d0ac8590f875211c9680359648c28767c770e10200c33a18c712ffb79a376e3c"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/FxtLoader.cleo",
+          "sha256": "67d30fc64e0407887f4a5a2170e9e72b85379f73d496ad40a35e60eb5c9a1200"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/IdeLoader.cleo",
+          "sha256": "da946169cfcc24b2da4b048920ddc6bb8b22d312d46e89a0845750c1b4ee1cfe"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/IniFiles.cleo",
+          "sha256": "582692a1ef0e46772d7865eaad8e133c26b64658a31edc42f2e609b65468e1c0"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/Input.cleo",
+          "sha256": "732c398162c32c927ad45b3aa9dc01e764757371149be36b089782c9a2825592"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/TextLoader.cleo",
+          "sha256": "46b7624de70731f9dcccfbe07f15d3f5bcf5703c8baaba9b99fe1ae833982994"
+        },
+        {
+          "path": "CLEO/CLEO_PLUGINS/dylib.cleo",
+          "sha256": "b98ef2f2a3380f91972be9e22ee9489ebe55e887c654901165b3d12adb682c18"
+        },
+        {
+          "path": "cleo_redux.asi",
+          "sha256": "02380a76a76fffbf65dedce0c9986698fd1f58b58ca2a2afe79b975b6b886925"
         }
       ]
     },
