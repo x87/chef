@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generated_at": 1790564472,
+  "generated_at": 1793465151,
   "assets": {
     "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip": {
       "url": "https://github.com/CookiePLMonster/SilentPatch/releases/download/1.1-BUILD33-SA/SilentPatchIII.zip",
@@ -466,6 +466,34 @@
         }
       ]
     },
+    "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v3.0.0/III.VC.SA.SaveLoader.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v3.0.0/III.VC.SA.SaveLoader.zip",
+      "sha256": "1e179aeb9fbb8bc09dc58ea7b33c75477a1ff6c86c37e9e5916f5f570627223d",
+      "files": [
+        {
+          "path": "III.VC.SA.SaveLoader.asi",
+          "sha256": "f73f84ecc983e6916bc51e484223322e3d96245397b19fc942b361710b161a15"
+        },
+        {
+          "path": "readme.md",
+          "sha256": "4418e526503b817c914fd15700d5fc2970a310abccd176ba4a9da54e9f8f0f71"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v3.0.1/III.VC.SA.SaveLoader.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v3.0.1/III.VC.SA.SaveLoader.zip",
+      "sha256": "5e1b29094bd46ebe34a2de7946fa8b374b855dbe639442e8371faba120bfa938",
+      "files": [
+        {
+          "path": "III.VC.SA.SaveLoader.asi",
+          "sha256": "72cefe0daf13a434e30bd71c75a1f994cf2ad47059517247fb80109e624d6087"
+        },
+        {
+          "path": "readme.md",
+          "sha256": "4418e526503b817c914fd15700d5fc2970a310abccd176ba4a9da54e9f8f0f71"
+        }
+      ]
+    },
     "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.0/III.VC.SA.WindowedMode.zip": {
       "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v1.0/III.VC.SA.WindowedMode.zip",
       "sha256": "a68a7bd75892d9fedb4d2c9deddc4bbbdf47dc0a38495382bb4c00ec4ec6abac",
@@ -702,6 +730,72 @@
         }
       ]
     },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v3.0.0/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v3.0.0/III.VC.SA.WindowedMode.zip",
+      "sha256": "669a2c66d87f2beb9b41d43a65098c2afd4eb2bf7c7aba7f4f765467d79736b3",
+      "files": [
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "a429077e7fd6bc9e0bcd603a25d9d95351a4c3b4064ff4c80a7635455a8c1685"
+        },
+        {
+          "path": "changelog.md",
+          "sha256": "156feda733efa92869757ae1749f2ebe6ea0bbdf93df169935993621012da9c0"
+        },
+        {
+          "path": "readme.md",
+          "sha256": "3fd9b3714b9e2519505ae5d980bfecf9b89a59dfcd08a17bd9f76c80228512fc"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v3.0.1/III.VC.SA.WindowedMode.zip": {
+      "url": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v3.0.1/III.VC.SA.WindowedMode.zip",
+      "sha256": "05eb663868c6fd2d63316a591401ab7edd650aecd12ca48e40710d9675af9184",
+      "files": [
+        {
+          "path": "III.VC.SA.WindowedMode.asi",
+          "sha256": "8b2485e89761044f56bbd4e2fa882ec9667939edf542fde682e016bd7e9373a9"
+        },
+        {
+          "path": "changelog.md",
+          "sha256": "156feda733efa92869757ae1749f2ebe6ea0bbdf93df169935993621012da9c0"
+        },
+        {
+          "path": "readme.md",
+          "sha256": "3fd9b3714b9e2519505ae5d980bfecf9b89a59dfcd08a17bd9f76c80228512fc"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.0/Ultimate-ASI-Loader.zip": {
+      "url": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.0/Ultimate-ASI-Loader.zip",
+      "sha256": "41bc535561a001f7164a9513c7b05fcecf08be780cac896ec84566cd6d534fb5",
+      "files": [
+        {
+          "path": "dinput8.dll",
+          "sha256": "8ae9f3456a49129d6fb505423eeb51d3758f7b3292b76fdf198ea51fb1eaf808"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.1/Ultimate-ASI-Loader.zip": {
+      "url": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.1/Ultimate-ASI-Loader.zip",
+      "sha256": "e1d297fe6dd0ab6ef6c54dba2d93c2df714269b02bd505dba45c692c9f792036",
+      "files": [
+        {
+          "path": "dinput8.dll",
+          "sha256": "861f883c3c974384bf686e77cfbb136f7815d0219a8e63b67d2aa51fe36fdb5f"
+        }
+      ]
+    },
+    "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.2/Ultimate-ASI-Loader.zip": {
+      "url": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.2/Ultimate-ASI-Loader.zip",
+      "sha256": "a8f76a891f9beeef3b02babf1062c128b00e0285fa17c227a45ec4f81f45116f",
+      "files": [
+        {
+          "path": "dinput8.dll",
+          "sha256": "63b465dbc1bf9c5ab4e33c3ccad099d9edb702f2c51587ac8d4f196497396437"
+        }
+      ]
+    },
     "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip": {
       "url": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v9.7.4/Ultimate-ASI-Loader.zip",
       "sha256": "952cebfc30d525afc2bdbaca954329d405ded3aa688a83027354dae14dfd5c5f",
@@ -714,43 +808,43 @@
     },
     "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gta3/GTA3.WidescreenFix.zip": {
       "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gta3/GTA3.WidescreenFix.zip",
-      "sha256": "a8ceb0399db0b34f92979d8cd05efaaccd7d4c98922f09f7ad1f4261b68c5df0",
+      "sha256": "46303a225d1b4b02354230ec507248491a99be8d09bdcaf0297c103c692f60d2",
       "files": [
         {
           "path": "scripts/GTA3.WidescreenFix.asi",
-          "sha256": "5f884bee45536f64265c300db6ddaf29f38ec24fbeafaf676af8be89caeb9c2c"
+          "sha256": "214e332085d516cb8b154b52f673ad0e2c02423dd0b7019a51cd33fde7497b42"
         },
         {
           "path": "scripts/GTA3.WidescreenFix.ini",
-          "sha256": "4acbfbd58684fc5c9353ccf8cd5670bef6ec1eeb4159e17c39662d919536afa5"
+          "sha256": "369c92f3ebf731c7ce5fff4cbc81c9c613f6382b16b952615a57d2b79e680df5"
         }
       ]
     },
     "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtasa/GTASA.WidescreenFix.zip": {
       "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtasa/GTASA.WidescreenFix.zip",
-      "sha256": "e0530806e75ee6f0387965a7ddab947c0c56a3caf76c8ea7a2bc6e06afdb2d83",
+      "sha256": "563078bfae5ad93be548d9378d4a97809762fb3a8dfdf0ef65e6023beadeb3ae",
       "files": [
         {
           "path": "scripts/GTASA.WidescreenFix.asi",
-          "sha256": "5c2ad3b16565e287ece59fe5d6ca0366690ef9ee5c7e7df66b4693e193ca3a10"
+          "sha256": "9f8a2b5c508010d0423ba9d712b203225a46a49998d5467f4a1bb9835580a513"
         },
         {
           "path": "scripts/GTASA.WidescreenFix.ini",
-          "sha256": "d5c7ef9ef57b20c77b1ffed793c1ef5be5fb7f688601895646ba4d7a63b96ba1"
+          "sha256": "5f4b5459296aa7534ebdec581fad371e322079e278532577784246ce994748e4"
         }
       ]
     },
     "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtavc/GTAVC.WidescreenFix.zip": {
       "url": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/gtavc/GTAVC.WidescreenFix.zip",
-      "sha256": "10e22c06d31987ef49d4f7f3e6f147111cb878f530f78f07622213e5d5ff7745",
+      "sha256": "955391a35ddd58e27d313b4c04a9ac5de2b23ee64b2ba922f5b2d30f8657e9a1",
       "files": [
         {
           "path": "scripts/GTAVC.WidescreenFix.asi",
-          "sha256": "74f6d52755787a28a01a803fa53dfd33e5c6064552f65b1e953e237ad2dd305b"
+          "sha256": "ac3a86786537bd0d85a127288dd807362fb9fad9453cbc5ed0a6f86463cd25e9"
         },
         {
           "path": "scripts/GTAVC.WidescreenFix.ini",
-          "sha256": "dfbe185b08e91cb4901cbb0939efada5fbef1adb6ab6ba9c684d3ecc9eb4f7b2"
+          "sha256": "b85e3e7f158e46e077117aacc1d0607a59a461a7b1e3b6584262a352c480bd5f"
         }
       ]
     },
@@ -1391,6 +1485,84 @@
         {
           "path": "cleo/cleo_plugins/SA.Text.cleo",
           "sha256": "24f5505999f94cbbc1859d75b7c61cc59c44f1ef31aceb8320ee2e4190acd572"
+        }
+      ]
+    },
+    "https://github.com/cleolibrary/CLEO5/releases/download/v5.5.0/SA.CLEO-v5.5.0.zip": {
+      "url": "https://github.com/cleolibrary/CLEO5/releases/download/v5.5.0/SA.CLEO-v5.5.0.zip",
+      "sha256": "8b2d57752dfe63a8ce9f99fc2437649093be81da8e2622d1c3918bb1eca4fd63",
+      "files": [
+        {
+          "path": "CLEO.asi",
+          "sha256": "24d8ad3b9442ff030d963b806c50104888defd74f22c51b999b621fcf4f58043"
+        },
+        {
+          "path": "bass.dll",
+          "sha256": "ce5e97630cf4e1ef12a9afad785683414b7504efc443766333360ad2ed142eba"
+        },
+        {
+          "path": "cleo/.config/enums.json",
+          "sha256": "2d26fd815930f44c6094727fbbc6025729d84b553be8986db0cc5df1e08f2b6f"
+        },
+        {
+          "path": "cleo/.config/sa.json",
+          "sha256": "8237253de4fcf183fd6445a9af8aa952f660d85c33c80c38994376f546834516"
+        },
+        {
+          "path": "cleo/NewOpcodes.cleo",
+          "sha256": "66e20a5183c6f9d02620625fe75f853ee211e3f8bb643d11dc76b57e1186eec3"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.cleo",
+          "sha256": "54109dec2779cbeecef0ddc1d6d0523b1cdcda59504a18dc9b27df55c0447e25"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.exp",
+          "sha256": "b98bb6c1c9d72f64a3ad60374de8fc2d3d62ccf098ee8e958850074a22764672"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Audio.lib",
+          "sha256": "f0a3962188b53bb0e72346f9b10a7a61b03560e60d52421f679032915552f798"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.DebugUtils.cleo",
+          "sha256": "20f15208c2a3da283be685c3b322d980d4678c264ad665e6f1805122d76883b5"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.FileSystemOperations.cleo",
+          "sha256": "adf6e15b5ac164a66ef58ddaf72318fda7204fcc1a2f3c32c18bc8c101263727"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.GameEntities.cleo",
+          "sha256": "632712d1a3338a40fdfccc2aa23bb72d53ca5202a55e8c42722b828a795b0074"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.IniFiles.cleo",
+          "sha256": "a73520b9d81bb270c9e62d113ab2c59c617ccb92fe9bf7040f2b09c3e422b801"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Input.cleo",
+          "sha256": "5421205420f49628e53522d1db204ff8c99e7e16fa3b1acc9c35a3d633516e9f"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Math.cleo",
+          "sha256": "709c566cfce9abd8703067d732e0eccdf06025ec818725eb13f78d82a0568f17"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.MemoryOperations.cleo",
+          "sha256": "6c6e812ba9b7b58993b166278ecb8d553d56ca4bc2537b761f362155043e24c2"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.cleo",
+          "sha256": "d27d45b6bbefa1c562aa979334380a130e406b845e02fb1747de28b364dcd718"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.exp",
+          "sha256": "15a930a65a11ea66f5dc9a0bd20efab91b4b49235ea90b8946f59ed8a8a37515"
+        },
+        {
+          "path": "cleo/cleo_plugins/SA.Text.lib",
+          "sha256": "ce8ff29acb5f7cf9c446b7495036116653ce028ba65f204f2d411b156ee66f36"
         }
       ]
     },

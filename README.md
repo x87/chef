@@ -60,7 +60,7 @@ WidescreenFix        <no version>         chef add widescreenfix
 Mod Loader           0.3.10               chef add modloader
 Windowed Mode        2.2.0, 2.1.0         chef add windowedmode
 SaveLoader           2.7.0                chef add saveloader
-CLEO Plus            1.2.0                chef add cleoplus
+CLEO+                1.2.0                chef add cleoplus
 NewOpcodes           2.5.1                chef add newopcodes
 ```
 

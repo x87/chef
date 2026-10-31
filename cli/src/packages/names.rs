@@ -9,10 +9,12 @@ use crate::utils::term;
 
 use super::catalog::{PackageEntry, PackagesFile};
 
-/// Normalize a package name or alias for matching.
+/// Normalize a package name or alias for matching. Case and punctuation are
+/// ignored, except `+` which is significant, so `CLEO+` stays distinct from
+/// `CLEO`.
 pub fn normalize(s: &str) -> String {
     s.chars()
-        .filter(|c| c.is_ascii_alphanumeric())
+        .filter(|c| c.is_ascii_alphanumeric() || *c == '+')
         .collect::<String>()
         .to_lowercase()
 }

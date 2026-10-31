@@ -11,6 +11,27 @@
       ],
       "versions": [
         {
+          "version": "5.5.0",
+          "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.5.0",
+          "assets": [
+            "https://github.com/cleolibrary/CLEO5/releases/download/v5.5.0/SA.CLEO-v5.5.0.zip"
+          ],
+          "exclude": [
+            "cleo_readme/*"
+          ],
+          "games": [
+            "gta-sa"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
           "version": "5.4.0",
           "release": "https://github.com/cleolibrary/CLEO5/releases/tag/v5.4.0",
           "assets": [
@@ -427,6 +448,84 @@
         "silents-asi-loader.sa"
       ],
       "versions": [
+        {
+          "version": "10.0.2",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v10.0.2",
+          "games": [
+            "gta-sa"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.2/Ultimate-ASI-Loader.zip"
+          ],
+          "postinstall": {
+            "rename": {
+              "dinput8.dll": "vorbisFile.dll"
+            }
+          }
+        },
+        {
+          "version": "10.0.2",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v10.0.2",
+          "games": [
+            "gta-3",
+            "gta-vc"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.2/Ultimate-ASI-Loader.zip"
+          ]
+        },
+        {
+          "version": "10.0.1",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v10.0.1",
+          "games": [
+            "gta-sa"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.1/Ultimate-ASI-Loader.zip"
+          ],
+          "postinstall": {
+            "rename": {
+              "dinput8.dll": "vorbisFile.dll"
+            }
+          }
+        },
+        {
+          "version": "10.0.1",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v10.0.1",
+          "games": [
+            "gta-3",
+            "gta-vc"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.1/Ultimate-ASI-Loader.zip"
+          ]
+        },
+        {
+          "version": "10.0.0",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v10.0.0",
+          "games": [
+            "gta-sa"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.0/Ultimate-ASI-Loader.zip"
+          ],
+          "postinstall": {
+            "rename": {
+              "dinput8.dll": "vorbisFile.dll"
+            }
+          }
+        },
+        {
+          "version": "10.0.0",
+          "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v10.0.0",
+          "games": [
+            "gta-3",
+            "gta-vc"
+          ],
+          "assets": [
+            "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v10.0.0/Ultimate-ASI-Loader.zip"
+          ]
+        },
         {
           "version": "9.7.4",
           "release": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v9.7.4",
@@ -876,6 +975,46 @@
       ],
       "versions": [
         {
+          "version": "3.0.1",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v3.0.1",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v3.0.1/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
+          "version": "3.0.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v3.0.0",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/download/v3.0.0/III.VC.SA.WindowedMode.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
           "version": "2.2.0",
           "release": "https://github.com/ThirteenAG/III.VC.SA.WindowedMode/releases/tag/v2.2",
           "assets": [
@@ -1205,6 +1344,46 @@
       ],
       "versions": [
         {
+          "version": "3.0.1",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/tag/v3.0.1",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v3.0.1/III.VC.SA.SaveLoader.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
+          "version": "3.0.0",
+          "release": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/tag/v3.0.0",
+          "assets": [
+            "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/download/v3.0.0/III.VC.SA.SaveLoader.zip"
+          ],
+          "games": [
+            "gta-sa",
+            "gta-vc",
+            "gta-3"
+          ],
+          "dependencies": [
+            {
+              "any": [
+                "silents-asi-loader.sa",
+                "universal-asi-loader.sa.vc.iii"
+              ]
+            }
+          ]
+        },
+        {
           "version": "2.7.0",
           "release": "https://github.com/ThirteenAG/III.VC.SA.SaveLoader/releases/tag/v2.7",
           "assets": [
@@ -1287,8 +1466,8 @@
       ]
     },
     {
-      "id": "cleoplus.sa",
-      "name": "CLEO Plus",
+      "id": "cleo+.sa",
+      "name": "CLEO+",
       "aliases": [
         "cleoplus"
       ],

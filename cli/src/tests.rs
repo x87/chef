@@ -418,13 +418,18 @@ fn unit_pkgs() -> PackagesFile {
 }
 
 #[test]
-fn normalization_strips_non_alphanumerics() {
+fn normalization_strips_punctuation_except_plus() {
     assert_eq!(
         crate::packages::normalize("Silent's ASI Loader"),
         "silentsasiloader"
     );
     assert_eq!(crate::packages::normalize("cleo-redux"), "cleoredux");
     assert_eq!(crate::packages::normalize("CLEO 5"), "cleo5");
+    assert_eq!(crate::packages::normalize("CLEO+"), "cleo+");
+    assert_ne!(
+        crate::packages::normalize("CLEO+"),
+        crate::packages::normalize("CLEO")
+    );
 }
 
 #[test]
